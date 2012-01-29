@@ -46,5 +46,29 @@ exports["General tests"] = {
         mc.addHeader("test-key", "second");
         test.deepEqual(mc.getHeader("test-key"), ["first", "second"]);
         test.done();
+    },
+    
+    "Add message option": function(test){
+        var mc = new MailComposer();
+        test.equal(typeof mc._message.subject, "undefined");
+        
+        mc.setMessageOption({
+            subject: "Test1",
+            body: "Test2",
+            nonexistent: "Test3"
+        });
+        
+        test.equal(mc._message.subject, "Test1");
+        test.equal(mc._message.body, "Test2");
+        test.equal(typeof mc._message.nonexistent, "undefined");
+        
+        mc.setMessageOption({
+            subject: "Test4"
+        });
+        
+        test.equal(mc._message.subject, "Test4");
+        test.equal(mc._message.body, "Test2");
+        
+        test.done();
     }
 };
