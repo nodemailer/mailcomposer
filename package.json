@@ -1,0 +1,36 @@
+{
+    "name": "mailcomposer",
+    "description": "Compose E-Mail messages",
+    "version": "0.1.0",
+    "author" : "Andris Reinman",
+    "maintainers":[
+        {
+            "name":"andris",
+            "email":"andris@node.ee"
+        }
+    ],
+    "repository" : {
+        "type" : "git",
+        "url" : "http://github.com/andris9/mailcomposer.git"
+    },
+    "scripts":{
+        "test": "node ./run_tests.js"
+    },
+    "main" : "./lib/mailcomposer",
+    "licenses" : [
+        {
+            "type": "MIT",
+            "url": "http://github.com/andris9/mailcomposer/blob/master/LICENSE"
+        }
+    ],
+    "dependencies": {
+        "mimelib-noiconv": "*"
+    },
+    "devDependencies": {
+        "nodeunit": "*"
+    },
+    "engine": {
+        "node": ">=0.4"
+    },
+    "keywords": ["e-mail", "mime", "parser"]
+}
