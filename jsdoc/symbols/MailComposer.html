@@ -49,7 +49,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-			<time datetime='2012-0-29' pubdate>2012-0-29 23:15</time>
+			<time datetime='2012-0-30' pubdate>2012-0-30 16:52</time>
 		</footer>
 	</div>
 </div>
@@ -99,9 +99,9 @@
 									<td class="attributes">&nbsp;</td>
 									<td class="nameDescription" >
 										<div class="fixedFont">
-											<b><a href="../symbols/MailComposer.html#constructor">MailComposer</a></b>()
+											<b><a href="../symbols/MailComposer.html#constructor">MailComposer</a></b>(options)
 										</div>
-										<div class="description"><p>Costructs a MailComposer object</p></div>
+										<div class="description"><p>Costructs a MailComposer object.</div>
 									</td>
 								</tr>
 							</tbody>
@@ -127,6 +127,36 @@
 									</thead>
 									
 									<tbody>
+										
+											<tr>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont">
+													<b><a href="../symbols/MailComposer.html#_attachments">_attachments</a></b>
+													</div>
+													<div class="description"><p>Contains a list of attachments</p></div>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont">
+													<b><a href="../symbols/MailComposer.html#_envelope">_envelope</a></b>
+													</div>
+													<div class="description"><p>Contains e-mail addresses for the SMTP</p></div>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont">
+													<b><a href="../symbols/MailComposer.html#_gencounter">_gencounter</a></b>
+													</div>
+													<div class="description"><p>Counter for generating unique mime boundaries etc.</div>
+												</td>
+											</tr>
 										
 											<tr>
 												<td class="attributes">&lt;private&gt; &nbsp;</td>
@@ -185,9 +215,22 @@
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#addHeader">addHeader</a></b>(key, value)
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#addAttachment">addAttachment</a></b>(attachment)
 													</div>
-													<div class="description"><p>Adds a header field to the headers object</p></div>
+													<div class="description"><p>Adds an attachment to the list</p>
+
+<p>Following options are allowed:</p>
+
+<ul>
+    <li><b>fileName</b> - filename for the attachment</li>
+    <li><b>contentType</b> - content type for the attachmetn (default will be derived from the filename)</li>
+    <li><b>cid</b> - Content ID value for inline images</li>
+    <li><b>contents</b> - String or Buffer attachment contents</li>
+    <li><b>filePath</b> - Path to a file for streaming</li>
+</ul>
+
+<p>One of <code>contents</code> or <code>filePath</code> must be specified, otherwise
+the attachment is not included</p></div>
 												</td>
 											</tr>
 										
@@ -196,14 +239,74 @@
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#convertAddress">convertAddress</a></b>(value)
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#addHeader">addHeader</a></b>(key, value)
 													</div>
-													<div class="description"><p>Parses a list of semicolon separated e-mail addresses</p></div>
+													<div class="description"><p>Adds a header field to the headers object</p></div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item2'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#composeEnvelope">composeEnvelope</a></b>()
+													</div>
+													<div class="description"><p>Composes and emits an envelope from the <code>this._envelope</code> 
+object.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item3'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#composeHeader">composeHeader</a></b>()
+													</div>
+													<div class="description"><p>Composes a header for the message and emits it with a <code>'data'</code>
+event</p>
+
+<p>Also checks and build a structure for the message (is it a multipart message
+and does it need a boundary etc.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item4'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#composeMessage">composeMessage</a></b>()
+													</div>
+													<div class="description"><p>Generate an e-mail from the described info</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item5'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#convertAddresses">convertAddresses</a></b>(value)
+													</div>
+													<div class="description"><p>Handles a list of parsed e-mail addresses, checks encoding etc.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item6'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#encodeMimeWord">encodeMimeWord</a></b>(str, encoding, maxlen)
+													</div>
+													<div class="description"><p>Converts a string to mime word format.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item7'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -214,7 +317,18 @@
 											</tr>
 										
 											<tr
-												 class='item3'
+												 class='item8'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#getMimeType">getMimeType</a></b>(filename)
+													</div>
+													<div class="description"><p>Resolves a mime type for a filename</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item9'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -225,7 +339,18 @@
 											</tr>
 										
 											<tr
-												 class='item4'
+												 class='item10'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#hasUTFChars">hasUTFChars</a></b>(str)
+													</div>
+													<div class="description"><p>Tests if a string has high bit (UTF-8) symbols</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item11'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -236,22 +361,7 @@
 											</tr>
 										
 											<tr
-												 class='item5'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#normalizeKey">normalizeKey</a></b>(key)
-													</div>
-													<div class="description"><p>Normalizes a key name by capitalizing first chars of words</p>
-
-<p><code>x-mailer</code> will become <code>X-Mailer</code></p>
-
-<p>Needed to avoid duplicate header keys</p></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item6'
+												 class='item12'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -264,7 +374,7 @@
 <p>Possible options:</p>
 
 <ul>
-    <li><b>sender</b> - The e-mail address of the sender.</div>
+    <li><b>from</b> - The e-mail address of the sender.</div>
 												</td>
 											</tr>
 										
@@ -294,16 +404,43 @@
 							</h2>
 							
 							<div class="fixedFont">
-								<b>MailComposer</b>()
+								<b>MailComposer</b>(options)
 							</div>
 							
 							<div class="description">
-								<p>Costructs a MailComposer object</p>
+								<p>Costructs a MailComposer object. This is a Stream instance so you could
+pipe the output to a file or send it to network.</p>
+
+<p>Possible options properties are:</p>
+
+<ul>
+    <li><b>escapeSMTP</b> - convert dots in the beginning of line to double dots</li>
+    <li><b>encoding</b> - forced transport encoding (quoted-printable, base64, 7bit or 8bit)</li>
+</ul>
+
+<p><b>Events</b></p>
+
+<ul>
+    <li><b>'envelope'</b> - emits an envelope object with <code>from</code> and <code>to</code> (array) addresses.</li>
+    <li><b>'data'</b> - emits a chunk of data</li>
+    <li><b>'end'</b> - composing the message has ended</li>
+</ul>
 								
 							</div>
 							
 							
 						
+							
+								<dl class="detailList params">
+									<dt class="heading">Parameters:</dt>
+									
+										<dt>
+											<span class="light fixedFont">{Object}</span>  <b>options</b>
+											<i>Optional</i>
+										</dt>
+										<dd>Optional options object</dd>
+									
+								</dl>
 							
 							
 							
@@ -322,6 +459,72 @@
 								Field Detail
 							</h2>
 							
+							
+								<div class="fixedFont heading" id="_attachments">
+									<span class='lighter'>
+									&lt;private&gt; 
+									</span>
+									
+									
+									
+									<b>_attachments</b>							
+								</div>
+								
+								<div class="description">
+									<p>Contains a list of attachments</p>
+									
+									
+									
+								</div>
+								
+								
+									
+								
+								<div class="hr"></div>
+							
+								<div class="fixedFont heading" id="_envelope">
+									<span class='lighter'>
+									&lt;private&gt; 
+									</span>
+									
+									
+									
+									<b>_envelope</b>							
+								</div>
+								
+								<div class="description">
+									<p>Contains e-mail addresses for the SMTP</p>
+									
+									
+									
+								</div>
+								
+								
+									
+								
+								<div class="hr"></div>
+							
+								<div class="fixedFont heading" id="_gencounter">
+									<span class='lighter'>
+									&lt;private&gt; 
+									</span>
+									
+									
+									
+									<b>_gencounter</b>							
+								</div>
+								
+								<div class="description">
+									<p>Counter for generating unique mime boundaries etc.</p>
+									
+									
+									
+								</div>
+								
+								
+									
+								
+								<div class="hr"></div>
 							
 								<div class="fixedFont heading" id="_headers">
 									<span class='lighter'>
@@ -388,6 +591,59 @@
 									<li 
 										 class='item0'
 									>
+										<div class="fixedFont heading" id="addAttachment">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>addAttachment</b>(attachment)
+										</div>
+										
+										<div class="description">
+											<p>Adds an attachment to the list</p>
+
+<p>Following options are allowed:</p>
+
+<ul>
+    <li><b>fileName</b> - filename for the attachment</li>
+    <li><b>contentType</b> - content type for the attachmetn (default will be derived from the filename)</li>
+    <li><b>cid</b> - Content ID value for inline images</li>
+    <li><b>contents</b> - String or Buffer attachment contents</li>
+    <li><b>filePath</b> - Path to a file for streaming</li>
+</ul>
+
+<p>One of <code>contents</code> or <code>filePath</code> must be specified, otherwise
+the attachment is not included</p>
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{Object}</span> <b>attachment</b>
+														
+													</dt>
+													<dd>Attachment info</dd>
+												
+											</dl>
+										
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item1'
+									>
 										<div class="fixedFont heading" id="addHeader">
 											<span class='lighter'>
 											
@@ -432,20 +688,129 @@
 									</li>
 								
 									<li 
-										 class='item1'
+										 class='item2'
 									>
-										<div class="fixedFont heading" id="convertAddress">
+										<div class="fixedFont heading" id="composeEnvelope">
 											<span class='lighter'>
 											
 											</span>
 											
-											<span class="light">{Object}</span>
 											
-											<b>convertAddress</b>(value)
+											
+											<b>composeEnvelope</b>()
 										</div>
 										
 										<div class="description">
-											<p>Parses a list of semicolon separated e-mail addresses</p>
+											<p>Composes and emits an envelope from the <code>this._envelope</code> 
+object. Needed for the SMTP client</p>
+
+<p>Emitted envelope is int hte following structure:</p>
+
+<pre>
+{
+    to: "address",
+    from: ["list", "of", "addresses"]
+}
+</pre>
+
+<p>Both properties (<code>from</code> and <code>to</code>) are optional
+and may not exist</p>
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item3'
+									>
+										<div class="fixedFont heading" id="composeHeader">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>composeHeader</b>()
+										</div>
+										
+										<div class="description">
+											<p>Composes a header for the message and emits it with a <code>'data'</code>
+event</p>
+
+<p>Also checks and build a structure for the message (is it a multipart message
+and does it need a boundary etc.)</p>
+
+<p>By default the message is not a multipart. If the message containes both
+plaintext and html contents, an alternative block is used. it it containes
+attachments, a mixed block is used. If both alternative and mixed exist, then
+alternative resides inside mixed.</p>
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item4'
+									>
+										<div class="fixedFont heading" id="composeMessage">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>composeMessage</b>()
+										</div>
+										
+										<div class="description">
+											<p>Generate an e-mail from the described info</p>
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item5'
+									>
+										<div class="fixedFont heading" id="convertAddresses">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{String}</span>
+											
+											<b>convertAddresses</b>(value)
+										</div>
+										
+										<div class="description">
+											<p>Handles a list of parsed e-mail addresses, checks encoding etc.</p>
 											
 											
 											
@@ -459,10 +824,10 @@
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<span class="light fixedFont">{String}</span> <b>value</b>
+														<span class="light fixedFont">{Array}</span> <b>value</b>
 														
 													</dt>
-													<dd>A list or single e-mail address</dd>
+													<dd>A list or single e-mail address <code>{address:'...', name:'...'}</code></dd>
 												
 											</dl>
 										
@@ -479,7 +844,7 @@
 												
 													<dt class="heading">Returns:</dt>
 													
-														<dd><span class="light fixedFont">{Object}</span> Parsed e-mail address list</dd>
+														<dd><span class="light fixedFont">{String}</span> Comma separated and encoded list of addresses</dd>
 													
 												
 												
@@ -493,7 +858,84 @@
 									</li>
 								
 									<li 
-										 class='item2'
+										 class='item6'
+									>
+										<div class="fixedFont heading" id="encodeMimeWord">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{String}</span>
+											
+											<b>encodeMimeWord</b>(str, encoding, maxlen)
+										</div>
+										
+										<div class="description">
+											<p>Converts a string to mime word format. If the length is longer than
+<code>maxlen</code>, split it</p>
+
+<p>If the string doesn't have any unicode characters return the original 
+string instead</p>
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{String}</span> <b>str</b>
+														
+													</dt>
+													<dd>String to be encoded</dd>
+												
+													<dt>
+														<span class="light fixedFont">{String}</span> <b>encoding</b>
+														
+													</dt>
+													<dd>Either Q for Quoted-Printable or B for Base64</dd>
+												
+													<dt>
+														<span class="light fixedFont">{Number}</span> <b>maxlen</b>
+														<i>Optional</i>
+													</dt>
+													<dd>Optional length of the resulting string, whitespace will be inserted if needed</dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{String}</span> Mime-word encoded string (if needed)</dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item7'
 									>
 										<div class="fixedFont heading" id="getHeader">
 											<span class='lighter'>
@@ -554,7 +996,68 @@
 									</li>
 								
 									<li 
-										 class='item3'
+										 class='item8'
+									>
+										<div class="fixedFont heading" id="getMimeType">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{String}</span>
+											
+											<b>getMimeType</b>(filename)
+										</div>
+										
+										<div class="description">
+											<p>Resolves a mime type for a filename</p>
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{String}</span> <b>filename</b>
+														
+													</dt>
+													<dd>Filename to check</dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{String}</span> Corresponding mime type</dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item9'
 									>
 										<div class="fixedFont heading" id="handleValue">
 											<span class='lighter'>
@@ -621,7 +1124,68 @@
 									</li>
 								
 									<li 
-										 class='item4'
+										 class='item10'
+									>
+										<div class="fixedFont heading" id="hasUTFChars">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{Boolean}</span>
+											
+											<b>hasUTFChars</b>(str)
+										</div>
+										
+										<div class="description">
+											<p>Tests if a string has high bit (UTF-8) symbols</p>
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{String}</span> <b>str</b>
+														
+													</dt>
+													<dd>String to be tested for high bit symbols</dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{Boolean}</span> true if high bit symbols were found</dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item11'
 									>
 										<div class="fixedFont heading" id="init">
 											<span class='lighter'>
@@ -650,72 +1214,7 @@
 									</li>
 								
 									<li 
-										 class='item5'
-									>
-										<div class="fixedFont heading" id="normalizeKey">
-											<span class='lighter'>
-											
-											</span>
-											
-											<span class="light">{String}</span>
-											
-											<b>normalizeKey</b>(key)
-										</div>
-										
-										<div class="description">
-											<p>Normalizes a key name by capitalizing first chars of words</p>
-
-<p><code>x-mailer</code> will become <code>X-Mailer</code></p>
-
-<p>Needed to avoid duplicate header keys</p>
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<span class="light fixedFont">{String}</span> <b>key</b>
-														
-													</dt>
-													<dd>Key name</dd>
-												
-											</dl>
-										
-										
-										
-											<dl class="detailList nomargin">
-											
-												
-												
-												
-												
-												
-												
-												
-													<dt class="heading">Returns:</dt>
-													
-														<dd><span class="light fixedFont">{String}</span> First chars uppercased</dd>
-													
-												
-												
-												
-												
-												
-											
-											</dl>
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item6'
+										 class='item12'
 									>
 										<div class="fixedFont heading" id="setMessageOption">
 											<span class='lighter'>
@@ -735,7 +1234,7 @@
 <p>Possible options:</p>
 
 <ul>
-    <li><b>sender</b> - The e-mail address of the sender. All e-mail addresses can be plain <code>sender@server.com<code> or formatted <code>Sender Name &lt;sender@server.com&gt;</code></li>
+    <li><b>from</b> - The e-mail address of the sender. All e-mail addresses can be plain <code>sender@server.com<code> or formatted <code>Sender Name &lt;sender@server.com&gt;</code></li>
     <li><b>to</b> - Comma separated list of recipients e-mail addresses that will appear on the <code>To:</code> field</li>
     <li><b>cc</b> - Comma separated list of recipients e-mail addresses that will appear on the <code>Cc:</code> field</li>
     <li><b>bcc</b> - Comma separated list of recipients e-mail addresses that will appear on the <code>Bcc:</code> field</li>
