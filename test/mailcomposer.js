@@ -152,6 +152,19 @@ exports["Text encodings"] = {
         
         test.equal(mc._message.subject, "tere tere!");
         test.done();
+    },
+    
+    "Long header line": function(test){
+        var mc = new MailComposer();
+        mc._headers = {
+            From: "a very log line, \"=?UTF-8?Q?Jaanuar_Veebruar,_M=C3=A4rts?=\" <=?UTF-8?Q?m=C3=A4rts?=@xn--mrts-loa.eu>"
+        }
+        mc.on("data", function(chunk){
+            test.ok(chunk.toString().trim().match(/From\:\s[^\r\n]+\r\n\s+[^\r\n]+/));
+            test.done();
+        });
+        mc.composeHeader();
+        
     }
     
 };
@@ -212,7 +225,7 @@ exports["Mail related"] = {
 
         mc.on("data", function(chunk){
             chunk = (chunk || "").toString("utf-8");
-            test.ok(chunk.match(/^(?:[a-zA-Z0-0\-]+\:[^\r\n]+\r\n)+\r\n$/));
+            test.ok(chunk.match(/^(?:(?:[\s]+|[a-zA-Z0-0\-]+\:)[^\r\n]+\r\n)+\r\n$/));
             console.log("----"+chunk+"----");
             test.done();
         });
