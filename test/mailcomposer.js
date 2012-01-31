@@ -156,9 +156,11 @@ exports["Text encodings"] = {
     
     "Long header line": function(test){
         var mc = new MailComposer();
+        
         mc._headers = {
             From: "a very log line, \"=?UTF-8?Q?Jaanuar_Veebruar,_M=C3=A4rts?=\" <=?UTF-8?Q?m=C3=A4rts?=@xn--mrts-loa.eu>"
-        }
+        };
+        
         mc.on("data", function(chunk){
             test.ok(chunk.toString().trim().match(/From\:\s[^\r\n]+\r\n\s+[^\r\n]+/));
             test.done();
@@ -226,10 +228,257 @@ exports["Mail related"] = {
         mc.on("data", function(chunk){
             chunk = (chunk || "").toString("utf-8");
             test.ok(chunk.match(/^(?:(?:[\s]+|[a-zA-Z0-0\-]+\:)[^\r\n]+\r\n)+\r\n$/));
-            console.log("----"+chunk+"----");
             test.done();
         });
 
         mc.composeHeader();
     }
 };
+
+exports["Mime tree"] = {
+    "No contents": function(test){
+        test.expect(4);
+        
+        var mc = new MailComposer();
+        mc.composeMessage();
+        
+        test.ok(!mc._message.tree.boundary);
+        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "text/plain");
+        test.equal(mc._message.tree.childNodes.length, 0);
+        
+        for(var i=0, len = mc._message.flatTree.length; i<len; i++){
+            if(typeof mc._message.flatTree[i] == "object"){
+                test.equal(mc._message.flatTree[i].contents, "\r\n");
+            }
+        }
+        
+        test.done();
+    },
+    "Text contents": function(test){
+        test.expect(4);
+        
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            body: "test"
+        });
+        mc.composeMessage();
+        
+        test.ok(!mc._message.tree.boundary);
+        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "text/plain");
+        test.equal(mc._message.tree.childNodes.length, 0);
+        
+        for(var i=0, len = mc._message.flatTree.length; i<len; i++){
+            if(typeof mc._message.flatTree[i] == "object"){
+                test.equal(mc._message.flatTree[i].contents, "test");
+            }
+        }
+        
+        test.done();
+    },
+    "HTML contents": function(test){
+        test.expect(4);
+        
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            html: "<b>test</b>"
+        });
+        mc.composeMessage();
+        
+        test.ok(!mc._message.tree.boundary);
+        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "text/html");
+        test.equal(mc._message.tree.childNodes.length, 0);
+        
+        for(var i=0, len = mc._message.flatTree.length; i<len; i++){
+            if(typeof mc._message.flatTree[i] == "object"){
+                test.equal(mc._message.flatTree[i].contents, "<b>test</b>");
+            }
+        }
+        
+        test.done();
+    },
+    "HTML and text contents": function(test){
+        test.expect(5);
+        
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            body: "test",
+            html: "test"
+        });
+        mc.composeMessage();
+        
+        test.equal(mc._message.tree.childNodes.length, 2);
+        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "multipart/alternative");
+        test.ok(mc._message.tree.boundary);
+        
+        for(var i=0, len = mc._message.flatTree.length; i<len; i++){
+            if(typeof mc._message.flatTree[i] == "object"){
+                test.equal(mc._message.flatTree[i].contents, "test");
+            }
+        }
+        
+        test.done();
+    },
+    "Attachment": function(test){
+        test.expect(5);
+        
+        var mc = new MailComposer();
+        mc.setMessageOption();
+        mc.addAttachment({contents:"\r\n"});
+        mc.composeMessage();
+        
+        test.equal(mc._message.tree.childNodes.length, 2);
+        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
+        test.ok(mc._message.tree.boundary);
+        
+        for(var i=0, len = mc._message.flatTree.length; i<len; i++){
+            if(typeof mc._message.flatTree[i] == "object"){
+                test.equal(mc._message.flatTree[i].contents, "\r\n");
+            }
+        }
+        
+        test.done();
+    },
+    "Several attachments": function(test){
+        test.expect(6);
+        
+        var mc = new MailComposer();
+        mc.setMessageOption();
+        mc.addAttachment({contents:"\r\n"});
+        mc.addAttachment({contents:"\r\n"});
+        mc.composeMessage();
+        
+        test.equal(mc._message.tree.childNodes.length, 3);
+        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
+        test.ok(mc._message.tree.boundary);
+        
+        for(var i=0, len = mc._message.flatTree.length; i<len; i++){
+            if(typeof mc._message.flatTree[i] == "object"){
+                test.equal(mc._message.flatTree[i].contents, "\r\n");
+            }
+        }
+        
+        test.done();
+    },
+    "Attachment and text": function(test){
+        test.expect(7);
+        
+        var mc = new MailComposer();
+        mc.setMessageOption();
+        mc.addAttachment({contents:"test"});
+        mc.setMessageOption({
+            body: "test"
+        });
+        mc.composeMessage();
+        
+        test.equal(mc._message.tree.childNodes.length, 2);
+        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
+        test.ok(mc._message.tree.boundary);
+        
+        mc._message.tree.childNodes[0].headers.forEach(function(header){
+            if(header[0]=="Content-Type"){
+                test.equal(header[1].split(";").shift().trim(), "text/plain");
+            }
+        });
+        
+        mc._message.tree.childNodes[1].headers.forEach(function(header){
+            if(header[0]=="Content-Type"){
+                test.equal(header[1].split(";").shift().trim(), "application/octet-stream");
+            }
+        });
+        
+        for(var i=0, len = mc._message.flatTree.length; i<len; i++){
+            if(typeof mc._message.flatTree[i] == "object"){
+                test.equal(mc._message.flatTree[i].contents, "test");
+            }
+        }
+        
+        test.done();
+    },
+    "Attachment and html": function(test){
+        test.expect(7);
+        
+        var mc = new MailComposer();
+        mc.setMessageOption();
+        mc.addAttachment({contents:"test"});
+        mc.setMessageOption({
+            html: "test"
+        });
+        mc.composeMessage();
+        
+        test.equal(mc._message.tree.childNodes.length, 2);
+        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
+        test.ok(mc._message.tree.boundary);
+        
+        mc._message.tree.childNodes[0].headers.forEach(function(header){
+            if(header[0]=="Content-Type"){
+                test.equal(header[1].split(";").shift().trim(), "text/html");
+            }
+        });
+        
+        mc._message.tree.childNodes[1].headers.forEach(function(header){
+            if(header[0]=="Content-Type"){
+                test.equal(header[1].split(";").shift().trim(), "application/octet-stream");
+            }
+        });
+        
+        for(var i=0, len = mc._message.flatTree.length; i<len; i++){
+            if(typeof mc._message.flatTree[i] == "object"){
+                test.equal(mc._message.flatTree[i].contents, "test");
+            }
+        }
+        
+        test.done();
+    },
+    "Attachment, html and text": function(test){
+        test.expect(11);
+        
+        var mc = new MailComposer();
+        mc.setMessageOption();
+        mc.addAttachment({contents:"test"});
+        mc.setMessageOption({
+            body: "test",
+            html: "test"
+        });
+        mc.composeMessage();
+        
+        test.equal(mc._message.tree.childNodes.length, 2);
+        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
+        test.ok(mc._message.tree.boundary);
+        
+        mc._message.tree.childNodes[0].headers.forEach(function(header){
+            if(header[0]=="Content-Type"){
+                test.equal(header[1].split(";").shift().trim(), "multipart/alternative");
+            }
+        });
+        
+        test.ok(mc._message.tree.childNodes[0].boundary);
+        
+        mc._message.tree.childNodes[0].childNodes[0].headers.forEach(function(header){
+            if(header[0]=="Content-Type"){
+                test.equal(header[1].split(";").shift().trim(), "text/plain");
+            }
+        });
+        
+        mc._message.tree.childNodes[0].childNodes[1].headers.forEach(function(header){
+            if(header[0]=="Content-Type"){
+                test.equal(header[1].split(";").shift().trim(), "text/html");
+            }
+        });
+        
+        mc._message.tree.childNodes[1].headers.forEach(function(header){
+            if(header[0]=="Content-Type"){
+                test.equal(header[1].split(";").shift().trim(), "application/octet-stream");
+            }
+        });
+        
+        for(var i=0, len = mc._message.flatTree.length; i<len; i++){
+            if(typeof mc._message.flatTree[i] == "object"){
+                test.equal(mc._message.flatTree[i].contents, "test");
+            }
+        }
+        
+        test.done();
+    }
+    
+};
+
