@@ -49,7 +49,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-			<time datetime='2012-0-31' pubdate>2012-0-31 16:42</time>
+			<time datetime='2012-0-31' pubdate>2012-0-31 17:13</time>
 		</footer>
 	</div>
 </div>
@@ -213,6 +213,255 @@
 											<tr
 												 class='item0'
 											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_buildMessageHeaders">_buildMessageHeaders</a></b>()
+													</div>
+													<div class="description"><p>Uses data from the <code>this._message</code> object to build headers</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item1'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_composeBody">_composeBody</a></b>()
+													</div>
+													<div class="description"><p>Composes the e-mail body based on the previously generated mime tree</p>
+
+<p>Assumes that the linebreak separating headers and contents is already 
+sent</p>
+
+<p>Emits 'data' events</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item2'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_composeEnvelope">_composeEnvelope</a></b>()
+													</div>
+													<div class="description"><p>Composes and emits an envelope from the <code>this._envelope</code> 
+object.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item3'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_composeHeader">_composeHeader</a></b>()
+													</div>
+													<div class="description"><p>Composes a header for the message and emits it with a <code>'data'</code>
+event</p>
+
+<p>Also checks and build a structure for the message (is it a multipart message
+and does it need a boundary etc.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item4'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_composeMessage">_composeMessage</a></b>()
+													</div>
+													<div class="description"><p>Generate an e-mail from the described info</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item5'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_convertAddresses">_convertAddresses</a></b>(value)
+													</div>
+													<div class="description"><p>Handles a list of parsed e-mail addresses, checks encoding etc.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item6'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_createAttachmentComponent">_createAttachmentComponent</a></b>(attachment)
+													</div>
+													<div class="description"><p>Creates a mime tree node for a text component (plaintext, HTML)</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item7'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_createMimeNode">_createMimeNode</a></b>()
+													</div>
+													<div class="description"><p>Creates an empty mime tree node</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item8'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_createTextComponent">_createTextComponent</a></b>(text, contentType)
+													</div>
+													<div class="description"><p>Creates a mime tree node for a text component (plaintext, HTML)</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item9'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_emitDataElement">_emitDataElement</a></b>(element, callback)
+													</div>
+													<div class="description"><p>Emits a data event for a text or html body and attachments.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item10'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_encodeMimeWord">_encodeMimeWord</a></b>(str, encoding, maxlen)
+													</div>
+													<div class="description"><p>Converts a string to mime word format.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item11'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_flattenMimeTree">_flattenMimeTree</a></b>()
+													</div>
+													<div class="description"><p>Converts a structured mimetree into an one dimensional array of
+components.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item12'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_generateBodyStructure">_generateBodyStructure</a></b>()
+													</div>
+													<div class="description"><p>Generates the structure (mime tree) of the body.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item13'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_generateBoundary">_generateBoundary</a></b>()
+													</div>
+													<div class="description"><p>Generates a boundary for multipart bodies</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item14'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_getHeader">_getHeader</a></b>(key)
+													</div>
+													<div class="description"><p>Gets a header field</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item15'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_getMimeType">_getMimeType</a></b>(filename)
+													</div>
+													<div class="description"><p>Resolves a mime type for a filename</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item16'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_handleValue">_handleValue</a></b>(key, value)
+													</div>
+													<div class="description"><p>Handles a message object value, converts addresses etc.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item17'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_hasUTFChars">_hasUTFChars</a></b>(str)
+													</div>
+													<div class="description"><p>Tests if a string has high bit (UTF-8) symbols</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item18'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_init">_init</a></b>()
+													</div>
+													<div class="description"><p>Resets and initializes MailComposer</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item19'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_normalizeKey">_normalizeKey</a></b>(key)
+													</div>
+													<div class="description"><p>Normalizes a key name by cpitalizing first chars of words</p>
+
+<p><code>x-mailer</code> will become <code>X-Mailer</code></p>
+
+<p>Needed to avoid duplicate header keys</p></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item20'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_serveFile">_serveFile</a></b>(filePath, callback)
+													</div>
+													<div class="description"><p>Pipes a file to the e-mail stream</p>
+
+<p>This function opens a file and starts sending 76 bytes long base64
+encoded lines.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item21'
+											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#addAttachment">addAttachment</a></b>(attachment)
@@ -235,7 +484,7 @@ the attachment is not included</p></div>
 											</tr>
 										
 											<tr
-												 class='item1'
+												 class='item22'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -246,262 +495,13 @@ the attachment is not included</p></div>
 											</tr>
 										
 											<tr
-												 class='item2'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#buildMessageHeaders">buildMessageHeaders</a></b>()
-													</div>
-													<div class="description"><p>Uses data from the <code>this._message</code> object to build headers</p></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item3'
+												 class='item23'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#compileHeaders">compileHeaders</a></b>(headers)
 													</div>
 													<div class="description"><p>Compiles headers object into an array of header lines.</div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item4'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#composeBody">composeBody</a></b>()
-													</div>
-													<div class="description"><p>Composes the e-mail body based on the previously generated mime tree</p>
-
-<p>Assumes that the linebreak separating headers and contents is already 
-sent</p>
-
-<p>Emits 'data' events</p></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item5'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#composeEnvelope">composeEnvelope</a></b>()
-													</div>
-													<div class="description"><p>Composes and emits an envelope from the <code>this._envelope</code> 
-object.</div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item6'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#composeHeader">composeHeader</a></b>()
-													</div>
-													<div class="description"><p>Composes a header for the message and emits it with a <code>'data'</code>
-event</p>
-
-<p>Also checks and build a structure for the message (is it a multipart message
-and does it need a boundary etc.</div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item7'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#composeMessage">composeMessage</a></b>()
-													</div>
-													<div class="description"><p>Generate an e-mail from the described info</p></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item8'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#convertAddresses">convertAddresses</a></b>(value)
-													</div>
-													<div class="description"><p>Handles a list of parsed e-mail addresses, checks encoding etc.</div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item9'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#createAttachmentComponent">createAttachmentComponent</a></b>(attachment)
-													</div>
-													<div class="description"><p>Creates a mime tree node for a text component (plaintext, HTML)</p></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item10'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#createMimeNode">createMimeNode</a></b>()
-													</div>
-													<div class="description"><p>Creates an empty mime tree node</p></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item11'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#createTextComponent">createTextComponent</a></b>(text, contentType)
-													</div>
-													<div class="description"><p>Creates a mime tree node for a text component (plaintext, HTML)</p></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item12'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#emitDataElement">emitDataElement</a></b>(element, callback)
-													</div>
-													<div class="description"><p>Emits a data event for a text or html body and attachments.</div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item13'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#encodeMimeWord">encodeMimeWord</a></b>(str, encoding, maxlen)
-													</div>
-													<div class="description"><p>Converts a string to mime word format.</div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item14'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#flattenMimeTree">flattenMimeTree</a></b>()
-													</div>
-													<div class="description"><p>Converts a structured mimetree into an one dimensional array of
-components.</div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item15'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#generateBodyStructure">generateBodyStructure</a></b>()
-													</div>
-													<div class="description"><p>Generates the structure (mime tree) of the body.</div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item16'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#generateBoundary">generateBoundary</a></b>()
-													</div>
-													<div class="description"><p>Generates a boundary for multipart bodies</p></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item17'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#getHeader">getHeader</a></b>(key)
-													</div>
-													<div class="description"><p>Gets a header field</p></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item18'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#getMimeType">getMimeType</a></b>(filename)
-													</div>
-													<div class="description"><p>Resolves a mime type for a filename</p></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item19'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#handleValue">handleValue</a></b>(key, value)
-													</div>
-													<div class="description"><p>Handles a message object value, converts addresses etc.</div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item20'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#hasUTFChars">hasUTFChars</a></b>(str)
-													</div>
-													<div class="description"><p>Tests if a string has high bit (UTF-8) symbols</p></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item21'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#init">init</a></b>()
-													</div>
-													<div class="description"><p>Resets and initializes MailComposer</p></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item22'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#normalizeKey">normalizeKey</a></b>(key)
-													</div>
-													<div class="description"><p>Normalizes a key name by cpitalizing first chars of words</p>
-
-<p><code>x-mailer</code> will become <code>X-Mailer</code></p>
-
-<p>Needed to avoid duplicate header keys</p></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item23'
-											>
-												<td class="attributes">&nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#serveFile">serveFile</a></b>(filePath, callback)
-													</div>
-													<div class="description"><p>Pipes a file to the e-mail stream</p>
-
-<p>This function opens a file and starts sending 76 bytes long base64
-encoded lines.</div>
 												</td>
 											</tr>
 										
@@ -520,6 +520,17 @@ encoded lines.</div>
 
 <ul>
     <li><b>from</b> - The e-mail address of the sender.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item25'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#streamMessage">streamMessage</a></b>()
+													</div>
+													<div class="description"><p>Starts streaming the message</p></div>
 												</td>
 											</tr>
 										
@@ -736,113 +747,14 @@ pipe the output to a file or send it to network.</p>
 									<li 
 										 class='item0'
 									>
-										<div class="fixedFont heading" id="addAttachment">
+										<div class="fixedFont heading" id="_buildMessageHeaders">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											
 											
-											<b>addAttachment</b>(attachment)
-										</div>
-										
-										<div class="description">
-											<p>Adds an attachment to the list</p>
-
-<p>Following options are allowed:</p>
-
-<ul>
-    <li><b>fileName</b> - filename for the attachment</li>
-    <li><b>contentType</b> - content type for the attachmetn (default will be derived from the filename)</li>
-    <li><b>cid</b> - Content ID value for inline images</li>
-    <li><b>contents</b> - String or Buffer attachment contents</li>
-    <li><b>filePath</b> - Path to a file for streaming</li>
-</ul>
-
-<p>One of <code>contents</code> or <code>filePath</code> must be specified, otherwise
-the attachment is not included</p>
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<span class="light fixedFont">{Object}</span> <b>attachment</b>
-														
-													</dt>
-													<dd>Attachment info</dd>
-												
-											</dl>
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item1'
-									>
-										<div class="fixedFont heading" id="addHeader">
-											<span class='lighter'>
-											
-											</span>
-											
-											
-											
-											<b>addHeader</b>(key, value)
-										</div>
-										
-										<div class="description">
-											<p>Adds a header field to the headers object</p>
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<span class="light fixedFont">{String}</span> <b>key</b>
-														
-													</dt>
-													<dd>Key name</dd>
-												
-													<dt>
-														<span class="light fixedFont">{String}</span> <b>value</b>
-														
-													</dt>
-													<dd>Header value</dd>
-												
-											</dl>
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item2'
-									>
-										<div class="fixedFont heading" id="buildMessageHeaders">
-											<span class='lighter'>
-											
-											</span>
-											
-											
-											
-											<b>buildMessageHeaders</b>()
+											<b>_buildMessageHeaders</b>()
 										</div>
 										
 										<div class="description">
@@ -862,80 +774,16 @@ the attachment is not included</p>
 									</li>
 								
 									<li 
-										 class='item3'
+										 class='item1'
 									>
-										<div class="fixedFont heading" id="compileHeaders">
+										<div class="fixedFont heading" id="_composeBody">
 											<span class='lighter'>
-											
-											</span>
-											
-											<span class="light">{Array}</span>
-											
-											<b>compileHeaders</b>(headers)
-										</div>
-										
-										<div class="description">
-											<p>Compiles headers object into an array of header lines. If needed, the
-lines are folded</p>
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<span class="light fixedFont">{Object|Array}</span> <b>headers</b>
-														
-													</dt>
-													<dd>An object with headers in the form of
-       <code>{key:value}</code> or <ocde>[[key, value]]</code> or
-       <code>[{key:key, value: value}]</code></dd>
-												
-											</dl>
-										
-										
-										
-											<dl class="detailList nomargin">
-											
-												
-												
-												
-												
-												
-												
-												
-													<dt class="heading">Returns:</dt>
-													
-														<dd><span class="light fixedFont">{Array}</span> A list of header lines. Can be joined with \r\n</dd>
-													
-												
-												
-												
-												
-												
-											
-											</dl>
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item4'
-									>
-										<div class="fixedFont heading" id="composeBody">
-											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											
 											
-											<b>composeBody</b>()
+											<b>_composeBody</b>()
 										</div>
 										
 										<div class="description">
@@ -960,16 +808,16 @@ sent</p>
 									</li>
 								
 									<li 
-										 class='item5'
+										 class='item2'
 									>
-										<div class="fixedFont heading" id="composeEnvelope">
+										<div class="fixedFont heading" id="_composeEnvelope">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											
 											
-											<b>composeEnvelope</b>()
+											<b>_composeEnvelope</b>()
 										</div>
 										
 										<div class="description">
@@ -1002,16 +850,16 @@ and may not exist</p>
 									</li>
 								
 									<li 
-										 class='item6'
+										 class='item3'
 									>
-										<div class="fixedFont heading" id="composeHeader">
+										<div class="fixedFont heading" id="_composeHeader">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											
 											
-											<b>composeHeader</b>()
+											<b>_composeHeader</b>()
 										</div>
 										
 										<div class="description">
@@ -1040,16 +888,16 @@ alternative resides inside mixed.</p>
 									</li>
 								
 									<li 
-										 class='item7'
+										 class='item4'
 									>
-										<div class="fixedFont heading" id="composeMessage">
+										<div class="fixedFont heading" id="_composeMessage">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											
 											
-											<b>composeMessage</b>()
+											<b>_composeMessage</b>()
 										</div>
 										
 										<div class="description">
@@ -1069,16 +917,16 @@ alternative resides inside mixed.</p>
 									</li>
 								
 									<li 
-										 class='item8'
+										 class='item5'
 									>
-										<div class="fixedFont heading" id="convertAddresses">
+										<div class="fixedFont heading" id="_convertAddresses">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											<span class="light">{String}</span>
 											
-											<b>convertAddresses</b>(value)
+											<b>_convertAddresses</b>(value)
 										</div>
 										
 										<div class="description">
@@ -1130,16 +978,16 @@ alternative resides inside mixed.</p>
 									</li>
 								
 									<li 
-										 class='item9'
+										 class='item6'
 									>
-										<div class="fixedFont heading" id="createAttachmentComponent">
+										<div class="fixedFont heading" id="_createAttachmentComponent">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											<span class="light">{Object}</span>
 											
-											<b>createAttachmentComponent</b>(attachment)
+											<b>_createAttachmentComponent</b>(attachment)
 										</div>
 										
 										<div class="description">
@@ -1191,16 +1039,16 @@ alternative resides inside mixed.</p>
 									</li>
 								
 									<li 
-										 class='item10'
+										 class='item7'
 									>
-										<div class="fixedFont heading" id="createMimeNode">
+										<div class="fixedFont heading" id="_createMimeNode">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											<span class="light">{Object}</span>
 											
-											<b>createMimeNode</b>()
+											<b>_createMimeNode</b>()
 										</div>
 										
 										<div class="description">
@@ -1241,16 +1089,16 @@ alternative resides inside mixed.</p>
 									</li>
 								
 									<li 
-										 class='item11'
+										 class='item8'
 									>
-										<div class="fixedFont heading" id="createTextComponent">
+										<div class="fixedFont heading" id="_createTextComponent">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											<span class="light">{Object}</span>
 											
-											<b>createTextComponent</b>(text, contentType)
+											<b>_createTextComponent</b>(text, contentType)
 										</div>
 										
 										<div class="description">
@@ -1308,16 +1156,16 @@ alternative resides inside mixed.</p>
 									</li>
 								
 									<li 
-										 class='item12'
+										 class='item9'
 									>
-										<div class="fixedFont heading" id="emitDataElement">
+										<div class="fixedFont heading" id="_emitDataElement">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											
 											
-											<b>emitDataElement</b>(element, callback)
+											<b>_emitDataElement</b>(element, callback)
 										</div>
 										
 										<div class="description">
@@ -1358,16 +1206,16 @@ beginning of a line with double dots - only valid for QP encoding</p>
 									</li>
 								
 									<li 
-										 class='item13'
+										 class='item10'
 									>
-										<div class="fixedFont heading" id="encodeMimeWord">
+										<div class="fixedFont heading" id="_encodeMimeWord">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											<span class="light">{String}</span>
 											
-											<b>encodeMimeWord</b>(str, encoding, maxlen)
+											<b>_encodeMimeWord</b>(str, encoding, maxlen)
 										</div>
 										
 										<div class="description">
@@ -1435,16 +1283,16 @@ string instead</p>
 									</li>
 								
 									<li 
-										 class='item14'
+										 class='item11'
 									>
-										<div class="fixedFont heading" id="flattenMimeTree">
+										<div class="fixedFont heading" id="_flattenMimeTree">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											
 											
-											<b>flattenMimeTree</b>()
+											<b>_flattenMimeTree</b>()
 										</div>
 										
 										<div class="description">
@@ -1466,16 +1314,16 @@ textual and attachment contents are.</p>
 									</li>
 								
 									<li 
-										 class='item15'
+										 class='item12'
 									>
-										<div class="fixedFont heading" id="generateBodyStructure">
+										<div class="fixedFont heading" id="_generateBodyStructure">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											
 											
-											<b>generateBodyStructure</b>()
+											<b>_generateBodyStructure</b>()
 										</div>
 										
 										<div class="description">
@@ -1499,16 +1347,16 @@ headers</p>
 									</li>
 								
 									<li 
-										 class='item16'
+										 class='item13'
 									>
-										<div class="fixedFont heading" id="generateBoundary">
+										<div class="fixedFont heading" id="_generateBoundary">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											<span class="light">{String}</span>
 											
-											<b>generateBoundary</b>()
+											<b>_generateBoundary</b>()
 										</div>
 										
 										<div class="description">
@@ -1549,16 +1397,16 @@ headers</p>
 									</li>
 								
 									<li 
-										 class='item17'
+										 class='item14'
 									>
-										<div class="fixedFont heading" id="getHeader">
+										<div class="fixedFont heading" id="_getHeader">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											<span class="light">{String|Array}</span>
 											
-											<b>getHeader</b>(key)
+											<b>_getHeader</b>(key)
 										</div>
 										
 										<div class="description">
@@ -1610,16 +1458,16 @@ headers</p>
 									</li>
 								
 									<li 
-										 class='item18'
+										 class='item15'
 									>
-										<div class="fixedFont heading" id="getMimeType">
+										<div class="fixedFont heading" id="_getMimeType">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											<span class="light">{String}</span>
 											
-											<b>getMimeType</b>(filename)
+											<b>_getMimeType</b>(filename)
 										</div>
 										
 										<div class="description">
@@ -1671,16 +1519,16 @@ headers</p>
 									</li>
 								
 									<li 
-										 class='item19'
+										 class='item16'
 									>
-										<div class="fixedFont heading" id="handleValue">
+										<div class="fixedFont heading" id="_handleValue">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											<span class="light">{String}</span>
 											
-											<b>handleValue</b>(key, value)
+											<b>_handleValue</b>(key, value)
 										</div>
 										
 										<div class="description">
@@ -1738,16 +1586,16 @@ headers</p>
 									</li>
 								
 									<li 
-										 class='item20'
+										 class='item17'
 									>
-										<div class="fixedFont heading" id="hasUTFChars">
+										<div class="fixedFont heading" id="_hasUTFChars">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											<span class="light">{Boolean}</span>
 											
-											<b>hasUTFChars</b>(str)
+											<b>_hasUTFChars</b>(str)
 										</div>
 										
 										<div class="description">
@@ -1799,16 +1647,16 @@ headers</p>
 									</li>
 								
 									<li 
-										 class='item21'
+										 class='item18'
 									>
-										<div class="fixedFont heading" id="init">
+										<div class="fixedFont heading" id="_init">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											
 											
-											<b>init</b>()
+											<b>_init</b>()
 										</div>
 										
 										<div class="description">
@@ -1828,16 +1676,16 @@ headers</p>
 									</li>
 								
 									<li 
-										 class='item22'
+										 class='item19'
 									>
-										<div class="fixedFont heading" id="normalizeKey">
+										<div class="fixedFont heading" id="_normalizeKey">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											<span class="light">{String}</span>
 											
-											<b>normalizeKey</b>(key)
+											<b>_normalizeKey</b>(key)
 										</div>
 										
 										<div class="description">
@@ -1893,16 +1741,16 @@ headers</p>
 									</li>
 								
 									<li 
-										 class='item23'
+										 class='item20'
 									>
-										<div class="fixedFont heading" id="serveFile">
+										<div class="fixedFont heading" id="_serveFile">
 											<span class='lighter'>
-											
+											&lt;private&gt; 
 											</span>
 											
 											
 											
-											<b>serveFile</b>(filePath, callback)
+											<b>_serveFile</b>(filePath, callback)
 										</div>
 										
 										<div class="description">
@@ -1939,6 +1787,169 @@ base64</p>
 											</dl>
 										
 										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item21'
+									>
+										<div class="fixedFont heading" id="addAttachment">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>addAttachment</b>(attachment)
+										</div>
+										
+										<div class="description">
+											<p>Adds an attachment to the list</p>
+
+<p>Following options are allowed:</p>
+
+<ul>
+    <li><b>fileName</b> - filename for the attachment</li>
+    <li><b>contentType</b> - content type for the attachmetn (default will be derived from the filename)</li>
+    <li><b>cid</b> - Content ID value for inline images</li>
+    <li><b>contents</b> - String or Buffer attachment contents</li>
+    <li><b>filePath</b> - Path to a file for streaming</li>
+</ul>
+
+<p>One of <code>contents</code> or <code>filePath</code> must be specified, otherwise
+the attachment is not included</p>
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{Object}</span> <b>attachment</b>
+														
+													</dt>
+													<dd>Attachment info</dd>
+												
+											</dl>
+										
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item22'
+									>
+										<div class="fixedFont heading" id="addHeader">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>addHeader</b>(key, value)
+										</div>
+										
+										<div class="description">
+											<p>Adds a header field to the headers object</p>
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{String}</span> <b>key</b>
+														
+													</dt>
+													<dd>Key name</dd>
+												
+													<dt>
+														<span class="light fixedFont">{String}</span> <b>value</b>
+														
+													</dt>
+													<dd>Header value</dd>
+												
+											</dl>
+										
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item23'
+									>
+										<div class="fixedFont heading" id="compileHeaders">
+											<span class='lighter'>
+											
+											</span>
+											
+											<span class="light">{Array}</span>
+											
+											<b>compileHeaders</b>(headers)
+										</div>
+										
+										<div class="description">
+											<p>Compiles headers object into an array of header lines. If needed, the
+lines are folded</p>
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{Object|Array}</span> <b>headers</b>
+														
+													</dt>
+													<dd>An object with headers in the form of
+       <code>{key:value}</code> or <ocde>[[key, value]]</code> or
+       <code>[{key:key, value: value}]</code></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{Array}</span> A list of header lines. Can be joined with \r\n</dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
 										
 										<div class="hr"></div>
 									</li>
@@ -1992,6 +2003,35 @@ base64</p>
 													<dd>Message related options</dd>
 												
 											</dl>
+										
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item25'
+									>
+										<div class="fixedFont heading" id="streamMessage">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>streamMessage</b>()
+										</div>
+										
+										<div class="description">
+											<p>Starts streaming the message</p>
+											
+											
+											
+											
+										</div>
+										
+										
+										
 										
 										
 										

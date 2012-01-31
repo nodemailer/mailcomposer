@@ -12,7 +12,7 @@ exports["General tests"] = {
     },
     
     "Normalize key names": function(test){
-        var normalizer = MailComposer.prototype.normalizeKey;
+        var normalizer = MailComposer.prototype._normalizeKey;
         
         test.equal(normalizer("abc"), "Abc");
         test.equal(normalizer("aBC"), "Abc");
@@ -40,12 +40,12 @@ exports["General tests"] = {
     
     "Get header": function(test){
         var mc = new MailComposer();
-        test.equal(mc.getHeader("MIME-Version"), "1.0");
-        test.equal(mc.getHeader("test-key"), "");
+        test.equal(mc._getHeader("MIME-Version"), "1.0");
+        test.equal(mc._getHeader("test-key"), "");
         mc.addHeader("test-key", "first");
-        test.equal(mc.getHeader("test-key"), "first");
+        test.equal(mc._getHeader("test-key"), "first");
         mc.addHeader("test-key", "second");
-        test.deepEqual(mc.getHeader("test-key"), ["first", "second"]);
+        test.deepEqual(mc._getHeader("test-key"), ["first", "second"]);
         test.done();
     },
     
@@ -76,8 +76,8 @@ exports["General tests"] = {
     "Detect mime type": function(test){
         var mc = new MailComposer();
         
-        test.equal(mc.getMimeType("test.txt"), "text/plain");
-        test.equal(mc.getMimeType("test.unknown"), "application/octet-stream");
+        test.equal(mc._getMimeType("test.txt"), "text/plain");
+        test.equal(mc._getMimeType("test.unknown"), "application/octet-stream");
         
         test.done();
     }
@@ -93,16 +93,16 @@ exports["Text encodings"] = {
     
     "Mime words": function(test){
         var mc = new MailComposer();
-        test.equal(mc.encodeMimeWord("Tere"), "Tere");
-        test.equal(mc.encodeMimeWord("Tere","Q"), "Tere");
-        test.equal(mc.encodeMimeWord("Tere","B"), "Tere");
+        test.equal(mc._encodeMimeWord("Tere"), "Tere");
+        test.equal(mc._encodeMimeWord("Tere","Q"), "Tere");
+        test.equal(mc._encodeMimeWord("Tere","B"), "Tere");
         
         // simple
-        test.equal(mc.encodeMimeWord("äss"), "=?UTF-8?Q?=C3=A4ss?=");
-        test.equal(mc.encodeMimeWord("äss","B"), "=?UTF-8?B?"+(new Buffer("äss","utf-8").toString("base64"))+"?=");
+        test.equal(mc._encodeMimeWord("äss"), "=?UTF-8?Q?=C3=A4ss?=");
+        test.equal(mc._encodeMimeWord("äss","B"), "=?UTF-8?B?"+(new Buffer("äss","utf-8").toString("base64"))+"?=");
         
         //multiliple
-        test.equal(mc.encodeMimeWord("äss tekst on see siin või kuidas?","Q", 20), "=?UTF-8?Q?=C3=A4ss_t?= =?UTF-8?Q?ekst_on_see_siin_v=C?= =?UTF-8?Q?3=B5i_kuidas=3F?=");
+        test.equal(mc._encodeMimeWord("äss tekst on see siin või kuidas?","Q", 20), "=?UTF-8?Q?=C3=A4ss_t?= =?UTF-8?Q?ekst_on_see_siin_v=C?= =?UTF-8?Q?3=B5i_kuidas=3F?=");
         
         test.done();
     },
@@ -165,7 +165,7 @@ exports["Text encodings"] = {
             test.ok(chunk.toString().trim().match(/From\:\s[^\r\n]+\r\n\s+[^\r\n]+/));
             test.done();
         });
-        mc.composeHeader();
+        mc._composeHeader();
         
     }
     
@@ -211,7 +211,7 @@ exports["Mail related"] = {
             test.done();
         });
 
-        mc.composeEnvelope();
+        mc._composeEnvelope();
         
     },
     
@@ -231,7 +231,7 @@ exports["Mail related"] = {
             test.done();
         });
 
-        mc.composeHeader();
+        mc._composeHeader();
     }
 };
 
@@ -240,10 +240,10 @@ exports["Mime tree"] = {
         test.expect(4);
         
         var mc = new MailComposer();
-        mc.composeMessage();
+        mc._composeMessage();
         
         test.ok(!mc._message.tree.boundary);
-        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "text/plain");
+        test.equal(mc._getHeader("Content-Type").split(";").shift().trim(), "text/plain");
         test.equal(mc._message.tree.childNodes.length, 0);
         
         for(var i=0, len = mc._message.flatTree.length; i<len; i++){
@@ -261,10 +261,10 @@ exports["Mime tree"] = {
         mc.setMessageOption({
             body: "test"
         });
-        mc.composeMessage();
+        mc._composeMessage();
         
         test.ok(!mc._message.tree.boundary);
-        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "text/plain");
+        test.equal(mc._getHeader("Content-Type").split(";").shift().trim(), "text/plain");
         test.equal(mc._message.tree.childNodes.length, 0);
         
         for(var i=0, len = mc._message.flatTree.length; i<len; i++){
@@ -282,10 +282,10 @@ exports["Mime tree"] = {
         mc.setMessageOption({
             html: "<b>test</b>"
         });
-        mc.composeMessage();
+        mc._composeMessage();
         
         test.ok(!mc._message.tree.boundary);
-        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "text/html");
+        test.equal(mc._getHeader("Content-Type").split(";").shift().trim(), "text/html");
         test.equal(mc._message.tree.childNodes.length, 0);
         
         for(var i=0, len = mc._message.flatTree.length; i<len; i++){
@@ -304,10 +304,10 @@ exports["Mime tree"] = {
             body: "test",
             html: "test"
         });
-        mc.composeMessage();
+        mc._composeMessage();
         
         test.equal(mc._message.tree.childNodes.length, 2);
-        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "multipart/alternative");
+        test.equal(mc._getHeader("Content-Type").split(";").shift().trim(), "multipart/alternative");
         test.ok(mc._message.tree.boundary);
         
         for(var i=0, len = mc._message.flatTree.length; i<len; i++){
@@ -324,10 +324,10 @@ exports["Mime tree"] = {
         var mc = new MailComposer();
         mc.setMessageOption();
         mc.addAttachment({contents:"\r\n"});
-        mc.composeMessage();
+        mc._composeMessage();
         
         test.equal(mc._message.tree.childNodes.length, 2);
-        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
+        test.equal(mc._getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
         test.ok(mc._message.tree.boundary);
         
         for(var i=0, len = mc._message.flatTree.length; i<len; i++){
@@ -345,10 +345,11 @@ exports["Mime tree"] = {
         mc.setMessageOption();
         mc.addAttachment({contents:"\r\n"});
         mc.addAttachment({contents:"\r\n"});
-        mc.composeMessage();
+        
+        mc._composeMessage();
         
         test.equal(mc._message.tree.childNodes.length, 3);
-        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
+        test.equal(mc._getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
         test.ok(mc._message.tree.boundary);
         
         for(var i=0, len = mc._message.flatTree.length; i<len; i++){
@@ -368,10 +369,10 @@ exports["Mime tree"] = {
         mc.setMessageOption({
             body: "test"
         });
-        mc.composeMessage();
+        mc._composeMessage();
         
         test.equal(mc._message.tree.childNodes.length, 2);
-        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
+        test.equal(mc._getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
         test.ok(mc._message.tree.boundary);
         
         mc._message.tree.childNodes[0].headers.forEach(function(header){
@@ -403,10 +404,10 @@ exports["Mime tree"] = {
         mc.setMessageOption({
             html: "test"
         });
-        mc.composeMessage();
+        mc._composeMessage();
         
         test.equal(mc._message.tree.childNodes.length, 2);
-        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
+        test.equal(mc._getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
         test.ok(mc._message.tree.boundary);
         
         mc._message.tree.childNodes[0].headers.forEach(function(header){
@@ -439,10 +440,10 @@ exports["Mime tree"] = {
             body: "test",
             html: "test"
         });
-        mc.composeMessage();
+        mc._composeMessage();
         
         test.equal(mc._message.tree.childNodes.length, 2);
-        test.equal(mc.getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
+        test.equal(mc._getHeader("Content-Type").split(";").shift().trim(), "multipart/mixed");
         test.ok(mc._message.tree.boundary);
         
         mc._message.tree.childNodes[0].headers.forEach(function(header){
