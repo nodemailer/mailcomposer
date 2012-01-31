@@ -15,7 +15,35 @@ Install through NPM
 
 ## Usage
 
+### Include mailcomposer module
 
+    var MailComposer = require("mailcomposer").MailComposer;
+
+### Create a new `MailComposer` instance
+
+    var mailcomposer = new MailComposer([options]);
+
+Where `options` is an optional options object with the following possible properties:
+
+  * **escapeSMTP** - if set replaces dots in the beginning of a line with double dots
+  * **encoding** - sets transfer encoding for the textual parts (defaults to `"quoted-printable"`)
+
+### Add message parts
+
+### Add attachments
+
+### Start streaming
+
+When the message data is setup, streaming can be started
+
+    mailcomposer.streamMessage();
+
+This generates `'data'` events for the message headers and body and final `'end'` event.
+As `MailComposer` objects are Stream instances, these can be piped
+
+    // save the output to a file
+    mailcomposer.streamMessage();
+    mailcomposer.pipe(fs.createWriteStream("out.txt"));
 
 ## Envelope
 
