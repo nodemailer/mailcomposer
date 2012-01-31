@@ -16,11 +16,12 @@ Install through NPM
 ## Usage
 
 
+
 ## Envelope
 
-Envelope is emitted with 'envelope' event and it has an object as a param
-that includes a from address and a list of to addresses suitable for forwarding
-to a SMTP server.
+Envelope is emitted with an `'envelope'` event and it has an object as a param
+that includes a `from` address (string) and a list of `to` addresses (array of
+strings) suitable for forwarding to a SMTP server as `MAIL FROM:` and `RCPT TO:`.
 
     mailcomposer.on("envelope", function(envelope){
         console.log(envelope);

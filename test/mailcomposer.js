@@ -1,6 +1,8 @@
 var testCase = require('nodeunit').testCase,
     MailComposer = require("../lib/mailcomposer").MailComposer,
-    toPunycode = require("../lib/punycode");
+    toPunycode = require("../lib/punycode"),
+    MailParser = require("mailparser").MailParser,
+    fs = require("fs");
 
 exports["General tests"] = {
     
@@ -434,7 +436,6 @@ exports["Mime tree"] = {
         test.expect(11);
         
         var mc = new MailComposer();
-        mc.setMessageOption();
         mc.addAttachment({contents:"test"});
         mc.setMessageOption({
             body: "test",
@@ -483,3 +484,116 @@ exports["Mime tree"] = {
     
 };
 
+exports["Stream parser"] = {
+    "Text": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            from: "andris@node.ee",
+            to:"andris@tr.ee, andris@kreata.ee",
+            subject: "õäöü",
+            body: "test"
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.from[0].address, "andris@node.ee");
+            test.equal(mail.to[0].address, "andris@tr.ee");
+            test.equal(mail.to[1].address, "andris@kreata.ee");
+            test.equal(mail.subject, "õäöü");
+            test.equal(mail.text.trim(), "test");
+            test.done();
+        });
+    },
+    "HTML": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            html: "<b>test</b>"
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.html.trim(), "<b>test</b>");
+            test.done();
+        });
+    },
+    "HTML and text": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            html: "<b>test</b>",
+            body: "test"
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.text.trim(), "test");
+            test.equal(mail.html.trim(), "<b>test</b>");
+            test.done();
+        });
+    },
+    "Flowed text": function(test){
+        var mc = new MailComposer({encoding:"8bit"}),
+            file = fs.readFileSync(__dirname+"/textfile.txt").toString("utf-8");
+        
+        mc.setMessageOption({
+            body: file
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.text.trim(), file.trim());
+            test.done();
+        });
+    },
+    "Attachment content": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption();
+        mc.addAttachment({
+            fileName: "file.txt",
+            contents: fs.readFileSync(__dirname+"/textfile.txt").toString("utf-8")
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.attachments[0].checksum, "a1027a4579d2f01b2dae17e57518f411");
+            test.done();
+        });
+    },
+    "Attachment stream": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption();
+        mc.addAttachment({
+            fileName: "file.txt",
+            filePath: __dirname+"/textfile.txt"
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.attachments[0].checksum, "a1027a4579d2f01b2dae17e57518f411");
+            test.done();
+        });
+    }
+}
