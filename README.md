@@ -128,9 +128,25 @@ Possible options that can be used are (all fields accept unicode):
   * **body** (alias `text`) - the plaintext part of the message
   * **html** - the HTML part of the message
 
-**NB!** all e-mail address fields take structured e-mail lists (comma separated)
+This method can be called several times
+
+    mailcomposer.setMessageOption({from: "andris@tr.ee"});
+    mailcomposer.setMessageOption({to: "andris@node.ee"});
+    mailcomposer.setMessageOption({body: "Hello world!"});
+
+Trying to set the same key several times will yield in overwrite
+
+    mailcomposer.setMessageOption({body: "Hello world!"});
+    mailcomposer.setMessageOption({body: "Hello world?"});
+    // body contents will be "Hello world?"
+
+### Address format
+
+All e-mail address fields take structured e-mail lists (comma separated)
 as the input. Unicode is allowed for all the parts (receiver name, e-mail username
-and domain) of the address.
+and domain) of the address. If the domain part contains unicode symbols, it is
+automatically converted into punycode, user part will be converted into UTF-8
+mime word.
 
 E-mail addresses can be a plain e-mail addresses
 
