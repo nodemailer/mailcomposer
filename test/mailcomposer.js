@@ -82,6 +82,22 @@ exports["General tests"] = {
         test.equal(mc._getMimeType("test.unknown"), "application/octet-stream");
         
         test.done();
+    },
+    
+    "keepBcc off": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({bcc: "andris@node.ee"});
+        mc._buildMessageHeaders();
+        test.ok(!mc._getHeader("Bcc"));
+        test.done();
+    },
+    
+    "keepBcc on": function(test){
+        var mc = new MailComposer({keepBcc: true});
+        mc.setMessageOption({bcc: "andris@node.ee"});
+        mc._buildMessageHeaders();
+        test.equal(mc._getHeader("Bcc"), "andris@node.ee");
+        test.done();
     }
 };
 

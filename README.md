@@ -40,6 +40,7 @@ Where `options` is an optional options object with the following possible proper
 
   * **escapeSMTP** - if set replaces dots in the beginning of a line with double dots
   * **encoding** - sets transfer encoding for the textual parts (defaults to `"quoted-printable"`)
+  * **keepBcc** - if set to true, includes `Bcc:` field in the message headers. Useful for *sendmail* command. 
 
 ### Simple example
 
