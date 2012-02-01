@@ -670,7 +670,7 @@ exports["Stream parser"] = {
             test.done();
         });
     }
-}
+};
 
 
 
