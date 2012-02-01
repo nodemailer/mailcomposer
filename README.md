@@ -1,7 +1,7 @@
 # mailcomposer
 
-This is going to be a module for generating e-mail messages that can be
-streamed to SMTP etc.
+This is a Node.JS module for generating e-mail messages that can be
+streamed to SMTP or file.
 
 [![Build Status](https://secure.travis-ci.org/andris9/mailcomposer.png)](http://travis-ci.org/andris9/mailcomposer)
 
@@ -28,13 +28,95 @@ Where `options` is an optional options object with the following possible proper
   * **escapeSMTP** - if set replaces dots in the beginning of a line with double dots
   * **encoding** - sets transfer encoding for the textual parts (defaults to `"quoted-printable"`)
 
+### Add custom headers
+
+Headers can be added with `mailcomposer.addHeader(key, value)`
+
+    var mailcomposer = new MailComposer();
+    mailcomposer.addHeader("x-mailer", "Nodemailer 1.0");
+
+If you add an header value with the same key several times, all of the values will be used
+in the generated header. For example:
+
+    mailcomposer.addHeader("x-mailer", "Nodemailer 1.0");
+    mailcomposer.addHeader("x-mailer", "Nodemailer 2.0");
+    
+Will be generated into
+
+    ...
+    X-Mailer: Nodemailer 1.0
+    X-Mailer: Nodemailer 2.0
+    ...
+
+The contents of the field value is not edited any way (except for the folding),
+so if you want to use unicode symbols you need to escape these to mime words
+by yourself.
+
 ### Add message parts
+
+You can set message sender, receiver, subject line, message body etc. with
+`mailcomposer.setMessageOption(options)` where options is an object with the
+data to be set. This function overwrites any previously set values with the
+same key
+
+The following example creates a simple e-mail with sender being `andris@tr.ee`, 
+receiver `andris@node.ee` and plaintext part of the message as `Hello world!`:
+
+
+    mailcomposer.setMessageOption({
+        from: "andris@tr.ee",
+        to: "andris@node.ee",
+        body: "Hello world!"
+    }); 
+
+Possible options that can be used are (all fields accept unicode):
+
+  * **from** (alias `sender`) - the sender of the message. If several addresses are given, only the first one will be used
+  * **to** - receivers for the `To:` field
+  * **cc** - receivers for the `Cc:` field
+  * **bcc** - receivers for the `Bcc:` field
+  * **replyTo** (alias `reply_to`) - e-mail address for the `Reply-To:` field
+  * **subject** - the subject line of the message
+  * **body** (alias `text`) - the plaintext part of the message
+  * **html** - the HTML part of the message
+
+**NB!** all e-mail address fields take structured e-mail lists (comma separated)
+as the input. Unicode is allowed for all the parts (receiver name, e-mail username
+and domain) of the address.
+
+E-mail addresses can be a plain e-mail addresses
+
+    username@example.com
+
+or with a formatted name
+
+    'Ноде Майлер' <username@example.com>
+
+Or in case of comma separated lists, the formatting can be mixed
+
+    username@example.com, 'Ноде Майлер' <username@example.com>, "Name, User" <username@example.com>
 
 ### Add attachments
 
+Attachments can be added with `mailcomposer.addAttachment(attachment)` where
+`attachment` is an object with attachment (meta)data with the following possible
+properties:
+
+  * **fileName** - filename to be reported as the name of the attached file, use of unicode is allowed
+  * **cid** - content id for using inline images in HTML message source
+  * **contents** - String or a Buffer contents for the attachment
+  * **filePath** - path to a file if you want to stream the file instead of including it (better for larger attachments)
+  * **contentType** - content type for the attachment, if not set will be derived from the `fileName` property 
+
+One of `contents` or `filePath` must be specified, if both are missing, the attachment
+will be discarded. Other fields are optional.
+
+Attachments can be added as many as you want.
+
 ### Start streaming
 
-When the message data is setup, streaming can be started
+When the message data is setup, streaming can be started. After this it is not
+possible to add headers, attachments or change body contents.
 
     mailcomposer.streamMessage();
 
@@ -56,6 +138,8 @@ strings) suitable for forwarding to a SMTP server as `MAIL FROM:` and `RCPT TO:`
         // {from:"sender@example.com", to:["receiver@example.com"]}
     });
 
+**NB!** both `from` and `to` properties might be missing from the envelope object
+if corresponding addresses were not detected from the e-mail.
 
 ## Running tests
 

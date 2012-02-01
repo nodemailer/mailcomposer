@@ -28,6 +28,8 @@
 
 "I think so, sir."
 
+Some unicode symbols ÕÄÖÜ ↑, →, ↓, ↔, ↕, ↖, ↗, ↘, ↙, ↚, ↛, ↜, ↝, ↞, ↟, ↠, ↡, ↢, ↣, ↤, ↥, ↦
+
 "And I suppose thou can'st smoothe almost any seams and dents; never mind how hard the metal, blacksmith?"
 
 "Aye, sir, I think I can; all seams and dents but one."

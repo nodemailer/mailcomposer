@@ -486,12 +486,13 @@ exports["Mime tree"] = {
 
 exports["Stream parser"] = {
     "Text": function(test){
-        var mc = new MailComposer();
+        var mc = new MailComposer(),
+            file = fs.readFileSync(__dirname+"/textfile.txt").toString("utf-8");
         mc.setMessageOption({
             from: "andris@node.ee",
             to:"andris@tr.ee, andris@kreata.ee",
             subject: "õäöü",
-            body: "test"
+            body: file
         });
         mc.streamMessage();
         
@@ -504,7 +505,7 @@ exports["Stream parser"] = {
             test.equal(mail.to[0].address, "andris@tr.ee");
             test.equal(mail.to[1].address, "andris@kreata.ee");
             test.equal(mail.subject, "õäöü");
-            test.equal(mail.text.trim(), "test");
+            test.equal(mail.text.trim(), file.trim());
             test.done();
         });
     },
@@ -560,7 +561,7 @@ exports["Stream parser"] = {
             test.done();
         });
     },
-    "Attachment content": function(test){
+    "Attachment as string": function(test){
         var mc = new MailComposer();
         mc.setMessageOption();
         mc.addAttachment({
@@ -574,7 +575,25 @@ exports["Stream parser"] = {
         mc.pipe(mp);
         
         mp.on("end", function(mail){
-            test.equal(mail.attachments[0].checksum, "a1027a4579d2f01b2dae17e57518f411");
+            test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
+            test.done();
+        });
+    },
+    "Attachment as buffer": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption();
+        mc.addAttachment({
+            fileName: "file.txt",
+            contents: fs.readFileSync(__dirname+"/textfile.txt")
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
             test.done();
         });
     },
@@ -592,8 +611,66 @@ exports["Stream parser"] = {
         mc.pipe(mp);
         
         mp.on("end", function(mail){
-            test.equal(mail.attachments[0].checksum, "a1027a4579d2f01b2dae17e57518f411");
+            test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
+            test.done();
+        });
+    },
+    "escape SMTP": function(test){
+        var mc = new MailComposer({escapeSMTP: true});
+        mc.setMessageOption({
+            body: ".\r\n."
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.text.trim(), "..\n..");
+            test.done();
+        });
+    },
+    "don't escape SMTP": function(test){
+        var mc = new MailComposer({escapeSMTP: false});
+        mc.setMessageOption({
+            body: ".\r\n."
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.text.trim(), ".\n.");
+            test.done();
+        });
+    },
+    "HTML and text and attachment": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            html: "<b>test</b>",
+            body: "test"
+        });
+        mc.addAttachment({
+            fileName: "file.txt",
+            contents: fs.readFileSync(__dirname+"/textfile.txt").toString("utf-8")
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.text.trim(), "test");
+            test.equal(mail.html.trim(), "<b>test</b>");
+            test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
             test.done();
         });
     }
 }
+
+
+
