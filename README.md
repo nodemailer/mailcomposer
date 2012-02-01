@@ -226,14 +226,12 @@ As `MailComposer` objects are Stream instances, these can be piped
 
 ## Envelope
 
-Envelope is emitted with an `'envelope'` event and it has an object as a param
+Envelope can be generated with an `getEnvelope()` which returns an object
 that includes a `from` address (string) and a list of `to` addresses (array of
 strings) suitable for forwarding to a SMTP server as `MAIL FROM:` and `RCPT TO:`.
 
-    mailcomposer.on("envelope", function(envelope){
-        console.log(envelope);
-        // {from:"sender@example.com", to:["receiver@example.com"]}
-    });
+    console.log(mailcomposer.getEnvelope());
+    // {from:"sender@example.com", to:["receiver@example.com"]}
 
 **NB!** both `from` and `to` properties might be missing from the envelope object
 if corresponding addresses were not detected from the e-mail.

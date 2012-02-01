@@ -216,7 +216,7 @@ exports["Mail related"] = {
         test.done();
     },
     
-    "Emit envelope": function(test){
+    "Generate envelope": function(test){
         var mc = new MailComposer();
         mc.setMessageOption({
             sender: '"Jaanuar Veebruar, Märts" <märts@märts.eu>, karu@ahven.ee',
@@ -224,13 +224,8 @@ exports["Mail related"] = {
             cc: '"Node, Master" <node@node.ee>'
         });
         
-        mc.on("envelope", function(envelope){
-            test.deepEqual(envelope, {from: 'märts@xn--mrts-loa.eu',to:[ 'aavik@xn--mrts-loa.eu', 'juulius@node.ee', 'node@node.ee' ]});
-            test.done();
-        });
-
-        mc._composeEnvelope();
-        
+        test.deepEqual(mc.getEnvelope(), {from: 'märts@xn--mrts-loa.eu',to:[ 'aavik@xn--mrts-loa.eu', 'juulius@node.ee', 'node@node.ee' ], stamp: 'Postage paid, Par Avion'});
+        test.done();
     },
     
     "Generate Headers": function(test){
