@@ -28,6 +28,54 @@ Where `options` is an optional options object with the following possible proper
   * **escapeSMTP** - if set replaces dots in the beginning of a line with double dots
   * **encoding** - sets transfer encoding for the textual parts (defaults to `"quoted-printable"`)
 
+### Simple example
+
+The following example generates a simple e-mail message with plaintext and html
+body.
+
+    var MailComposer = require("mailcomposer").MailComposer;
+        mailcomposer = new MailComposer(),
+        fs = require("fs");
+    
+    // add additional header field
+    mailcomposer.addHeader("x-mailer", "Nodemailer 1.0");
+    
+    // setup message data
+    mailcomposer.setMessageOption({
+        from: "andris@tr.ee",
+        to: "andris@node.ee",
+        body: "Hello world!",
+        html: "<b>Hello world!</b>"
+    }); 
+    
+    mailcomposer.streamMessage();
+    
+    // pipe the output to a file
+    mailcomposer.pipe(fs.createWriteStream("test.eml"));
+
+The output for such a script (the contents for "test.eml") would look like:
+
+    MIME-Version: 1.0
+    X-Mailer: Nodemailer 1.0
+    From: andris@tr.ee
+    To: andris@node.ee
+    Content-Type: multipart/alternative;
+            boundary="----mailcomposer-?=_1-1328088797399"
+    
+    ------mailcomposer-?=_1-1328088797399
+    Content-Type: text/plain; charset=utf-8
+    Content-Transfer-Encoding: quoted-printable
+    
+    Hello world!
+    ------mailcomposer-?=_1-1328088797399
+    Content-Type: text/html; charset=utf-8
+    Content-Transfer-Encoding: quoted-printable
+    
+    <b>Hello world!</b>
+    ------mailcomposer-?=_1-1328088797399--
+
+## API
+
 ### Add custom headers
 
 Headers can be added with `mailcomposer.addHeader(key, value)`
