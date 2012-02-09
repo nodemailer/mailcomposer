@@ -680,6 +680,126 @@ exports["Stream parser"] = {
             test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
             test.done();
         });
+    },
+    "HTML and related attachment": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            html: "<b><img src=\"cid:test@node\"/></b>"
+        });
+        mc.addAttachment({
+            fileName: "file.txt",
+            cid: "test@node",
+            contents: fs.readFileSync(__dirname+"/textfile.txt").toString("utf-8")
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        /*
+        var d = "";
+        mc.on("data", function(data){
+            d += data.toString();
+        })
+        
+        mc.on("end", function(){
+            console.log(d);
+        });
+        */
+        
+        mp.on("end", function(mail){
+            test.equal(mc._attachments.length, 0);
+            test.equal(mc._relatedAttachments.length, 1);
+            test.equal(mail.html.trim(), "<b><img src=\"cid:test@node\"/></b>");
+            test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
+            test.done();
+        });
+    },
+    "HTML and related plus regular attachment": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            html: "<b><img src=\"cid:test@node\"/></b>"
+        });
+        mc.addAttachment({
+            fileName: "file.txt",
+            cid: "test@node",
+            contents: fs.readFileSync(__dirname+"/textfile.txt").toString("utf-8")
+        });
+        mc.addAttachment({
+            fileName: "file.txt",
+            contents: fs.readFileSync(__dirname+"/textfile.txt").toString("utf-8")
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mc._attachments.length, 1);
+            test.equal(mc._relatedAttachments.length, 1);
+            test.equal(mail.html.trim(), "<b><img src=\"cid:test@node\"/></b>");
+            test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
+            test.equal(mail.attachments[1].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
+            test.done();
+        });
+    },
+    "HTML and text related attachment": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            html: "<b><img src=\"cid:test@node\"/></b>",
+            text:"test"
+        });
+        mc.addAttachment({
+            fileName: "file.txt",
+            cid: "test@node",
+            contents: fs.readFileSync(__dirname+"/textfile.txt").toString("utf-8")
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mc._attachments.length, 0);
+            test.equal(mc._relatedAttachments.length, 1);
+            test.equal(mail.text.trim(), "test");
+            test.equal(mail.html.trim(), "<b><img src=\"cid:test@node\"/></b>");
+            test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
+            test.done();
+        });
+    },
+    "HTML, text, related+regular attachment": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            html: "<b><img src=\"cid:test@node\"/></b>",
+            text:"test"
+        });
+        mc.addAttachment({
+            fileName: "file.txt",
+            cid: "test@node",
+            contents: fs.readFileSync(__dirname+"/textfile.txt").toString("utf-8")
+        });
+        mc.addAttachment({
+            fileName: "file.txt",
+            contents: fs.readFileSync(__dirname+"/textfile.txt").toString("utf-8")
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mc._attachments.length, 1);
+            test.equal(mc._relatedAttachments.length, 1);
+            test.equal(mail.text.trim(), "test");
+            test.equal(mail.html.trim(), "<b><img src=\"cid:test@node\"/></b>");
+            test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
+            test.equal(mail.attachments[1].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
+            test.done();
+        });
     }
 };
 
