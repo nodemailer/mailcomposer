@@ -608,12 +608,33 @@ exports["Stream parser"] = {
             test.done();
         });
     },
-    "Attachment stream": function(test){
+    "Attachment file stream": function(test){
         var mc = new MailComposer();
         mc.setMessageOption();
         mc.addAttachment({
             fileName: "file.txt",
             filePath: __dirname+"/textfile.txt"
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
+            test.done();
+        });
+    },
+    "Attachment source stream": function(test){
+        var mc = new MailComposer();
+        
+        var fileStream = fs.createReadStream(__dirname+"/textfile.txt");
+        
+        mc.setMessageOption();
+        mc.addAttachment({
+            fileName: "file.txt",
+            streamSource: fileStream
         });
         mc.streamMessage();
         
