@@ -110,14 +110,15 @@ Will be generated into
     X-Mailer: Nodemailer 2.0
     ...
 
-The contents of the field value is not edited any way (except for the folding),
+The contents of the field value is not edited in any way (except for the folding),
 so if you want to use unicode symbols you need to escape these to mime words
-by yourself. Exception being a JSON serializable object, in this case the object
-is JSONized and mime encoded.
+by yourself. Exception being object values - in this case the object
+is automatically JSONized and mime encoded.
 
-    // using object as values is allowed (will be converted to JSON)
+    // using objects as header values is allowed (will be converted to JSON)
     var apiOptions = {};
     apiOptions.category = "newuser";
+    apiOptions.tags = ["user", "web"];
     mailcomposer.addHeader("X-SMTPAPI", apiOptions)
 
 ### Add message parts
