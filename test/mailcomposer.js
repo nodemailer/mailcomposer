@@ -51,6 +51,36 @@ exports["General tests"] = {
         test.done();
     },
     
+    "Set object header": function(test){
+        var mc = new MailComposer();
+        
+        var testObj = {
+                stringValue: "String with unicode symbols: ÕÄÖÜŽŠ",
+                arrayValue: ["hello ÕÄÖÜ", 12345],
+                objectValue: {
+                    customerId: "12345"
+                }
+            };
+        
+        mc.addHeader("x-mytest-string", "first");
+        mc.addHeader("x-mytest-json", testObj);
+        
+        mc.streamMessage();
+        
+        //mc.on("data", function(c){console.log(c.toString("utf-8"))})
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.headers['x-mytest-string'], "first");
+            test.deepEqual(JSON.parse(mail.headers['x-mytest-json']), testObj);
+            //console.log(mail)
+            test.done();
+        });
+    },
+    
     "Add message option": function(test){
         var mc = new MailComposer();
         test.equal(typeof mc._message.subject, "undefined");
