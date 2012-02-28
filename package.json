@@ -1,7 +1,7 @@
 {
     "name": "mailcomposer",
     "description": "Compose E-Mail messages",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "author" : "Andris Reinman",
     "maintainers":[
         {
@@ -14,7 +14,7 @@
         "url" : "http://github.com/andris9/mailcomposer.git"
     },
     "scripts":{
-        "test": "node ./run_tests.js"
+        "test": "nodeunit test/"
     },
     "main" : "./lib/mailcomposer",
     "licenses" : [
