@@ -49,7 +49,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-			<time datetime='2012-1-1' pubdate>2012-1-1 14:32</time>
+			<time datetime='2012-1-28' pubdate>2012-1-28 12:20</time>
 		</footer>
 	</div>
 </div>
@@ -175,6 +175,16 @@
 													<b><a href="../symbols/MailComposer.html#_message">_message</a></b>
 													</div>
 													<div class="description"><p>Contains message related values</p></div>
+												</td>
+											</tr>
+										
+											<tr>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont">
+													<b><a href="../symbols/MailComposer.html#_relatedAttachments">_relatedAttachments</a></b>
+													</div>
+													<div class="description"><p>Contains a list of attachments that are related to HTML body</p></div>
 												</td>
 											</tr>
 										
@@ -440,15 +450,26 @@ components.</div>
 												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_serveFile">_serveFile</a></b>(filePath, callback)
 													</div>
-													<div class="description"><p>Pipes a file to the e-mail stream</p>
-
-<p>This function opens a file and starts sending 76 bytes long base64
-encoded lines.</div>
+													<div class="description"><p>Pipes a file to the e-mail stream</p></div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item20'
+											>
+												<td class="attributes">&lt;private&gt; &nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/MailComposer.html#_serveStream">_serveStream</a></b>(stream, callback)
+													</div>
+													<div class="description"><p>Pipes a stream source to the e-mail stream</p>
+
+<p>This function resumes the stream and starts sending 76 bytes long base64
+encoded lines.</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item21'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -464,15 +485,16 @@ encoded lines.</div>
     <li><b>cid</b> - Content ID value for inline images</li>
     <li><b>contents</b> - String or Buffer attachment contents</li>
     <li><b>filePath</b> - Path to a file for streaming</li>
+    <li><b>streamSource</b> - Stream object for arbitrary streams</li>
 </ul>
 
-<p>One of <code>contents</code> or <code>filePath</code> must be specified, otherwise
-the attachment is not included</p></div>
+<p>One of <code>contents</code> or <code>filePath</code> or <code>stream</code> 
+must be specified, otherwise the attachment is not included</p></div>
 												</td>
 											</tr>
 										
 											<tr
-												 class='item21'
+												 class='item22'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -483,7 +505,7 @@ the attachment is not included</p></div>
 											</tr>
 										
 											<tr
-												 class='item22'
+												 class='item23'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -494,7 +516,7 @@ the attachment is not included</p></div>
 											</tr>
 										
 											<tr
-												 class='item23'
+												 class='item24'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -506,7 +528,7 @@ object.</div>
 											</tr>
 										
 											<tr
-												 class='item24'
+												 class='item25'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -524,7 +546,7 @@ object.</div>
 											</tr>
 										
 											<tr
-												 class='item25'
+												 class='item26'
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
@@ -717,6 +739,28 @@ pipe the output to a file or send it to network.</p>
 								
 								<div class="description">
 									<p>Contains message related values</p>
+									
+									
+									
+								</div>
+								
+								
+									
+								
+								<div class="hr"></div>
+							
+								<div class="fixedFont heading" id="_relatedAttachments">
+									<span class='lighter'>
+									&lt;private&gt; 
+									</span>
+									
+									
+									
+									<b>_relatedAttachments</b>							
+								</div>
+								
+								<div class="description">
+									<p>Contains a list of attachments that are related to HTML body</p>
 									
 									
 									
@@ -1714,11 +1758,6 @@ headers</p>
 										
 										<div class="description">
 											<p>Pipes a file to the e-mail stream</p>
-
-<p>This function opens a file and starts sending 76 bytes long base64
-encoded lines. To achieve this, the incoming stream is divded into
-chunks of 57 bytes (57/3*4=76) to achieve exactly 76 byte long
-base64</p>
 											
 											
 											
@@ -1753,6 +1792,57 @@ base64</p>
 									<li 
 										 class='item20'
 									>
+										<div class="fixedFont heading" id="_serveStream">
+											<span class='lighter'>
+											&lt;private&gt; 
+											</span>
+											
+											
+											
+											<b>_serveStream</b>(stream, callback)
+										</div>
+										
+										<div class="description">
+											<p>Pipes a stream source to the e-mail stream</p>
+
+<p>This function resumes the stream and starts sending 76 bytes long base64
+encoded lines. To achieve this, the incoming stream is divded into
+chunks of 57 bytes (57/3*4=76) to achieve exactly 76 byte long
+base64</p>
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{Object}</span> <b>stream</b>
+														
+													</dt>
+													<dd>Stream to be piped</dd>
+												
+													<dt>
+														<span class="light fixedFont">{Function}</span> <b>callback</b>
+														
+													</dt>
+													<dd>Callback function to run after completion</dd>
+												
+											</dl>
+										
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item21'
+									>
 										<div class="fixedFont heading" id="addAttachment">
 											<span class='lighter'>
 											
@@ -1774,10 +1864,11 @@ base64</p>
     <li><b>cid</b> - Content ID value for inline images</li>
     <li><b>contents</b> - String or Buffer attachment contents</li>
     <li><b>filePath</b> - Path to a file for streaming</li>
+    <li><b>streamSource</b> - Stream object for arbitrary streams</li>
 </ul>
 
-<p>One of <code>contents</code> or <code>filePath</code> must be specified, otherwise
-the attachment is not included</p>
+<p>One of <code>contents</code> or <code>filePath</code> or <code>stream</code> 
+must be specified, otherwise the attachment is not included</p>
 											
 											
 											
@@ -1804,7 +1895,7 @@ the attachment is not included</p>
 									</li>
 								
 									<li 
-										 class='item21'
+										 class='item22'
 									>
 										<div class="fixedFont heading" id="addHeader">
 											<span class='lighter'>
@@ -1850,7 +1941,7 @@ the attachment is not included</p>
 									</li>
 								
 									<li 
-										 class='item22'
+										 class='item23'
 									>
 										<div class="fixedFont heading" id="compileHeaders">
 											<span class='lighter'>
@@ -1914,7 +2005,7 @@ lines are folded</p>
 									</li>
 								
 									<li 
-										 class='item23'
+										 class='item24'
 									>
 										<div class="fixedFont heading" id="getEnvelope">
 											<span class='lighter'>
@@ -1977,7 +2068,7 @@ and may not exist</p>
 									</li>
 								
 									<li 
-										 class='item24'
+										 class='item25'
 									>
 										<div class="fixedFont heading" id="setMessageOption">
 											<span class='lighter'>
@@ -2032,7 +2123,7 @@ and may not exist</p>
 									</li>
 								
 									<li 
-										 class='item25'
+										 class='item26'
 									>
 										<div class="fixedFont heading" id="streamMessage">
 											<span class='lighter'>
