@@ -51,6 +51,18 @@ exports["General tests"] = {
         test.done();
     },
     
+    "Uppercase header keys": function(test){
+        var mc = new MailComposer();
+        
+        mc.addHeader("X-TEST", "first");
+        test.equal(mc._headers["X-TEST"], "first");
+        
+        mc.addHeader("TEST", "second");
+        test.equal(mc._headers["Test"], "second");
+        
+        test.done();
+    },
+    
     "Set object header": function(test){
         var mc = new MailComposer();
         
