@@ -162,7 +162,7 @@ exports["Text encodings"] = {
         test.equal(mc._encodeMimeWord("äss","B"), "=?UTF-8?B?"+(new Buffer("äss","utf-8").toString("base64"))+"?=");
         
         //multiliple
-        test.equal(mc._encodeMimeWord("äss tekst on see siin või kuidas?","Q", 20), "=?UTF-8?Q?=C3=A4ss_tekst_on_se?= =?UTF-8?Q?e_siin_v=C3=B5i_kuid?= =?UTF-8?Q?as=3F?=");
+        test.equal(mc._encodeMimeWord("äss tekst on see siin või kuidas?","Q", 20), "=?UTF-8?Q?=C3=A4ss?= =?UTF-8?Q?_tekst_o?= =?UTF-8?Q?n_see_si?= =?UTF-8?Q?in_v?= =?UTF-8?Q?=C3=B5i_?= =?UTF-8?Q?kuidas?= =?UTF-8?Q?=3F?=");
         
         test.done();
     },
