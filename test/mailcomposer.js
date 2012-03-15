@@ -232,7 +232,7 @@ exports["Text encodings"] = {
 };
 
 exports["Mail related"] = {
-    "Envelope": function(test){
+    "Envelope with sender": function(test){
         var mc = new MailComposer();
         mc.setMessageOption({
             sender: '"Jaanuar Veebruar, Märts" <märts@märts.eu>',
@@ -240,10 +240,22 @@ exports["Mail related"] = {
             cc: '"Node, Master" <node@node.ee>'
         });
 
-        test.deepEqual(mc._envelope, {from:[ 'märts@xn--mrts-loa.eu' ],to:[ 'aavik@xn--mrts-loa.eu', 'juulius@node.ee'], cc:['node@node.ee' ]});
+        test.deepEqual(mc._envelope, {sender:[ 'märts@xn--mrts-loa.eu' ],to:[ 'aavik@xn--mrts-loa.eu', 'juulius@node.ee'], cc:['node@node.ee' ]});
         test.done();
     },
-    
+
+    "Envelope with from": function(test){
+      var mc = new MailComposer();
+      mc.setMessageOption({
+        from: '"Jaanuar Veebruar, Märts" <märts@märts.eu>',
+        to: '<aavik@märts.eu>, juulius@node.ee',
+        cc: '"Node, Master" <node@node.ee>'
+      });
+
+      test.deepEqual(mc._envelope, {from:[ 'märts@xn--mrts-loa.eu' ],to:[ 'aavik@xn--mrts-loa.eu', 'juulius@node.ee'], cc:['node@node.ee' ]});
+      test.done();
+    },
+
     "Add attachment": function(test){
         var mc = new MailComposer();
         mc.addAttachment();
@@ -258,7 +270,7 @@ exports["Mail related"] = {
         test.done();
     },
     
-    "Generate envelope": function(test){
+    "Generate envelope with sender only": function(test){
         var mc = new MailComposer();
         mc.setMessageOption({
             sender: '"Jaanuar Veebruar, Märts" <märts@märts.eu>, karu@ahven.ee',
@@ -269,7 +281,19 @@ exports["Mail related"] = {
         test.deepEqual(mc.getEnvelope(), {from: 'märts@xn--mrts-loa.eu',to:[ 'aavik@xn--mrts-loa.eu', 'juulius@node.ee', 'node@node.ee' ], stamp: 'Postage paid, Par Avion'});
         test.done();
     },
-    
+
+    "Generate envelope with from only": function(test){
+      var mc = new MailComposer();
+      mc.setMessageOption({
+        from: '"Jaanuar Veebruar, Märts" <märts@märts.eu>, karu@ahven.ee',
+        to: '<aavik@märts.eu>, juulius@node.ee',
+        cc: '"Node, Master" <node@node.ee>'
+      });
+
+      test.deepEqual(mc.getEnvelope(), {from: 'märts@xn--mrts-loa.eu',to:[ 'aavik@xn--mrts-loa.eu', 'juulius@node.ee', 'node@node.ee' ], stamp: 'Postage paid, Par Avion'});
+      test.done();
+    },
+
     "Generate Headers": function(test){
         var mc = new MailComposer();
         mc.setMessageOption({
@@ -287,6 +311,31 @@ exports["Mail related"] = {
         });
 
         mc._composeHeader();
+    },
+
+    "Valid From header": function(test){
+      var mc = new MailComposer();
+      mc.setMessageOption({
+        sender: 'sender@xyz.com',
+        from: 'hi@xyz.com',
+        to: '<aavik@märts.eu>, juulius@node.ee',
+        cc: '"Node, Master" <node@node.ee>',
+        replyTo: 'julla@pulla.ee',
+        subject: "Tere õkva!"
+      });
+
+      mc.on("data", function(chunk){
+        chunk = (chunk || "").toString("utf-8");
+
+        var froms = chunk.split('\n').filter(function(header){
+          return /^from/i.test(header);
+        });
+
+        test.ok(froms.length === 1);
+        test.done();
+      });
+
+      mc._composeHeader();
     }
 };
 
