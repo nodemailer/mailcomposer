@@ -244,6 +244,23 @@ exports["Mail related"] = {
         test.done();
     },
     
+    "User defined envelope": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            sender: '"Jaanuar Veebruar, Märts" <märts@märts.eu>',
+            envelope: {
+                from: "Andris <andris@tr.ee>",
+                to: ["Andris <andris@tr.ee>, Node <andris@node.ee>", "aavik@märts.eu", "juulius@gmail.com"],
+                cc: "trips@node.ee"
+            },
+            to: '<aavik@märts.eu>, juulius@node.ee',
+            cc: '"Node, Master" <node@node.ee>'
+        });
+
+        test.deepEqual(mc._envelope, {userDefined: true, from:[ 'andris@tr.ee' ],to:[ 'andris@tr.ee', 'andris@node.ee', 'aavik@xn--mrts-loa.eu', 'juulius@gmail.com'], "cc":['trips@node.ee']});
+        test.done();
+    },
+    
     "Add attachment": function(test){
         var mc = new MailComposer();
         mc.addAttachment();
@@ -267,6 +284,23 @@ exports["Mail related"] = {
         });
         
         test.deepEqual(mc.getEnvelope(), {from: 'märts@xn--mrts-loa.eu',to:[ 'aavik@xn--mrts-loa.eu', 'juulius@node.ee', 'node@node.ee' ], stamp: 'Postage paid, Par Avion'});
+        test.done();
+    },
+    
+    "Generate user defined envelope": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            sender: '"Jaanuar Veebruar, Märts" <märts@märts.eu>, karu@ahven.ee',
+            to: '<aavik@märts.eu>, juulius@node.ee',
+            envelope: {
+                from: "Andris <andris@tr.ee>",
+                to: ["Andris <andris@tr.ee>, Node <andris@node.ee>", "aavik@märts.eu", "juulius@gmail.com"],
+                cc: "trips@node.ee"
+            },
+            cc: '"Node, Master" <node@node.ee>'
+        });
+        
+        test.deepEqual(mc.getEnvelope(), {from: 'andris@tr.ee', to:[ 'andris@tr.ee', 'andris@node.ee', 'aavik@xn--mrts-loa.eu', 'juulius@gmail.com', 'trips@node.ee'], stamp: 'Postage paid, Par Avion'});
         test.done();
     },
     

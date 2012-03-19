@@ -147,6 +147,7 @@ Possible options that can be used are (all fields accept unicode):
   * **subject** - the subject line of the message
   * **body** (alias `text`) - the plaintext part of the message
   * **html** - the HTML part of the message
+  * **envelope** - optional SMTP envelope, if auto generated envelope is not suitable
 
 This method can be called several times
 
@@ -179,6 +180,24 @@ or with a formatted name
 Or in case of comma separated lists, the formatting can be mixed
 
     username@example.com, 'Ноде Майлер' <username@example.com>, "Name, User" <username@example.com>
+
+### SMTP envelope
+
+SMTP envelope is usually auto generated from `from`, `to`, `cc` and `bcc` fields but
+if for some reason you want to specify it yourself, you can do it with `envelope` property.
+
+`envelope` is an object with the following params: `from`, `to`, `cc` and `bcc` just like
+with regular mail options. You can also use the regular address format.
+
+    mailOptions = {
+        ...,
+        from: "mailer@node.ee",
+        to: "daemon@node.ee",
+        envelope: {
+            from: "Daemon <deamon@node.ee>",
+            to: "mailer@node.ee, Mailer <mailer2@node.ee>"
+        }
+    }
 
 ### Add attachments
 
