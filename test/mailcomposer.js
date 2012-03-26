@@ -275,6 +275,28 @@ exports["Mail related"] = {
         test.done();
     },
     
+    "Default attachment disposition": function(test){
+        var mc = new MailComposer();
+        mc.addAttachment();
+        test.equal(mc._attachments.length, 0);
+        
+        mc.addAttachment({filePath:"/tmp/var.txt"});
+        test.equal(mc._attachments[0].contentDisposition, undefined);
+        
+        test.done();
+    },
+    
+    "Set attachment disposition": function(test){
+        var mc = new MailComposer();
+        mc.addAttachment();
+        test.equal(mc._attachments.length, 0);
+        
+        mc.addAttachment({filePath:"/tmp/var.txt", contentDisposition: "inline"});
+        test.equal(mc._attachments[0].contentDisposition, "inline");
+        
+        test.done();
+    },
+    
     "Generate envelope": function(test){
         var mc = new MailComposer();
         mc.setMessageOption({

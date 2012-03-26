@@ -210,7 +210,8 @@ properties:
   * **contents** - String or a Buffer contents for the attachment
   * **filePath** - path to a file if you want to stream the file instead of including it (better for larger attachments)
   * **streamSource** - Stream object for arbitrary binary streams if you want to stream the contents (needs to support *pause*/*resume*)
-  * **contentType** - content type for the attachment, if not set will be derived from the `fileName` property 
+  * **contentType** - content type for the attachment, if not set will be derived from the `fileName` property
+  * **contentDisposition** - content disposition type for the attachment, defaults to "attachment" 
 
 One of `contents`, `filePath` or `streamSource` must be specified, if none is 
 present, the attachment will be discarded. Other fields are optional.
