@@ -922,5 +922,33 @@ exports["Stream parser"] = {
     }
 };
 
+exports["Output buffering"] = {
+    "Use DKIM": function(test){
+        var mc = new MailComposer();
+        
+        mc.setMessageOption({
+            from: "Andris Reinman <andris@node.ee>",
+            to: "Andris <andris.reinman@gmail.com>",
+            html: "<b>Hello world!</b>",
+            subject: "Hello world!"
+        });
+        
+        mc.useDKIM({
+            domainName: "do-not-trust.node.ee",
+            keySelector: "dkim",
+            privateKey: fs.readFileSync(__dirname+"/test_private.pem")
+        });
+        
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
 
+        mp.on("end", function(mail){
+            test.equal(mail.headers['dkim-signature'].replace(/\s/g, ""), 'v=1;a=rsa-sha256;c=relaxed/relaxed;d=do-not-trust.node.ee;q=dns/txt;s=dkim;bh=88i0PUP3tj3X/n0QT6Baw8ZPSeHZPqT7J0EmE26pjng=;h=from:to:subject;b=Z10PkKHkcgC60sNwRAUBkdjWNybkPWU+ejaI0G+0Cqp1gSKhAwLiIwjXLGdWpgpuAUnv+iqQiJEsIbfVkbHjG97JGcPDy6fSZugzTLpxwwdSe21vo4GttB3tDEpHYG1c');
+            test.done();
+        });
+    }
+}
 
