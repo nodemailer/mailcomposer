@@ -946,7 +946,7 @@ exports["Output buffering"] = {
         mc.pipe(mp);
 
         mp.on("end", function(mail){
-            test.equal(mail.headers['dkim-signature'].replace(/\s/g, ""), 'v=1;a=rsa-sha256;c=relaxed/relaxed;d=do-not-trust.node.ee;q=dns/txt;s=dkim;bh=88i0PUP3tj3X/n0QT6Baw8ZPSeHZPqT7J0EmE26pjng=;h=from:to:subject;b=Z10PkKHkcgC60sNwRAUBkdjWNybkPWU+ejaI0G+0Cqp1gSKhAwLiIwjXLGdWpgpuAUnv+iqQiJEsIbfVkbHjG97JGcPDy6fSZugzTLpxwwdSe21vo4GttB3tDEpHYG1c');
+            test.equal(mail.headers['dkim-signature'].replace(/\s/g, ""), 'v=1;a=rsa-sha256;c=relaxed/relaxed;d=do-not-trust.node.ee;q=dns/txt;s=dkim;bh=88i0PUP3tj3X/n0QT6Baw8ZPSeHZPqT7J0EmE26pjng=;h=from:subject:to:mime-version:content-type:content-transfer-encoding;b=dtxxQLotrcarEA5nbgBJLBJQxSAHcfrNxxpItcXSj68ntRvxmjXt9aPZTbVrzfRYe+xRzP2FTGpS7js8iYpAZZ2N3DBRLVp4gyyKHB1oWMkg/EV92uPtnjQ3MlHMbxC0');
             test.done();
         });
     }
