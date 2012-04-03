@@ -268,9 +268,14 @@ exports["Mail related"] = {
         
         mc.addAttachment({filePath:"/tmp/var.txt"});
         test.equal(mc._attachments[0].contentType, "text/plain");
+        test.equal(mc._attachments[0].fileName, "var.txt");
         
         mc.addAttachment({contents:"/tmp/var.txt"});
         test.equal(mc._attachments[1].contentType, "application/octet-stream");
+        test.equal(mc._attachments[1].fileName, undefined);
+        
+        mc.addAttachment({filePath:"/tmp/var.txt", fileName:"test.txt"});
+        test.equal(mc._attachments[2].fileName, "test.txt");
         
         test.done();
     },
