@@ -16,6 +16,7 @@ SendGrid etc). **mailcomposer** frees you from the tedious task of generating
   * **HTML** content as well as **plain text** alternative
   * **Attachments** and streaming for larger files (use strings, buffers, files or binary streams as attachments)
   * **Embedded images** in HTML
+  * **DKIM** signing
   * usage of **your own** transport mechanism
 
 ## Installation
@@ -235,6 +236,38 @@ NB! the cid value should be as unique as possible!
         filePath: "/static/images/image.png",
         cid: cid_value
     };
+
+### DKIM Signing
+
+**mailcomposer** supports DKIM signing with very simple setup. Use this with caution 
+though since the generated message needs to be buffered entirely before it can be
+signed - in this case the streaming capability offered by mailcomposer is illusionary,
+there will only be one `'data'` event with the entire message. Not a big deal with
+small messages but might consume a lot of RAM when using larger attachments.
+
+Set up the DKIM signing with `useDKIM` method:
+
+    mailcomposer.useDKIM(dkimOptions)
+
+Where `dkimOptions` includes necessary options for signing
+
+  * **domainName** - the domainname that is being used for signing
+  * **keySelector** - key selector. If you have set up a TXT record with DKIM public key at *zzz._domainkey.example.com* then `zzz` is the selector
+  * **privateKey** - DKIM private key that is used for signing as a string
+  * **headerFieldNames** - optional colon separated list of header fields to sign, by default all fields suggested by RFC4871 #5.5 are used
+
+**NB!** Currently if several header fields with the same name exists, only the last one (the one in the bottom) is signed.
+
+Example:
+
+    mailcomposer.setMessageOption({from: "andris@tr.ee"});
+    mailcomposer.setMessageOption({to: "andris@node.ee"});
+    mailcomposer.setMessageOption({body: "Hello world!"});
+    mailcomposer.useDKIM({
+        domainName: "node.ee",
+        keySelector: "dkim",
+        privateKey: fs.readFileSync("private_key.pem")
+    });
 
 ### Start streaming
 
