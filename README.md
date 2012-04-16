@@ -19,6 +19,10 @@ SendGrid etc). **mailcomposer** frees you from the tedious task of generating
   * **DKIM** signing
   * usage of **your own** transport mechanism
 
+## Support mailcomposer development
+
+[![Donate to author](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DB26KWR2BQX5W)
+
 ## Installation
 
 Install through NPM
