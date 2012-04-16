@@ -215,6 +215,7 @@ properties:
   * **streamSource** - Stream object for arbitrary binary streams if you want to stream the contents (needs to support *pause*/*resume*)
   * **contentType** - content type for the attachment, if not set will be derived from the `fileName` property
   * **contentDisposition** - content disposition type for the attachment, defaults to "attachment" 
+  * **userAgent** - User-Agent string to be used if the fileName points to an URL
 
 One of `contents`, `filePath` or `streamSource` must be specified, if none is 
 present, the attachment will be discarded. Other fields are optional.
