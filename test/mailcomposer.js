@@ -813,6 +813,35 @@ exports["Stream parser"] = {
             test.done();
         });
     },
+    "Custom User-Agent": function(test){
+        
+        var server = http.createServer(function (req, res) {
+            test.equal(req.headers['user-agent'], "test");
+            
+            res.writeHead(200, {'Content-Type': 'text/plain'});
+            res.end('OK!\n');
+        })
+        server.listen(HTTP_PORT, '127.0.0.1');
+        
+        var mc = new MailComposer();
+        
+        mc.setMessageOption();
+        mc.addAttachment({
+            fileName: "file.txt",
+            filePath: "http://localhost:"+HTTP_PORT+"/textfile.txt",
+            userAgent: "test"
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            server.close();
+            test.done();
+        });
+    },
     "escape SMTP": function(test){
         var mc = new MailComposer({escapeSMTP: true});
         mc.setMessageOption({
