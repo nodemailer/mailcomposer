@@ -2,7 +2,11 @@ var testCase = require('nodeunit').testCase,
     MailComposer = require("../lib/mailcomposer").MailComposer,
     toPunycode = require("../lib/punycode"),
     MailParser = require("mailparser").MailParser,
-    fs = require("fs");
+    fs = require("fs"),
+    http = require("http");
+
+
+var HTTP_PORT = 9437;
 
 exports["General tests"] = {
     
@@ -747,6 +751,63 @@ exports["Stream parser"] = {
         
         mp.on("end", function(mail){
             test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
+            test.done();
+        });
+    },
+    "Attachment source url": function(test){
+        
+        var server = http.createServer(function (req, res) {
+            if(req.url=="/textfile.txt"){
+                fs.createReadStream(__dirname+"/textfile.txt")
+                fs.createReadStream(__dirname+"/textfile.txt").pipe(res);
+            }else{
+                res.writeHead(404, {'Content-Type': 'text/plain'});
+                res.end('Not found!\n');
+            }
+        }).listen(HTTP_PORT, '127.0.0.1');
+        
+        var mc = new MailComposer();
+        
+        mc.setMessageOption();
+        mc.addAttachment({
+            fileName: "file.txt",
+            filePath: "http://localhost:"+HTTP_PORT+"/textfile.txt"
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
+            server.close();
+            test.done();
+        });
+    },
+    "Attachment source invalid url": function(test){
+        
+        var server = http.createServer(function (req, res) {
+            res.writeHead(404, {'Content-Type': 'text/plain'});
+            res.end('Not found!\n');
+        }).listen(HTTP_PORT, '127.0.0.1');
+        
+        var mc = new MailComposer();
+        
+        mc.setMessageOption();
+        mc.addAttachment({
+            fileName: "file.txt",
+            filePath: "http://localhost:"+HTTP_PORT+"/textfile.txt"
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.attachments[0].checksum, "3995d423c7453e472ce0d54e475bae3e");
+            server.close();
             test.done();
         });
     },

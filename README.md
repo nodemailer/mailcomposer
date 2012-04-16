@@ -207,7 +207,7 @@ properties:
   * **fileName** (alias `filename`) - filename to be reported as the name of the attached file, use of unicode is allowed
   * **cid** - content id for using inline images in HTML message source
   * **contents** - String or a Buffer contents for the attachment
-  * **filePath** - path to a file if you want to stream the file instead of including it (better for larger attachments)
+  * **filePath** - path to a file or an URL if you want to stream the file instead of including it (better for larger attachments)
   * **streamSource** - Stream object for arbitrary binary streams if you want to stream the contents (needs to support *pause*/*resume*)
   * **contentType** - content type for the attachment, if not set will be derived from the `fileName` property
   * **contentDisposition** - content disposition type for the attachment, defaults to "attachment" 
