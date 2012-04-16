@@ -779,6 +779,8 @@ exports["Stream parser"] = {
         
         mc.pipe(mp);
         
+        console.log(server)
+        
         mp.on("end", function(mail){
             test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
             server.close();
