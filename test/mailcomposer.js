@@ -764,7 +764,8 @@ exports["Stream parser"] = {
                 res.writeHead(404, {'Content-Type': 'text/plain'});
                 res.end('Not found!\n');
             }
-        }).listen(HTTP_PORT, '127.0.0.1');
+        });
+        server.listen(HTTP_PORT, '127.0.0.1');
         
         var mc = new MailComposer();
         
@@ -779,8 +780,6 @@ exports["Stream parser"] = {
         
         mc.pipe(mp);
         
-        console.log(server)
-        
         mp.on("end", function(mail){
             test.equal(mail.attachments[0].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
             server.close();
@@ -792,7 +791,8 @@ exports["Stream parser"] = {
         var server = http.createServer(function (req, res) {
             res.writeHead(404, {'Content-Type': 'text/plain'});
             res.end('Not found!\n');
-        }).listen(HTTP_PORT, '127.0.0.1');
+        })
+        server.listen(HTTP_PORT, '127.0.0.1');
         
         var mc = new MailComposer();
         
