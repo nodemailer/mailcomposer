@@ -1016,6 +1016,40 @@ exports["Stream parser"] = {
             test.equal(mail.attachments[1].checksum, "59fbcbcaf18cb9232f7da6663f374eb9");
             test.done();
         });
+    },
+    "References Header": function(test){
+        
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            references: ["myrdo", "vyrdo"]
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.deepEqual(mail.references, ["myrdo", "vyrdo"]);
+            test.done();
+        });
+    },
+    "InReplyTo Header": function(test){
+        
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            inReplyTo: "test"
+        });
+        mc.streamMessage();
+        
+        var mp = new MailParser();
+        
+        mc.pipe(mp);
+        
+        mp.on("end", function(mail){
+            test.equal(mail.inReplyTo, "test");
+            test.done();
+        });
     }
 };
 

@@ -147,6 +147,8 @@ Possible options that can be used are (all fields accept unicode):
   * **cc** - receivers for the `Cc:` field
   * **bcc** - receivers for the `Bcc:` field
   * **replyTo** (alias `reply_to`) - e-mail address for the `Reply-To:` field
+  * **inReplyTo** - The message-id this message is replying
+  * **references** - Message-id list
   * **subject** - the subject line of the message
   * **body** (alias `text`) - the plaintext part of the message
   * **html** - the HTML part of the message
