@@ -310,10 +310,6 @@ Run
 
     npm test
 
-or alternatively
-
-    node run_tests.js
-
 ## License
 
 **MIT**
