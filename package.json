@@ -1,7 +1,7 @@
 {
     "name": "mailcomposer",
     "description": "Compose E-Mail messages",
-    "version": "0.1.15",
+    "version": "0.1.16",
     "author" : "Andris Reinman",
     "maintainers":[
         {
@@ -24,7 +24,7 @@
         }
     ],
     "dependencies": {
-        "mimelib-noiconv": "*"
+        "mimelib": ">= 0.2.0"
     },
     "devDependencies": {
         "nodeunit": "*",
