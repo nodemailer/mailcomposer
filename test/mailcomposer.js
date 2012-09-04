@@ -144,6 +144,14 @@ exports["General tests"] = {
         mc._buildMessageHeaders();
         test.equal(mc._getHeader("Bcc"), "andris@node.ee");
         test.done();
+    },
+
+    "zero length cc": function(test){
+        var mc = new MailComposer({keepBcc: true});
+        mc.setMessageOption({cc: ""});
+        mc._buildMessageHeaders();
+        test.equal(mc._getHeader("cc"), "");
+        test.done();
     }
 };
 
