@@ -174,7 +174,7 @@ exports["Text encodings"] = {
         test.equal(mc._encodeMimeWord("äss","B"), "=?UTF-8?B?"+(new Buffer("äss","utf-8").toString("base64"))+"?=");
         
         //multiliple
-        test.equal(mc._encodeMimeWord("äss tekst on see siin või kuidas?","Q", 20), "=?UTF-8?Q?=C3=A4ss?= =?UTF-8?Q?_tekst_o?= =?UTF-8?Q?n_see_si?= =?UTF-8?Q?in_v?= =?UTF-8?Q?=C3=B5i_?= =?UTF-8?Q?kuidas?= =?UTF-8?Q?=3F?=");
+        test.equal(mc._encodeMimeWord("äss tekst on see siin või kuidas?","Q", 20), "=?UTF-8?Q?=C3=A4ss?= tekst on see siin =?UTF-8?Q?v=C3=B5i?= kuidas?");
         
         test.done();
     },
@@ -185,7 +185,7 @@ exports["Text encodings"] = {
             sender: '"Jaanuar Veebruar, Märts" <märts@märts.eu>'
         });
 
-        test.equal(mc._message.from, "\"=?UTF-8?Q?Jaanuar_Veebruar,_M=C3=A4rts?=\" <=?UTF-8?Q?m=C3=A4rts?=@xn--mrts-loa.eu>");
+        test.equal(mc._message.from, "\"Jaanuar Veebruar, =?UTF-8?Q?M=C3=A4rts?=\" <=?UTF-8?Q?m=C3=A4rts?=@xn--mrts-loa.eu>");
         
         mc.setMessageOption({
             sender: 'aavik <aavik@node.ee>'
