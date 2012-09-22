@@ -24,12 +24,12 @@
         }
     ],
     "dependencies": {
-        "mimelib": ">= 0.2.0"
+        "mimelib": ">= 0.2.0",
+        "mime": "*"
     },
     "devDependencies": {
         "nodeunit": "*",
-        "mailparser": "*",
-        "mime": "*"
+        "mailparser": "*"
     },
     "engine": {
         "node": ">=0.4"
