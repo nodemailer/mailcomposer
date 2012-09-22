@@ -3,6 +3,7 @@ var testCase = require('nodeunit').testCase,
     toPunycode = require("../lib/punycode"),
     MailParser = require("mailparser").MailParser,
     fs = require("fs"),
+    mime = require("mime"),
     http = require("http");
 
 
@@ -124,8 +125,8 @@ exports["General tests"] = {
     "Detect mime type": function(test){
         var mc = new MailComposer();
         
-        test.equal(mc._getMimeType("test.txt"), "text/plain");
-        test.equal(mc._getMimeType("test.unknown"), "application/octet-stream");
+        test.equal(mime.lookup("test.txt"), "text/plain");
+        test.equal(mime.lookup("test.unknown"), "application/octet-stream");
         
         test.done();
     },
