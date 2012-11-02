@@ -1059,6 +1059,44 @@ exports["Stream parser"] = {
             test.equal(mail.inReplyTo, "test");
             test.done();
         });
+    },
+    "Non UTF-8 charset": function(test){
+        var mc = new MailComposer({charset: "iso-8859-1"}),
+            message = "",
+            mp = new MailParser(),
+            subject = "Jõgeva maakond, Ärni küla",
+            text = "Lõäöpõld Jääger Sußi",
+            fromName = "Mäger Mõksi",
+            from = fromName+" <mager.moksi@hot.ee>"
+        
+        mc.setMessageOption({
+            subject: subject,
+            text: text,
+            from: from
+        });
+
+        mp.on("end", function(mail){
+            //console.log(mail);
+            test.equal(mail.subject, subject);
+            test.equal((mail.text || "").trim(), text);
+            test.equal(fromName, mail.from && mail.from[0] && mail.from[0].name);
+            test.done();
+        });
+
+        mc.on("data", function(chunk){
+            message += chunk.toString("utf-8");
+        });
+
+        mc.on("end", function(){
+            //console.log(message)
+            test.ok(message.match(/J=F5geva/));
+            test.ok(message.match(/=C4rni_k=FCla/));
+            test.ok(message.match(/L=F5=E4=F6p=F5ld J=E4=E4ger Su=DFi/));
+            test.ok(message.match(/M=E4ger_M=F5ksi/));
+            
+            mp.end(message);
+        });
+        mc.streamMessage();
     }
 };
 
