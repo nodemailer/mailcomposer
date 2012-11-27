@@ -1138,6 +1138,37 @@ exports["Output buffering"] = {
             test.equal(mail.headers['dkim-signature'].replace(/\s/g, ""), 'v=1;a=rsa-sha256;c=relaxed/relaxed;d=do-not-trust.node.ee;q=dns/txt;s=dkim;bh=88i0PUP3tj3X/n0QT6Baw8ZPSeHZPqT7J0EmE26pjng=;h=from:subject:to:mime-version:content-type:content-transfer-encoding;b=dtxxQLotrcarEA5nbgBJLBJQxSAHcfrNxxpItcXSj68ntRvxmjXt9aPZTbVrzfRYe+xRzP2FTGpS7js8iYpAZZ2N3DBRLVp4gyyKHB1oWMkg/EV92uPtnjQ3MlHMbxC0');
             test.done();
         });
+    },
+
+    "Build message": function(test){
+        var mc = new MailComposer();
+        
+        mc.setMessageOption({
+            from: "Andris Reinman <andris@node.ee>",
+            to: "Andris <andris.reinman@gmail.com>",
+            html: "<b>Hello world!</b>",
+            subject: "Hello world!"
+        });
+        
+        mc.useDKIM({
+            domainName: "do-not-trust.node.ee",
+            keySelector: "dkim",
+            privateKey: fs.readFileSync(__dirname+"/test_private.pem")
+        });
+        
+        mc.buildMessage(function(err, body){
+            test.ifError(err);
+            var mp = new MailParser();
+
+            mp.on("end", function(mail){
+                test.equal(mail.headers['dkim-signature'].replace(/\s/g, ""), 'v=1;a=rsa-sha256;c=relaxed/relaxed;d=do-not-trust.node.ee;q=dns/txt;s=dkim;bh=88i0PUP3tj3X/n0QT6Baw8ZPSeHZPqT7J0EmE26pjng=;h=from:subject:to:mime-version:content-type:content-transfer-encoding;b=dtxxQLotrcarEA5nbgBJLBJQxSAHcfrNxxpItcXSj68ntRvxmjXt9aPZTbVrzfRYe+xRzP2FTGpS7js8iYpAZZ2N3DBRLVp4gyyKHB1oWMkg/EV92uPtnjQ3MlHMbxC0');
+                test.done();
+            });
+
+            mp.end(body);
+        });
+        
+        
     }
 }
 

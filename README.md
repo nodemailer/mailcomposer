@@ -291,6 +291,17 @@ As `MailComposer` objects are Stream instances, these can be piped
     mailcomposer.streamMessage();
     mailcomposer.pipe(fs.createWriteStream("out.txt"));
 
+### Compile the message in one go
+
+If you do not want to use the streaming possibilities, you can compile the entire
+message into a string in one go with `buildMessage`.
+
+    mailcomposer.buildMessage(function(err, messageSource){
+        console.log(err || messageSource);
+    });
+
+The function is actually just a wrapper around `streamMessage` and emitted events.
+
 ## Envelope
 
 Envelope can be generated with an `getEnvelope()` which returns an object
