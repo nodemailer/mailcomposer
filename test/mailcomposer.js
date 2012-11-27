@@ -214,6 +214,17 @@ exports["Text encodings"] = {
         
         test.equal(mc._message.from, 'aavik@xn--mrts-loa.eu, juulius@node.ee, "Node, Master" <node@node.ee>');
         
+        mc.setMessageOption({
+            sender: ['<aavik@märts.eu>', 'juulius@node.ee, "Node, Master" <node@node.ee>', 'andris@node.ee']
+        });
+
+        mc.setMessageOption({
+            to: ['<aavik@märts.eu>', 'juulius@node.ee, "Node, Master" <node@node.ee>', 'andris@node.ee']
+        });
+        
+        test.equal(mc._message.from, 'aavik@xn--mrts-loa.eu, juulius@node.ee, "Node, Master" <node@node.ee>, andris@node.ee');
+        test.equal(mc._message.to, 'aavik@xn--mrts-loa.eu, juulius@node.ee, "Node, Master" <node@node.ee>, andris@node.ee');
+
         test.done();
     },
     
