@@ -44,7 +44,8 @@ Where `options` is an optional options object with the following possible proper
   * **escapeSMTP** - if set replaces dots in the beginning of a line with double dots
   * **encoding** - sets transfer encoding for the textual parts (defaults to `"quoted-printable"`)
   * **charset** - sets output character set for strings (defaults to `"utf-8"`)
-  * **keepBcc** - if set to true, includes `Bcc:` field in the message headers. Useful for *sendmail* command. 
+  * **keepBcc** - if set to true, includes `Bcc:` field in the message headers. Useful for *sendmail* command.
+  * **forceEmbeddedImages** - convert image urls and absolute paths in HTML to embedded attachments.
 
 ### Simple example
 
@@ -244,6 +245,23 @@ NB! the cid value should be as unique as possible!
         filePath: "/static/images/image.png",
         cid: cid_value
     };
+
+**Automatic embedding images**
+
+If you want to convert images in the HTML to embedded images automatically, you can
+set mailcomposer option `forceEmbeddedImages` to true. In this case all images in
+the HTML that are either using an absolute URL (http://...) or absolute file path
+(/path/to/file) are replaced with embedded attachments.
+
+For example when using this code
+
+    var mailcomposer = new MailComposer({forceEmbeddedImages: true});
+    mailcomposer.setMessageOption({
+        html: 'Embedded image: <img src="http://example.com/image.png">'
+    });
+
+The image linked is fetched and added automatically as an attachment and the url 
+in the HTML is replaced automatically with a proper `cid:` string.
 
 ### DKIM Signing
 
