@@ -277,6 +277,22 @@ properties:
 
 If `contents` is empty, the alternative will be discarded. Other fields are optional.
 
+**Usage example:**
+
+    // add HTML "alternative"
+    mailcomposer.setMessageOption({
+        html: "<b>Hello world!</b>"
+    });
+
+    // add Markdown alternative
+    mailcomposer.addAlternative({
+        contentType: "text/x-web-markdown",
+        contents: "**Hello world!**"
+    });
+
+If the receiving e-mail client can render messages in Markdown syntax as well, it could prefer
+to display this alternative as the main content of the message.
+
 Alternatives can be added as many as you want.
 
 ### DKIM Signing
