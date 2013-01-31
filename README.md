@@ -263,6 +263,22 @@ For example when using this code
 The image linked is fetched and added automatically as an attachment and the url 
 in the HTML is replaced automatically with a proper `cid:` string.
 
+### Add alternatives to HTML and text
+
+In addition to text and HTML, any kind of data can be inserted as an alternative content of the main body - for example a word processing document with the same text as in the HTML field. It is the job of the e-mail client to select and show the best fitting alternative to the reader. 
+
+Alternatives to text and HTML can be added with `mailcomposer.addAlternative(alternative)` where
+`alternative` is an object with alternative (meta)data with the following possible
+properties:
+
+  * **contents** - String or a Buffer contents for the attachment
+  * **contentType** - content type for the attachment, if not set will be derived from the `fileName` property
+  * **contentEncoding** - how the data is encoded, defaults to "base64" 
+
+If `contents` is empty, the alternative will be discarded. Other fields are optional.
+
+Alternatives can be added as many as you want.
+
 ### DKIM Signing
 
 **mailcomposer** supports DKIM signing with very simple setup. Use this with caution 
