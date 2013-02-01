@@ -1082,7 +1082,8 @@ exports["Stream parser"] = {
         });
         mc.addAlternative({
             contentType: "text/plain",
-            contents: "tere tere"
+            contents: "tere tere",
+            contentEncoding: "7bit"
         });
         mc.streamMessage();
         

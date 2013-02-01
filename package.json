@@ -1,7 +1,7 @@
 {
     "name": "mailcomposer",
     "description": "Compose E-Mail messages",
-    "version": "0.1.28",
+    "version": "0.1.29",
     "author" : "Andris Reinman",
     "maintainers":[
         {
