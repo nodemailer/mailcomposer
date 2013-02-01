@@ -272,8 +272,8 @@ Alternatives to text and HTML can be added with `mailcomposer.addAlternative(alt
 properties:
 
   * **contents** - String or a Buffer contents for the attachment
-  * **contentType** - content type for the attachment, if not set will be derived from the `fileName` property
-  * **contentEncoding** - how the data is encoded, defaults to "base64" 
+  * **contentType** - optional content type for the attachment, if not set will be set to "application/octet-stream"
+  * **contentEncoding** - optional value of how the data is encoded, defaults to "base64" 
 
 If `contents` is empty, the alternative will be discarded. Other fields are optional.
 
