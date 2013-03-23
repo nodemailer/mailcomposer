@@ -1074,67 +1074,6 @@ exports["Stream parser"] = {
             test.done();
         });
     },
-    "HTML and text and alternative": function(test){
-        var mc = new MailComposer();
-        mc.setMessageOption({
-            html: "<b>test</b>",
-            body: "test"
-        });
-        mc.addAlternative({
-            contentType: "text/plain",
-            contents: "tere tere",
-            contentEncoding: "7bit"
-        });
-        mc.streamMessage();
-        
-        var mp = new MailParser();
-        
-        mc.pipe(mp);
-        
-        mp.on("end", function(mail){
-            test.equal(mail.text.trim(), "test");
-            test.equal(mail.html.trim(), "<b>test</b>");
-            test.equal(mail.alternatives.length, 1)
-            test.equal(mail.alternatives[0].content, "tere tere")
-            test.equal(mail.alternatives[0].contentType, "text/plain")
-            test.done();
-        });
-    },
-    "HTML and text, alternative and attachment": function(test){
-        var mc = new MailComposer();
-        mc.setMessageOption({
-            html: "<b>test</b>",
-            body: "test"
-        });
-        mc.addAlternative({
-            contentType: "text/plain",
-            contents: "tere tere 1"
-        });
-
-        mc.addAttachment({
-            contents: "tere tere 2"
-        });
-
-        mc.streamMessage();
-        
-        var mp = new MailParser();
-        
-        mc.pipe(mp);
-        
-        mp.on("end", function(mail){
-            test.equal(mail.text.trim(), "test");
-            test.equal(mail.html.trim(), "<b>test</b>");
-            
-            test.equal(mail.alternatives.length, 1)
-            test.equal(mail.alternatives[0].content, "tere tere 1")
-            test.equal(mail.alternatives[0].contentType, "text/plain")
-
-            test.equal(mail.attachments.length, 1)
-            test.equal(mail.attachments[0].content.toString(), "tere tere 2")
-            test.equal(mail.attachments[0].contentType, "application/octet-stream")
-            test.done();
-        });
-    },
     "References Header": function(test){
         
         var mc = new MailComposer();
