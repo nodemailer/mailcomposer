@@ -6,7 +6,7 @@ streamed to SMTP or file.
 This is a standalone module that only generates raw e-mail source, you need to 
 write your own or use an existing transport mechanism (SMTP client, Amazon SES, 
 SendGrid etc). **mailcomposer** frees you from the tedious task of generating 
-[rfc822](http://tools.ietf.org/html/rfc2822) compatible messages.
+[rfc2822](http://tools.ietf.org/html/rfc2822) compatible messages.
 
 [![Build Status](https://secure.travis-ci.org/andris9/mailcomposer.png)](http://travis-ci.org/andris9/mailcomposer)
 
