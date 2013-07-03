@@ -68,6 +68,23 @@ exports["General tests"] = {
         test.done();
     },
 
+    "Folded header values": function(test){
+        var mc = new MailComposer(),
+            strings = [
+                ['This is a\r\n  folded header with extra space','This is a folded header with extra space'],
+                ['This is a header\n with just a LF','This is a headerwith just a LF'],
+                ['This is a header\r with just a CR','This is a headerwith just a CR'],
+                ['This is a plain header','This is a plain header'],
+                ['This is a\r\n split header with no extra WS','This is asplit header with no extra WS']
+            ];
+
+        strings.forEach(function(val){
+            test.equal(mc._sanitizeHeaderValue(val[0]), val[1]);
+        });
+
+        test.done();
+    },
+
     "Set object header": function(test){
         var mc = new MailComposer();
 
