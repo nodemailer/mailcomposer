@@ -195,6 +195,70 @@ exports["General tests"] = {
         mc._buildMessageHeaders();
         test.equal(mc._getHeader("cc"), "");
         test.done();
+    },
+
+    "Auto references from in-reply-to 1": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            inReplyTo: "test"
+        });
+        mc._buildMessageHeaders();
+        
+        test.equal(mc._getHeader("in-reply-to"), "<test>");
+        test.equal(mc._getHeader("references"), "<test>");
+        test.done();
+    },
+
+    "Auto references from in-reply-to 2": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            inReplyTo: "test",
+            references: "test"
+        });
+        mc._buildMessageHeaders();
+        
+        test.equal(mc._getHeader("in-reply-to"), "<test>");
+        test.equal(mc._getHeader("references"), "<test>");
+        test.done();
+    },
+
+    "Auto references from in-reply-to 3": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            inReplyTo: "test",
+            references: ["test"]
+        });
+        mc._buildMessageHeaders();
+        
+        test.equal(mc._getHeader("in-reply-to"), "<test>");
+        test.equal(mc._getHeader("references"), "<test>");
+        test.done();
+    },
+
+    "Auto references from in-reply-to 4": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            inReplyTo: "test",
+            references: ["<test2>"]
+        });
+        mc._buildMessageHeaders();
+        
+        test.equal(mc._getHeader("in-reply-to"), "<test>");
+        test.equal(mc._getHeader("references"), "<test> <test2>");
+        test.done();
+    },
+
+    "Auto references from in-reply-to 5": function(test){
+        var mc = new MailComposer();
+        mc.setMessageOption({
+            inReplyTo: "test",
+            references: ["test2 test"]
+        });
+        mc._buildMessageHeaders();
+        
+        test.equal(mc._getHeader("in-reply-to"), "<test>");
+        test.equal(mc._getHeader("references"), "<test2> <test>");
+        test.done();
     }
 };
 
