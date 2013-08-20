@@ -25,7 +25,8 @@
     ],
     "dependencies": {
         "mimelib": "~0.2",
-        "mime": "1.2.9"
+        "mime": "1.2.9",
+        "ent": "0.0.6"
     },
     "devDependencies": {
         "nodeunit": "*",
