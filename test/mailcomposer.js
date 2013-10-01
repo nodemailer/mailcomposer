@@ -47,13 +47,13 @@ exports["General tests"] = {
 
     "Add formatted header": function(test){
         var mc = new MailComposer();
-        
+
         mc.addHeader("test-key", "first", true);
         test.deepEqual(mc._headers["Test-Key"], {value: "first", formatted: true});
 
         mc.addHeader("test-key", "second", true);
         test.deepEqual(mc._headers["Test-Key"], [{value: "first", formatted: true}, {value: "second", formatted: true}]);
-        
+
         mc.addHeader("test-key", "third");
         test.deepEqual(mc._headers["Test-Key"], [{value: "first", formatted: true}, {value: "second", formatted: true},"third"]);
         test.done();
@@ -72,8 +72,8 @@ exports["General tests"] = {
 
     "Get formatted header": function(test){
         var mc = new MailComposer();
-        
-        
+
+
         mc.addHeader("test-key", "first", true);
         test.equal(mc._getHeader("test-key"), "first");
         mc.addHeader("test-key", "second");
@@ -203,7 +203,7 @@ exports["General tests"] = {
             inReplyTo: "test"
         });
         mc._buildMessageHeaders();
-        
+
         test.equal(mc._getHeader("in-reply-to"), "<test>");
         test.equal(mc._getHeader("references"), "<test>");
         test.done();
@@ -216,7 +216,7 @@ exports["General tests"] = {
             references: "test"
         });
         mc._buildMessageHeaders();
-        
+
         test.equal(mc._getHeader("in-reply-to"), "<test>");
         test.equal(mc._getHeader("references"), "<test>");
         test.done();
@@ -229,7 +229,7 @@ exports["General tests"] = {
             references: ["test"]
         });
         mc._buildMessageHeaders();
-        
+
         test.equal(mc._getHeader("in-reply-to"), "<test>");
         test.equal(mc._getHeader("references"), "<test>");
         test.done();
@@ -242,7 +242,7 @@ exports["General tests"] = {
             references: ["<test2>"]
         });
         mc._buildMessageHeaders();
-        
+
         test.equal(mc._getHeader("in-reply-to"), "<test>");
         test.equal(mc._getHeader("references"), "<test> <test2>");
         test.done();
@@ -255,7 +255,7 @@ exports["General tests"] = {
             references: ["test2 test"]
         });
         mc._buildMessageHeaders();
-        
+
         test.equal(mc._getHeader("in-reply-to"), "<test>");
         test.equal(mc._getHeader("references"), "<test2> <test>");
         test.done();
@@ -1391,5 +1391,23 @@ exports["Output buffering"] = {
 
 
     }
-}
+};
 
+exports["Options"]={
+    "allow the ability to remove carriage returns": function(test){
+        var mc = new MailComposer({noCR:true});
+        mc.setMessageOption({
+            from: "Andris Reinman <andris@node.ee>",
+            to: "Andris <andris.reinman@gmail.com>",
+            html: "<b>Hello world!</b>",
+            subject: "Hello world!"
+        });
+        mc.on("data", function(chunk){
+            test.ok(!/\r\n/m.test(chunk.toString()));
+        });
+        mc.on("end", function(){
+            test.done();
+        });
+        mc.streamMessage();
+    }
+};
