@@ -61,7 +61,6 @@ exports["General tests"] = {
 
     "Get header": function(test){
         var mc = new MailComposer();
-        test.equal(mc._getHeader("MIME-Version"), "1.0");
         test.equal(mc._getHeader("test-key"), "");
         mc.addHeader("test-key", "first");
         test.equal(mc._getHeader("test-key"), "first");
@@ -72,7 +71,6 @@ exports["General tests"] = {
 
     "Get formatted header": function(test){
         var mc = new MailComposer();
-
 
         mc.addHeader("test-key", "first", true);
         test.equal(mc._getHeader("test-key"), "first");
