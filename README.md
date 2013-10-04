@@ -1,11 +1,11 @@
 # mailcomposer
 
 **mailcomposer** is a Node.JS module for generating e-mail messages that can be
-streamed to SMTP or file. 
+streamed to SMTP or file.
 
-This is a standalone module that only generates raw e-mail source, you need to 
-write your own or use an existing transport mechanism (SMTP client, Amazon SES, 
-SendGrid etc). **mailcomposer** frees you from the tedious task of generating 
+This is a standalone module that only generates raw e-mail source, you need to
+write your own or use an existing transport mechanism (SMTP client, Amazon SES,
+SendGrid etc). **mailcomposer** frees you from the tedious task of generating
 [rfc2822](http://tools.ietf.org/html/rfc2822) compatible messages.
 
 [![Build Status](https://secure.travis-ci.org/andris9/mailcomposer.png)](http://travis-ci.org/andris9/mailcomposer)
@@ -46,6 +46,7 @@ Where `options` is an optional options object with the following possible proper
   * **charset** - sets output character set for strings (defaults to `"utf-8"`)
   * **keepBcc** - if set to true, includes `Bcc:` field in the message headers. Useful for *sendmail* command.
   * **forceEmbeddedImages** - convert image urls and absolute paths in HTML to embedded attachments.
+  * **noCR** - if set to true, the default line ending (`\r\n`) will become `\n`
 
 ### Simple example
 
@@ -55,20 +56,20 @@ body.
     var MailComposer = require("mailcomposer").MailComposer;
         mailcomposer = new MailComposer(),
         fs = require("fs");
-    
+
     // add additional header field
     mailcomposer.addHeader("x-mailer", "Nodemailer 1.0");
-    
+
     // setup message data
     mailcomposer.setMessageOption({
         from: "andris@tr.ee",
         to: "andris@node.ee",
         body: "Hello world!",
         html: "<b>Hello world!</b>"
-    }); 
-    
+    });
+
     mailcomposer.streamMessage();
-    
+
     // pipe the output to a file
     mailcomposer.pipe(fs.createWriteStream("test.eml"));
 
@@ -80,16 +81,16 @@ The output for such a script (the contents for "test.eml") would look like:
     To: andris@node.ee
     Content-Type: multipart/alternative;
             boundary="----mailcomposer-?=_1-1328088797399"
-    
+
     ------mailcomposer-?=_1-1328088797399
     Content-Type: text/plain; charset=utf-8
     Content-Transfer-Encoding: quoted-printable
-    
+
     Hello world!
     ------mailcomposer-?=_1-1328088797399
     Content-Type: text/html; charset=utf-8
     Content-Transfer-Encoding: quoted-printable
-    
+
     <b>Hello world!</b>
     ------mailcomposer-?=_1-1328088797399--
 
@@ -107,7 +108,7 @@ in the generated header. For example:
 
     mailcomposer.addHeader("x-mailer", "Nodemailer 1.0");
     mailcomposer.addHeader("x-mailer", "Nodemailer 2.0");
-    
+
 Will be generated into
 
     ...
@@ -133,14 +134,14 @@ You can set message sender, receiver, subject line, message body etc. with
 data to be set. This function overwrites any previously set values with the
 same key
 
-The following example creates a simple e-mail with sender being `andris@tr.ee`, 
+The following example creates a simple e-mail with sender being `andris@tr.ee`,
 receiver `andris@node.ee` and plaintext part of the message as `Hello world!`:
 
     mailcomposer.setMessageOption({
         from: "andris@tr.ee",
         to: "andris@node.ee",
         body: "Hello world!"
-    }); 
+    });
 
 Possible options that can be used are (all fields accept unicode):
 
@@ -218,28 +219,28 @@ properties:
   * **filePath** - path to a file or an URL if you want to stream the file instead of including it (better for larger attachments)
   * **streamSource** - Stream object for arbitrary binary streams if you want to stream the contents (needs to support *pause*/*resume*)
   * **contentType** - content type for the attachment, if not set will be derived from the `fileName` property
-  * **contentDisposition** - content disposition type for the attachment, defaults to "attachment" 
+  * **contentDisposition** - content disposition type for the attachment, defaults to "attachment"
   * **userAgent** - User-Agent string to be used if the fileName points to an URL
 
-One of `contents`, `filePath` or `streamSource` must be specified, if none is 
+One of `contents`, `filePath` or `streamSource` must be specified, if none is
 present, the attachment will be discarded. Other fields are optional.
 
 Attachments can be added as many as you want.
 
 **Using embedded images in HTML**
 
-Attachments can be used as embedded images in the HTML body. To use this 
-feature, you need to set additional property of the attachment - `cid` 
-(unique identifier of the file) which is a reference to the attachment file. 
-The same `cid` value must be used as the image URL in HTML (using `cid:` as 
+Attachments can be used as embedded images in the HTML body. To use this
+feature, you need to set additional property of the attachment - `cid`
+(unique identifier of the file) which is a reference to the attachment file.
+The same `cid` value must be used as the image URL in HTML (using `cid:` as
 the URL protocol, see example below).
 
 NB! the cid value should be as unique as possible!
 
     var cid_value = Date.now() + '.image.jpg';
-    
+
     var html = 'Embedded image: <img src="cid:' + cid_value + '" />';
-    
+
     var attachment = {
         fileName: "image.png",
         filePath: "/static/images/image.png",
@@ -260,12 +261,12 @@ For example when using this code
         html: 'Embedded image: <img src="http://example.com/image.png">'
     });
 
-The image linked is fetched and added automatically as an attachment and the url 
+The image linked is fetched and added automatically as an attachment and the url
 in the HTML is replaced automatically with a proper `cid:` string.
 
 ### Add alternatives to HTML and text
 
-In addition to text and HTML, any kind of data can be inserted as an alternative content of the main body - for example a word processing document with the same text as in the HTML field. It is the job of the e-mail client to select and show the best fitting alternative to the reader. 
+In addition to text and HTML, any kind of data can be inserted as an alternative content of the main body - for example a word processing document with the same text as in the HTML field. It is the job of the e-mail client to select and show the best fitting alternative to the reader.
 
 Alternatives to text and HTML can be added with `mailcomposer.addAlternative(alternative)` where
 `alternative` is an object with alternative (meta)data with the following possible
@@ -273,7 +274,7 @@ properties:
 
   * **contents** - String or a Buffer contents for the attachment
   * **contentType** - optional content type for the attachment, if not set will be set to "application/octet-stream"
-  * **contentEncoding** - optional value of how the data is encoded, defaults to "base64" 
+  * **contentEncoding** - optional value of how the data is encoded, defaults to "base64"
 
 If `contents` is empty, the alternative will be discarded. Other fields are optional.
 
@@ -297,7 +298,7 @@ Alternatives can be added as many as you want.
 
 ### DKIM Signing
 
-**mailcomposer** supports DKIM signing with very simple setup. Use this with caution 
+**mailcomposer** supports DKIM signing with very simple setup. Use this with caution
 though since the generated message needs to be buffered entirely before it can be
 signed - in this case the streaming capability offered by mailcomposer is illusionary,
 there will only be one `'data'` event with the entire message. Not a big deal with
