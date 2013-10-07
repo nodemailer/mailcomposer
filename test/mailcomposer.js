@@ -1261,6 +1261,9 @@ exports["Stream parser"] = {
             }else if(req.url=="/image2.png"){
                 res.writeHead(200, {'Content-Type': 'image/png'});
                 res.end(image2);
+            }else if(req.url=="/a=1&b=2"){
+                res.writeHead(200, {'Content-Type': 'image/png'});
+                res.end(image2);
             }else{
                 res.writeHead(404, {'Content-Type': 'text/plain'});
                 res.end('Not found!\n');
@@ -1280,7 +1283,8 @@ exports["Stream parser"] = {
                   '<ul>\n'+
                   '    <li>Embedded image1 <img title="test" src="http://localhost:'+HTTP_PORT+'/image1.png"/></li>\n'+
                   '    <li>Embedded image2 <img title="test" src="http://localhost:'+HTTP_PORT+'/image2.png"/></li>\n'+
-                  '    <li>Embedded image1 <img title="test" src="'+__dirname+'/image3.png"/></li>\n'+
+                  '    <li>Embedded image3 <img title="test" src="'+__dirname+'/image3.png"/></li>\n'+
+                  '    <li>Embedded image4 <img title="test" src="http://localhost:'+HTTP_PORT+'/a=1&amp;b=2"/></li>\n'+
                   '</ul>'
         });
         mc.streamMessage();
@@ -1296,6 +1300,7 @@ exports["Stream parser"] = {
             test.equal(mail.attachments[0].content.toString("base64"), image1.toString("base64"));
             test.equal(mail.attachments[1].content.toString("base64"), image2.toString("base64"));
             test.equal(mail.attachments[2].checksum, "29445222b4f912167463b8c65e9a6420");
+            test.equal(mail.attachments[3].content.toString("base64"), image2.toString("base64"));
             server.close();
             test.done();
         });
