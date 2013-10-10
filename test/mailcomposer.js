@@ -257,6 +257,28 @@ exports["General tests"] = {
         test.equal(mc._getHeader("in-reply-to"), "<test>");
         test.equal(mc._getHeader("references"), "<test2> <test>");
         test.done();
+    },
+
+    "Convert addresses": function(test){
+        var mc = new MailComposer(),
+            input = [
+                {
+                    name: "I \"am\" test",
+                    address: "test@example.com"
+                },
+                {
+                    name: "Punycode Address",
+                    address: "test@jõgeva.com"
+                },
+                {
+                    address: "test@example.com"
+                }
+            ],
+            output = '"I \\"am\\" test" <test@example.com>, "Punycode Address" <test@xn--jgeva-dua.com>, test@example.com';
+
+        test.deepEqual(mc._convertAddresses(input), output);
+
+        test.done();
     }
 };
 
