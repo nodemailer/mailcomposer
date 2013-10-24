@@ -33,11 +33,15 @@ Install through NPM
 
 ### Include mailcomposer module
 
-    var MailComposer = require("mailcomposer").MailComposer;
+```javascript
+var MailComposer = require("mailcomposer").MailComposer;
+```
 
 ### Create a new `MailComposer` instance
 
-    var mailcomposer = new MailComposer([options]);
+```javascript
+var mailcomposer = new MailComposer([options]);
+```
 
 Where `options` is an optional options object with the following possible properties:
 
@@ -53,25 +57,27 @@ Where `options` is an optional options object with the following possible proper
 The following example generates a simple e-mail message with plaintext and html
 body.
 
-    var MailComposer = require("mailcomposer").MailComposer;
-        mailcomposer = new MailComposer(),
-        fs = require("fs");
+```javascript
+var MailComposer = require("mailcomposer").MailComposer;
+    mailcomposer = new MailComposer(),
+    fs = require("fs");
 
-    // add additional header field
-    mailcomposer.addHeader("x-mailer", "Nodemailer 1.0");
+// add additional header field
+mailcomposer.addHeader("x-mailer", "Nodemailer 1.0");
 
-    // setup message data
-    mailcomposer.setMessageOption({
-        from: "andris@tr.ee",
-        to: "andris@node.ee",
-        body: "Hello world!",
-        html: "<b>Hello world!</b>"
-    });
+// setup message data
+mailcomposer.setMessageOption({
+    from: "andris@tr.ee",
+    to: "andris@node.ee",
+    body: "Hello world!",
+    html: "<b>Hello world!</b>"
+});
 
-    mailcomposer.streamMessage();
+mailcomposer.streamMessage();
 
-    // pipe the output to a file
-    mailcomposer.pipe(fs.createWriteStream("test.eml"));
+// pipe the output to a file
+mailcomposer.pipe(fs.createWriteStream("test.eml"));
+```
 
 The output for such a script (the contents for "test.eml") would look like:
 
@@ -100,14 +106,18 @@ The output for such a script (the contents for "test.eml") would look like:
 
 Headers can be added with `mailcomposer.addHeader(key, value[, formatted])` where `formatted` indicates if the value should be kept as is. If the value is missing or falsy, header value is sanitized and folded. If true, the value is passed to output as is.
 
-    var mailcomposer = new MailComposer();
-    mailcomposer.addHeader("x-mailer", "Nodemailer 1.0");
+```javascript
+var mailcomposer = new MailComposer();
+mailcomposer.addHeader("x-mailer", "Nodemailer 1.0");
+```
 
 If you add an header value with the same key several times, all of the values will be used
 in the generated header. For example:
 
-    mailcomposer.addHeader("x-mailer", "Nodemailer 1.0");
-    mailcomposer.addHeader("x-mailer", "Nodemailer 2.0");
+```javascript
+mailcomposer.addHeader("x-mailer", "Nodemailer 1.0");
+mailcomposer.addHeader("x-mailer", "Nodemailer 2.0");
+```
 
 Will be generated into
 
@@ -121,11 +131,13 @@ so if you want to use unicode symbols you need to escape these to mime words
 by yourself. Exception being object values - in this case the object
 is automatically JSONized and mime encoded.
 
-    // using objects as header values is allowed (will be converted to JSON)
-    var apiOptions = {};
-    apiOptions.category = "newuser";
-    apiOptions.tags = ["user", "web"];
-    mailcomposer.addHeader("X-SMTPAPI", apiOptions)
+```javascript
+// using objects as header values is allowed (will be converted to JSON)
+var apiOptions = {};
+apiOptions.category = "newuser";
+apiOptions.tags = ["user", "web"];
+mailcomposer.addHeader("X-SMTPAPI", apiOptions)
+```
 
 ### Add message parts
 
@@ -137,11 +149,13 @@ same key
 The following example creates a simple e-mail with sender being `andris@tr.ee`,
 receiver `andris@node.ee` and plaintext part of the message as `Hello world!`:
 
-    mailcomposer.setMessageOption({
-        from: "andris@tr.ee",
-        to: "andris@node.ee",
-        body: "Hello world!"
-    });
+```javascript
+mailcomposer.setMessageOption({
+    from: "andris@tr.ee",
+    to: "andris@node.ee",
+    body: "Hello world!"
+});
+```
 
 Possible options that can be used are (all fields accept unicode):
 
@@ -159,15 +173,19 @@ Possible options that can be used are (all fields accept unicode):
 
 This method can be called several times
 
-    mailcomposer.setMessageOption({from: "andris@tr.ee"});
-    mailcomposer.setMessageOption({to: "andris@node.ee"});
-    mailcomposer.setMessageOption({body: "Hello world!"});
+```javascript
+mailcomposer.setMessageOption({from: "andris@tr.ee"});
+mailcomposer.setMessageOption({to: "andris@node.ee"});
+mailcomposer.setMessageOption({body: "Hello world!"});
+```
 
 Trying to set the same key several times will yield in overwrite
 
-    mailcomposer.setMessageOption({body: "Hello world!"});
-    mailcomposer.setMessageOption({body: "Hello world?"});
-    // body contents will be "Hello world?"
+```javascript
+mailcomposer.setMessageOption({body: "Hello world!"});
+mailcomposer.setMessageOption({body: "Hello world?"});
+// body contents will be "Hello world?"
+```
 
 ### Address format
 
@@ -197,15 +215,17 @@ if for some reason you want to specify it yourself, you can do it with `envelope
 `envelope` is an object with the following params: `from`, `to`, `cc` and `bcc` just like
 with regular mail options. You can also use the regular address format.
 
-    mailOptions = {
-        ...,
-        from: "mailer@node.ee",
-        to: "daemon@node.ee",
-        envelope: {
-            from: "Daemon <deamon@node.ee>",
-            to: "mailer@node.ee, Mailer <mailer2@node.ee>"
-        }
+```javascript
+mailOptions = {
+    ...,
+    from: "mailer@node.ee",
+    to: "daemon@node.ee",
+    envelope: {
+        from: "Daemon <deamon@node.ee>",
+        to: "mailer@node.ee, Mailer <mailer2@node.ee>"
     }
+}
+```
 
 ### Add attachments
 
@@ -237,15 +257,17 @@ the URL protocol, see example below).
 
 NB! the cid value should be as unique as possible!
 
-    var cid_value = Date.now() + '.image.jpg';
+```javascript
+var cid_value = Date.now() + '.image.jpg';
 
-    var html = 'Embedded image: <img src="cid:' + cid_value + '" />';
+var html = 'Embedded image: <img src="cid:' + cid_value + '" />';
 
-    var attachment = {
-        fileName: "image.png",
-        filePath: "/static/images/image.png",
-        cid: cid_value
-    };
+var attachment = {
+    fileName: "image.png",
+    filePath: "/static/images/image.png",
+    cid: cid_value
+};
+```
 
 **Automatic embedding images**
 
@@ -256,10 +278,12 @@ the HTML that are either using an absolute URL (http://...) or absolute file pat
 
 For example when using this code
 
-    var mailcomposer = new MailComposer({forceEmbeddedImages: true});
-    mailcomposer.setMessageOption({
-        html: 'Embedded image: <img src="http://example.com/image.png">'
-    });
+```javascript
+var mailcomposer = new MailComposer({forceEmbeddedImages: true});
+mailcomposer.setMessageOption({
+    html: 'Embedded image: <img src="http://example.com/image.png">'
+});
+```
 
 The image linked is fetched and added automatically as an attachment and the url
 in the HTML is replaced automatically with a proper `cid:` string.
@@ -280,16 +304,18 @@ If `contents` is empty, the alternative will be discarded. Other fields are opti
 
 **Usage example:**
 
-    // add HTML "alternative"
-    mailcomposer.setMessageOption({
-        html: "<b>Hello world!</b>"
-    });
+```javascript
+// add HTML "alternative"
+mailcomposer.setMessageOption({
+    html: "<b>Hello world!</b>"
+});
 
-    // add Markdown alternative
-    mailcomposer.addAlternative({
-        contentType: "text/x-web-markdown",
-        contents: "**Hello world!**"
-    });
+// add Markdown alternative
+mailcomposer.addAlternative({
+    contentType: "text/x-web-markdown",
+    contents: "**Hello world!**"
+});
+```
 
 If the receiving e-mail client can render messages in Markdown syntax as well, it could prefer
 to display this alternative as the main content of the message.
@@ -306,7 +332,9 @@ small messages but might consume a lot of RAM when using larger attachments.
 
 Set up the DKIM signing with `useDKIM` method:
 
-    mailcomposer.useDKIM(dkimOptions)
+```javascript
+mailcomposer.useDKIM(dkimOptions)
+```
 
 Where `dkimOptions` includes necessary options for signing
 
@@ -319,37 +347,45 @@ Where `dkimOptions` includes necessary options for signing
 
 Example:
 
-    mailcomposer.setMessageOption({from: "andris@tr.ee"});
-    mailcomposer.setMessageOption({to: "andris@node.ee"});
-    mailcomposer.setMessageOption({body: "Hello world!"});
-    mailcomposer.useDKIM({
-        domainName: "node.ee",
-        keySelector: "dkim",
-        privateKey: fs.readFileSync("private_key.pem")
-    });
+```javascript
+mailcomposer.setMessageOption({from: "andris@tr.ee"});
+mailcomposer.setMessageOption({to: "andris@node.ee"});
+mailcomposer.setMessageOption({body: "Hello world!"});
+mailcomposer.useDKIM({
+    domainName: "node.ee",
+    keySelector: "dkim",
+    privateKey: fs.readFileSync("private_key.pem")
+});
+```
 
 ### Start streaming
 
 When the message data is setup, streaming can be started. After this it is not
 possible to add headers, attachments or change body contents.
 
-    mailcomposer.streamMessage();
+```javascript
+mailcomposer.streamMessage();
+```
 
 This generates `'data'` events for the message headers and body and final `'end'` event.
 As `MailComposer` objects are Stream instances, these can be piped
 
-    // save the output to a file
-    mailcomposer.streamMessage();
-    mailcomposer.pipe(fs.createWriteStream("out.txt"));
+```javascript
+// save the output to a file
+mailcomposer.streamMessage();
+mailcomposer.pipe(fs.createWriteStream("out.txt"));
+```
 
 ### Compile the message in one go
 
 If you do not want to use the streaming possibilities, you can compile the entire
 message into a string in one go with `buildMessage`.
 
-    mailcomposer.buildMessage(function(err, messageSource){
-        console.log(err || messageSource);
-    });
+```javascript
+mailcomposer.buildMessage(function(err, messageSource){
+    console.log(err || messageSource);
+});
+```
 
 The function is actually just a wrapper around `streamMessage` and emitted events.
 
@@ -359,8 +395,10 @@ Envelope can be generated with an `getEnvelope()` which returns an object
 that includes a `from` address (string) and a list of `to` addresses (array of
 strings) suitable for forwarding to a SMTP server as `MAIL FROM:` and `RCPT TO:`.
 
-    console.log(mailcomposer.getEnvelope());
-    // {from:"sender@example.com", to:["receiver@example.com"]}
+```javascript
+console.log(mailcomposer.getEnvelope());
+// {from:"sender@example.com", to:["receiver@example.com"]}
+```
 
 **NB!** both `from` and `to` properties might be missing from the envelope object
 if corresponding addresses were not detected from the e-mail.
