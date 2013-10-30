@@ -387,10 +387,11 @@ exports["Mail related"] = {
         mc.setMessageOption({
             sender: '"Jaanuar Veebruar, Märts" <märts@märts.eu>',
             to: '<aavik@märts.eu>, juulius@node.ee',
-            cc: '"Node, Master" <node@node.ee>'
+            cc: '"Node, Master" <node@node.ee>',
+            bcc:'Undisclosed Recipients:ahven@tr.ee, "Mäger" <mager@mäger.ee>;'
         });
 
-        test.deepEqual(mc._envelope, {from:[ 'märts@xn--mrts-loa.eu' ],to:[ 'aavik@xn--mrts-loa.eu', 'juulius@node.ee'], cc:['node@node.ee' ]});
+        test.deepEqual(mc._envelope, {from:[ 'märts@xn--mrts-loa.eu' ],to:[ 'aavik@xn--mrts-loa.eu', 'juulius@node.ee'], cc:['node@node.ee' ], bcc: [ 'ahven@tr.ee', 'mager@xn--mger-loa.ee' ]});
         test.done();
     },
 
@@ -505,7 +506,7 @@ exports["Mail related"] = {
         mc.setMessageOption({
             sender: '"Jaanuar Veebruar, Märts" <märts@märts.eu>, karu@ahven.ee',
             to: '<aavik@märts.eu>, juulius@node.ee',
-            cc: '"Node, Master" <node@node.ee>',
+            cc: '"Node, Master" <node@node.ee>, koger@mäger.ee, Undisclosed Recipients:ahven@tr.ee, "Mäger" <mager@mäger.ee>;',
             replyTo: 'julla@pulla.ee',
             subject: "Tere õkva!"
         });
@@ -972,7 +973,7 @@ exports["Stream parser"] = {
         mc.pipe(mp);
 
         mp.on("end", function(mail){
-            test.equal(mail.attachments[0].checksum, "3995d423c7453e472ce0d54e475bae3e");
+            test.equal(mail.attachments[0].checksum, "c47d65ffb34285e04a793dea442895b8");
             server.close();
             test.done();
         });
