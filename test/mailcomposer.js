@@ -1425,7 +1425,7 @@ exports["Options"]={
         mc.setMessageOption({
             from: "Andris Reinman <andris@node.ee>",
             to: "Andris <andris.reinman@gmail.com>",
-            html: "<b>Hello world!</b>",
+            html: "<b>Hello world!</b> <b>Hello world!</b> <b>Hello world!</b>",
             subject: "Hello world!"
         });
         mc.on("data", function(chunk){
