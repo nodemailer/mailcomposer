@@ -50,7 +50,6 @@ Where `options` is an optional options object with the following possible proper
   * **charset** - sets output character set for strings (defaults to `"utf-8"`)
   * **keepBcc** - if set to true, includes `Bcc:` field in the message headers. Useful for *sendmail* command.
   * **forceEmbeddedImages** - convert image urls and absolute paths in HTML to embedded attachments.
-  * **noCR** - if set to true, the default line ending (`\r\n`) will become `\n`
 
 ### Simple example
 

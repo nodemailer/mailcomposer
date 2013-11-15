@@ -1418,22 +1418,3 @@ exports["Output buffering"] = {
 
     }
 };
-
-exports["Options"]={
-    "allow the ability to remove carriage returns": function(test){
-        var mc = new MailComposer({noCR:true});
-        mc.setMessageOption({
-            from: "Andris Reinman <andris@node.ee>",
-            to: "Andris <andris.reinman@gmail.com>",
-            html: "<b>Hello world!</b>",
-            subject: "Hello world!"
-        });
-        mc.on("data", function(chunk){
-            test.ok(!/\r\n/m.test(chunk.toString()));
-        });
-        mc.on("end", function(){
-            test.done();
-        });
-        mc.streamMessage();
-    }
-};
