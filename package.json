@@ -28,6 +28,7 @@
     "mime": "1.2.9",
     "he": "~0.3.6",
     "punycode": "~1.2.3",
+    "follow-redirects": "0.0.3",
     "dkim-signer": "~0.1.0"
   },
   "devDependencies": {
