@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "nodeunit": "*",
-    "mailparser": "*"
+    "mailparser": "~0.4.0"
   },
   "engine": {
     "node": ">=0.4"
