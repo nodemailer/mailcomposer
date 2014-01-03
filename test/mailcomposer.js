@@ -78,7 +78,27 @@ exports["General tests"] = {
         test.deepEqual(mc._getHeader("test-key"), ["first", "second"]);
         test.done();
     },
+    "Get envelope with header 'Return-Path'": function(test){
+        var mc = new MailComposer();
 
+        mc.addHeader("Sender", "sender@example.com");
+        mc.addHeader("Return-Path", "bounce@example.com");
+        var envelope = mc.getEnvelope();
+        delete envelope['stamp'];
+
+        test.deepEqual(envelope, {from: "bounce@example.com"});
+        test.done();
+    },
+    "Get envelope with header 'Sender'": function(test){
+        var mc = new MailComposer();
+
+        mc.addHeader("Sender", "sender@example.com");
+        var envelope = mc.getEnvelope();
+        delete envelope['stamp'];
+
+        test.deepEqual(envelope, {from: "sender@example.com"});
+        test.done();
+    },
     "Uppercase header keys": function(test){
         var mc = new MailComposer();
 
