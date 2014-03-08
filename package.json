@@ -25,7 +25,7 @@
   ],
   "dependencies": {
     "mimelib": "~0.2.14",
-    "mime": "1.2.9",
+    "mime": "1.2.11",
     "he": "~0.3.6",
     "punycode": "~1.2.3",
     "follow-redirects": "0.0.3",
