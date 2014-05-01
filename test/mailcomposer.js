@@ -312,7 +312,13 @@ exports["Text encodings"] = {
             sender: '"Jaanuar Veebruar, Märts" <märts@märts.eu>'
         });
 
-        test.equal(mc._message.from, "\"Jaanuar Veebruar, =?UTF-8?Q?M=C3=A4rts?=\" <=?UTF-8?Q?m=C3=A4rts?=@xn--mrts-loa.eu>");
+        test.equal(mc._message.from, "Jaanuar =?UTF-8?Q?Veebruar=2C_M=C3=A4rts?= <=?UTF-8?Q?m=C3=A4rts?=@xn--mrts-loa.eu>");
+		
+        mc.setMessageOption({
+            sender: '"Ноде Майлер" <Mayler@nodejs.org>'
+        });
+
+        test.equal(mc._message.from, "=?UTF-8?Q?=D0=9D=D0=BE=D0=B4=D0=B5_=D0=9C=D0=B0?= =?UTF-8?Q?=D0=B9=D0=BB=D0=B5=D1=80?= <Mayler@nodejs.org>");
 
         mc.setMessageOption({
             sender: 'aavik <aavik@node.ee>'
