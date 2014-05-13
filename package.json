@@ -1,7 +1,7 @@
 {
   "name": "mailcomposer",
   "description": "Compose E-Mail messages",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "author": "Andris Reinman",
   "maintainers": [
     {
@@ -24,12 +24,12 @@
     }
   ],
   "dependencies": {
-    "mimelib": "~0.2.14",
-    "mime": "1.2.11",
-    "he": "~0.3.6",
-    "punycode": "~1.2.3",
+    "mimelib": "^0.2.15",
+    "mime": "^1.2.11",
+    "he": "^0.3.6",
+    "punycode": "^1.2.4",
     "follow-redirects": "0.0.3",
-    "dkim-signer": "~0.1.0"
+    "dkim-signer": "^0.1.1"
   },
   "devDependencies": {
     "nodeunit": "*",
