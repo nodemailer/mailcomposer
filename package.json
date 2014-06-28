@@ -27,7 +27,6 @@
     "mimelib": "~0.2.15",
     "mime": "~1.2.11",
     "he": "~0.3.6",
-    "punycode": "~1.2.4",
     "follow-redirects": "0.0.3",
     "dkim-signer": "~0.1.1"
   },
@@ -36,7 +35,7 @@
     "mailparser": "~0.4.0"
   },
   "engine": {
-    "node": ">=0.4"
+    "node": ">=0.8"
   },
   "keywords": [
     "e-mail",
