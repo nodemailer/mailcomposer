@@ -206,6 +206,16 @@ Or in case of comma separated lists, the formatting can be mixed
 
     username@example.com, 'Ноде Майлер' <username@example.com>, "Name, User" <username@example.com>
 
+Addresses can be encoded using `mailcomposer.convertAddress(options)`
+
+```javascript
+var address = mailcomposer.convertAddress({
+    name: 'username@example.com',
+    address: 'Ноде Майлер'
+});
+// "Ноде Майлер" <username@example.com>
+```
+
 ### SMTP envelope
 
 SMTP envelope is usually auto generated from `from`, `to`, `cc` and `bcc` fields but
