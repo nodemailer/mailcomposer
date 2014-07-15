@@ -259,7 +259,20 @@ exports["General tests"] = {
         test.done();
     },
 
-    "Convert addresses": function(test){
+    "Convert an address": function(test){
+        var mc = new MailComposer(),
+            input = {
+                name: "I \"am\" test",
+                address: "test@example.com"
+            };
+        output = '"I \\"am\\" test" <test@example.com>';
+
+        test.deepEqual(mc.convertAddress(input), output);
+
+        test.done();
+    },
+
+    "Convert mulitple addresses": function(test){
         var mc = new MailComposer(),
             input = [
                 {
