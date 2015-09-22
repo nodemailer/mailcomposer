@@ -1,12 +1,13 @@
 {
   "name": "mailcomposer",
   "description": "Compose E-Mail messages",
-  "version": "0.2.12",
+  "version": "1.0.0",
   "author": "Andris Reinman",
+  "license": "MIT",
   "maintainers": [
     {
       "name": "andris",
-      "email": "andris@node.ee"
+      "email": "andris@kreata.ee"
     }
   ],
   "repository": {
@@ -14,28 +15,23 @@
     "url": "http://github.com/andris9/mailcomposer.git"
   },
   "scripts": {
-    "test": "nodeunit test/"
+    "test": "grunt"
   },
   "main": "./lib/mailcomposer",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://github.com/andris9/mailcomposer/blob/master/LICENSE"
-    }
-  ],
   "dependencies": {
-    "mimelib": "~0.2.15",
-    "mime": "~1.2.11",
-    "he": "~0.3.6",
-    "follow-redirects": "0.0.3",
-    "dkim-signer": "~0.1.1"
+    "buildmail": "^1.2.4",
+    "libmime": "^1.0.0"
   },
   "devDependencies": {
-    "nodeunit": "*",
-    "mailparser": "~0.4.0"
+    "chai": "^3.3.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-mocha-test": "^0.12.7",
+    "mocha": "^2.3.3",
+    "sinon": "^1.17.0"
   },
   "engine": {
-    "node": ">=0.8"
+    "node": ">=0.12"
   },
   "keywords": [
     "e-mail",
