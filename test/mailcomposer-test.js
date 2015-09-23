@@ -12,7 +12,7 @@ describe('MailComposer unit tests', function() {
         expect(new MailComposer({})).to.exist;
     });
 
-    describe('#compile', function() {
+    describe('#createReadStream', function() {
         it('should use Mixed structure with text and attachment', function() {
             var data = {
                 text: 'abc',
@@ -23,7 +23,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createMixed');
-            compiler.compile();
+            compiler.createReadStream();
             expect(compiler._createMixed.callCount).to.equal(1);
             compiler._createMixed.restore();
         });
@@ -39,7 +39,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createMixed');
-            compiler.compile();
+            compiler.createReadStream();
             expect(compiler._createMixed.callCount).to.equal(1);
             compiler._createMixed.restore();
         });
@@ -52,7 +52,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createAlternative');
-            compiler.compile();
+            compiler.createReadStream();
             expect(compiler._createAlternative.callCount).to.equal(1);
 
             expect(compiler._alternatives.length).to.equal(2);
@@ -71,7 +71,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createAlternative');
-            compiler.compile();
+            compiler.createReadStream();
             expect(compiler._createAlternative.callCount).to.equal(1);
             expect(compiler._alternatives.length).to.equal(3);
             expect(compiler._alternatives[0].contentType).to.equal('text/plain');
@@ -95,7 +95,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createAlternative');
-            compiler.compile();
+            compiler.createReadStream();
             expect(compiler._createAlternative.callCount).to.equal(1);
             compiler._createAlternative.restore();
         });
@@ -114,7 +114,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createRelated');
-            compiler.compile();
+            compiler.createReadStream();
             expect(compiler._createRelated.callCount).to.equal(1);
             compiler._createRelated.restore();
         });
@@ -126,7 +126,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createContentNode');
-            compiler.compile();
+            compiler.createReadStream();
             expect(compiler._createContentNode.callCount).to.equal(1);
             compiler._createContentNode.restore();
         });
@@ -141,7 +141,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createContentNode');
-            compiler.compile();
+            compiler.createReadStream();
             expect(compiler._createContentNode.callCount).to.equal(1);
             compiler._createContentNode.restore();
         });
@@ -156,7 +156,7 @@ describe('MailComposer unit tests', function() {
             };
 
             var compiler = new MailComposer(data);
-            compiler.compile();
+            compiler.createReadStream();
             expect(compiler.message.content).to.deep.equal(new Buffer(str));
         });
 
@@ -169,9 +169,24 @@ describe('MailComposer unit tests', function() {
             };
 
             var compiler = new MailComposer(data);
-            compiler.compile();
+            compiler.createReadStream();
             expect(compiler.mail.attachments[0].content).to.deep.equal(new Buffer(str));
             expect(compiler.mail.attachments[0].contentType).to.equal('image/png');
+        });
+
+        it('should create the same output', function(done) {
+            var data = {
+                text: 'abc',
+                html: 'def',
+                baseBoundary: 'test',
+                messageId: 'zzzzzz',
+                date: 'Sat, 21 Jun 2014 10:52:44 +0000'
+            };
+
+            var compiler = new MailComposer(data);
+            console.log(compiler.createReadStream());
+            compiler.createReadStream().pipe(process.stdout);
+            done();
         });
     });
 });
