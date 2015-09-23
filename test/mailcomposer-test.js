@@ -1,7 +1,8 @@
 'use strict';
 
 var chai = require('chai');
-var MailComposer = require('../lib/mailcomposer');
+var mailcomposer = require('../lib/mailcomposer');
+var MailComposer = mailcomposer.MailComposer;
 var sinon = require('sinon');
 var expect = chai.expect;
 
@@ -10,9 +11,10 @@ chai.config.includeStack = true;
 describe('MailComposer unit tests', function() {
     it('should create new MailComposer', function() {
         expect(new MailComposer({})).to.exist;
+        expect(mailcomposer({})).to.exist;
     });
 
-    describe('#createReadStream', function() {
+    describe('#compile', function() {
         it('should use Mixed structure with text and attachment', function() {
             var data = {
                 text: 'abc',
@@ -23,7 +25,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createMixed');
-            compiler.createReadStream();
+            compiler.compile();
             expect(compiler._createMixed.callCount).to.equal(1);
             compiler._createMixed.restore();
         });
@@ -39,7 +41,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createMixed');
-            compiler.createReadStream();
+            compiler.compile();
             expect(compiler._createMixed.callCount).to.equal(1);
             compiler._createMixed.restore();
         });
@@ -52,7 +54,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createAlternative');
-            compiler.createReadStream();
+            compiler.compile();
             expect(compiler._createAlternative.callCount).to.equal(1);
 
             expect(compiler._alternatives.length).to.equal(2);
@@ -71,7 +73,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createAlternative');
-            compiler.createReadStream();
+            compiler.compile();
             expect(compiler._createAlternative.callCount).to.equal(1);
             expect(compiler._alternatives.length).to.equal(3);
             expect(compiler._alternatives[0].contentType).to.equal('text/plain');
@@ -95,7 +97,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createAlternative');
-            compiler.createReadStream();
+            compiler.compile();
             expect(compiler._createAlternative.callCount).to.equal(1);
             compiler._createAlternative.restore();
         });
@@ -114,7 +116,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createRelated');
-            compiler.createReadStream();
+            compiler.compile();
             expect(compiler._createRelated.callCount).to.equal(1);
             compiler._createRelated.restore();
         });
@@ -126,7 +128,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createContentNode');
-            compiler.createReadStream();
+            compiler.compile();
             expect(compiler._createContentNode.callCount).to.equal(1);
             compiler._createContentNode.restore();
         });
@@ -141,7 +143,7 @@ describe('MailComposer unit tests', function() {
 
             var compiler = new MailComposer(data);
             sinon.stub(compiler, '_createContentNode');
-            compiler.createReadStream();
+            compiler.compile();
             expect(compiler._createContentNode.callCount).to.equal(1);
             compiler._createContentNode.restore();
         });
@@ -156,7 +158,7 @@ describe('MailComposer unit tests', function() {
             };
 
             var compiler = new MailComposer(data);
-            compiler.createReadStream();
+            compiler.compile();
             expect(compiler.message.content).to.deep.equal(new Buffer(str));
         });
 
@@ -169,7 +171,7 @@ describe('MailComposer unit tests', function() {
             };
 
             var compiler = new MailComposer(data);
-            compiler.createReadStream();
+            compiler.compile();
             expect(compiler.mail.attachments[0].content).to.deep.equal(new Buffer(str));
             expect(compiler.mail.attachments[0].contentType).to.equal('image/png');
         });
@@ -183,10 +185,30 @@ describe('MailComposer unit tests', function() {
                 date: 'Sat, 21 Jun 2014 10:52:44 +0000'
             };
 
-            var compiler = new MailComposer(data);
-            console.log(compiler.createReadStream());
-            compiler.createReadStream().pipe(process.stdout);
-            done();
+            var expected = '' +
+                'Content-Type: multipart/alternative; boundary="----sinikael-?=_1-test"\r\n' +
+                'Message-Id: <zzzzzz>\r\n' +
+                'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
+                'MIME-Version: 1.0\r\n' +
+                '\r\n' +
+                '------sinikael-?=_1-test\r\n' +
+                'Content-Type: text/plain\r\n' +
+                'Content-Transfer-Encoding: 7bit\r\n' +
+                '\r\n' +
+                'abc\r\n' +
+                '------sinikael-?=_1-test\r\n' +
+                'Content-Type: text/html\r\n' +
+                'Content-Transfer-Encoding: 7bit\r\n' +
+                '\r\n' +
+                'def\r\n' +
+                '------sinikael-?=_1-test--\r\n';
+
+            var mail = mailcomposer(data);
+            mail.build(function(err, message){
+                expect(err).to.not.exist;
+                expect(message.toString()).to.equal(expected);
+                done();
+            });
         });
     });
 });

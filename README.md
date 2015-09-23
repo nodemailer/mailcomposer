@@ -2,6 +2,8 @@
 
 **mailcomposer** is a Node.JS module for generating e-mail messages that can be streamed to SMTP or file.
 
+> **NB!** This module is not backwards compatible with versions 0.x
+
 [![Build Status](https://secure.travis-ci.org/andris9/mailcomposer.png)](http://travis-ci.org/andris9/mailcomposer)
 
 ## Support mailcomposer development
@@ -19,13 +21,13 @@ Install through NPM
 ### Include mailcomposer module
 
 ```javascript
-var MailComposer = require("mailcomposer").MailComposer;
+var mailcomposer = require("mailcomposer");
 ```
 
 ### Create a new `MailComposer` instance
 
 ```javascript
-var mailcomposer = new MailComposer(mailOptions);
+var mail = mailcomposer(mailOptions);
 ```
 
 Where `mailOptions` is an object that defines the components of the message, see below
@@ -37,9 +39,20 @@ Where `mailOptions` is an object that defines the components of the message, see
 To create a stream that outputs a raw rfc822 message from the defined input, use `createReadStream()`
 
 ```javascript
-    var mailcomposer = new MailComposer({from: '...', ...});
-    var stream = mailcomposer.createReadStream();
-    stream.pipe(process.stdout);
+var mail = mailcomposer({from: '...', ...});
+var stream = mail.createReadStream();
+stream.pipe(process.stdout);
+```
+
+### build
+
+To generate the message and return it with a callback use `build()`
+
+```javascript
+var mail = mailcomposer({from: '...', ...});
+mail.build(function(err, message){
+    process.stdout.write(message);
+});
 ```
 
 ### E-mail message fields
