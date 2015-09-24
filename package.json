@@ -1,7 +1,7 @@
 {
   "name": "mailcomposer",
   "description": "Compose E-Mail messages",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Andris Reinman",
   "license": "MIT",
   "maintainers": [
@@ -19,8 +19,8 @@
   },
   "main": "./lib/mailcomposer",
   "dependencies": {
-    "buildmail": "^1.2.4",
-    "libmime": "^1.0.0"
+    "buildmail": "^1.2.5",
+    "libmime": "^1.1.0"
   },
   "devDependencies": {
     "chai": "^3.3.0",
