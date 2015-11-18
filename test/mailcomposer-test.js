@@ -210,5 +210,65 @@ describe('MailComposer unit tests', function() {
                 done();
             });
         });
+
+        it('should discard BCC', function(done) {
+            var data = {
+                from:'test1@example.com',
+                to:'test2@example.com',
+                bcc:'test3@example.com',
+                text: 'def',
+                messageId: 'zzzzzz',
+                date: 'Sat, 21 Jun 2014 10:52:44 +0000'
+            };
+
+            var expected = '' +
+                'Content-Type: text/plain\r\n' +
+                'From: test1@example.com\r\n' +
+                'To: test2@example.com\r\n' +
+                'Message-Id: <zzzzzz>\r\n' +
+                'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
+                'Content-Transfer-Encoding: 7bit\r\n' +
+                'MIME-Version: 1.0\r\n' +
+                '\r\n' +
+                'def';
+
+            var mail = mailcomposer(data);
+            mail.build(function(err, message){
+                expect(err).to.not.exist;
+                expect(message.toString()).to.equal(expected);
+                done();
+            });
+        });
+
+        it('should keep BCC', function(done) {
+            var data = {
+                from:'test1@example.com',
+                to:'test2@example.com',
+                bcc:'test3@example.com',
+                text: 'def',
+                messageId: 'zzzzzz',
+                date: 'Sat, 21 Jun 2014 10:52:44 +0000'
+            };
+
+            var expected = '' +
+                'Content-Type: text/plain\r\n' +
+                'From: test1@example.com\r\n' +
+                'To: test2@example.com\r\n' +
+                'Bcc: test3@example.com\r\n' +
+                'Message-Id: <zzzzzz>\r\n' +
+                'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
+                'Content-Transfer-Encoding: 7bit\r\n' +
+                'MIME-Version: 1.0\r\n' +
+                '\r\n' +
+                'def';
+
+            var mail = mailcomposer(data);
+            mail.keepBcc = true;
+            mail.build(function(err, message){
+                expect(err).to.not.exist;
+                expect(message.toString()).to.equal(expected);
+                done();
+            });
+        });
     });
 });
