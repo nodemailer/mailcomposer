@@ -1,3 +1,6 @@
+/* eslint no-unused-expressions:0 */
+/* globals describe, it */
+
 'use strict';
 
 var chai = require('chai');
@@ -8,14 +11,14 @@ var expect = chai.expect;
 
 chai.config.includeStack = true;
 
-describe('MailComposer unit tests', function() {
-    it('should create new MailComposer', function() {
+describe('MailComposer unit tests', function () {
+    it('should create new MailComposer', function () {
         expect(new MailComposer({})).to.exist;
         expect(mailcomposer({})).to.exist;
     });
 
-    describe('#compile', function() {
-        it('should use Mixed structure with text and attachment', function() {
+    describe('#compile', function () {
+        it('should use Mixed structure with text and attachment', function () {
             var data = {
                 text: 'abc',
                 attachments: [{
@@ -30,7 +33,7 @@ describe('MailComposer unit tests', function() {
             compiler._createMixed.restore();
         });
 
-        it('should use Mixed structure with multiple attachments', function() {
+        it('should use Mixed structure with multiple attachments', function () {
             var data = {
                 attachments: [{
                     content: 'abc'
@@ -46,7 +49,7 @@ describe('MailComposer unit tests', function() {
             compiler._createMixed.restore();
         });
 
-        it('should create Alternative structure with text and html', function() {
+        it('should create Alternative structure with text and html', function () {
             var data = {
                 text: 'abc',
                 html: 'def'
@@ -64,7 +67,7 @@ describe('MailComposer unit tests', function() {
             compiler._createAlternative.restore();
         });
 
-        it('should create Alternative structure with text, watchHtml and html', function() {
+        it('should create Alternative structure with text, watchHtml and html', function () {
             var data = {
                 text: 'abc',
                 html: 'def',
@@ -82,7 +85,7 @@ describe('MailComposer unit tests', function() {
             compiler._createAlternative.restore();
         });
 
-        it('should create Alternative structure with text, html and cid attachment', function() {
+        it('should create Alternative structure with text, html and cid attachment', function () {
             var data = {
                 text: 'abc',
                 html: 'def',
@@ -102,7 +105,7 @@ describe('MailComposer unit tests', function() {
             compiler._createAlternative.restore();
         });
 
-        it('should create Related structure with html and cid attachment', function() {
+        it('should create Related structure with html and cid attachment', function () {
             var data = {
                 html: 'def',
                 attachments: [{
@@ -121,7 +124,7 @@ describe('MailComposer unit tests', function() {
             compiler._createRelated.restore();
         });
 
-        it('should create content node with only text', function() {
+        it('should create content node with only text', function () {
             var data = {
                 text: 'def'
             };
@@ -133,7 +136,7 @@ describe('MailComposer unit tests', function() {
             compiler._createContentNode.restore();
         });
 
-        it('should create content node with only an attachment', function() {
+        it('should create content node with only an attachment', function () {
             var data = {
                 attachments: [{
                     content: 'abc',
@@ -148,7 +151,7 @@ describe('MailComposer unit tests', function() {
             compiler._createContentNode.restore();
         });
 
-        it('should create content node with encoded buffer', function() {
+        it('should create content node with encoded buffer', function () {
             var str = 'tere tere';
             var data = {
                 text: {
@@ -162,7 +165,7 @@ describe('MailComposer unit tests', function() {
             expect(compiler.message.content).to.deep.equal(new Buffer(str));
         });
 
-        it('should create content node from data url', function() {
+        it('should create content node from data url', function () {
             var str = 'tere tere';
             var data = {
                 attachments: [{
@@ -176,7 +179,7 @@ describe('MailComposer unit tests', function() {
             expect(compiler.mail.attachments[0].contentType).to.equal('image/png');
         });
 
-        it('should create the same output', function(done) {
+        it('should create the same output', function (done) {
             var data = {
                 text: 'abc',
                 html: 'def',
@@ -204,18 +207,18 @@ describe('MailComposer unit tests', function() {
                 '------sinikael-?=_1-test--\r\n';
 
             var mail = mailcomposer(data);
-            mail.build(function(err, message){
+            mail.build(function (err, message) {
                 expect(err).to.not.exist;
                 expect(message.toString()).to.equal(expected);
                 done();
             });
         });
 
-        it('should discard BCC', function(done) {
+        it('should discard BCC', function (done) {
             var data = {
-                from:'test1@example.com',
-                to:'test2@example.com',
-                bcc:'test3@example.com',
+                from: 'test1@example.com',
+                to: 'test2@example.com',
+                bcc: 'test3@example.com',
                 text: 'def',
                 messageId: 'zzzzzz',
                 date: 'Sat, 21 Jun 2014 10:52:44 +0000'
@@ -233,18 +236,18 @@ describe('MailComposer unit tests', function() {
                 'def';
 
             var mail = mailcomposer(data);
-            mail.build(function(err, message){
+            mail.build(function (err, message) {
                 expect(err).to.not.exist;
                 expect(message.toString()).to.equal(expected);
                 done();
             });
         });
 
-        it('should keep BCC', function(done) {
+        it('should keep BCC', function (done) {
             var data = {
-                from:'test1@example.com',
-                to:'test2@example.com',
-                bcc:'test3@example.com',
+                from: 'test1@example.com',
+                to: 'test2@example.com',
+                bcc: 'test3@example.com',
                 text: 'def',
                 messageId: 'zzzzzz',
                 date: 'Sat, 21 Jun 2014 10:52:44 +0000'
@@ -264,7 +267,7 @@ describe('MailComposer unit tests', function() {
 
             var mail = mailcomposer(data);
             mail.keepBcc = true;
-            mail.build(function(err, message){
+            mail.build(function (err, message) {
                 expect(err).to.not.exist;
                 expect(message.toString()).to.equal(expected);
                 done();
