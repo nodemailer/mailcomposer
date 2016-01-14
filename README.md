@@ -94,6 +94,7 @@ Attachment object consists of the following properties:
   * **contentType** - optional content type for the attachment, if not set will be derived from the `filename` property
   * **contentTransferEncoding** - optional transfer encoding for the attachment, if not set it will be derived from the `contentType` property. Example values: `quoted-printable`, `base64`
   * **contentDisposition** - optional content disposition type for the attachment, defaults to 'attachment'
+  * **headers** is an object of additional headers `{'X-My-Header': 'value'}`
 
 Attachments can be added as many as you want.
 

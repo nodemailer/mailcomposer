@@ -273,5 +273,50 @@ describe('MailComposer unit tests', function () {
                 done();
             });
         });
+
+        it('should set headers for attachment', function (done) {
+            var data = {
+                text: 'abc',
+                baseBoundary: 'test',
+                messageId: 'zzzzzz',
+                date: 'Sat, 21 Jun 2014 10:52:44 +0000',
+                attachments: [{
+                    headers: {
+                        'X-Test-1': 12345,
+                        'X-Test-2': 'ÕÄÖÜ'
+                    },
+                    content: 'test',
+                    filename: 'test.txt'
+                }]
+            };
+
+            var expected = '' +
+                'Content-Type: multipart/mixed; boundary="----sinikael-?=_1-test"\r\n' +
+                'Message-Id: <zzzzzz>\r\n' +
+                'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
+                'MIME-Version: 1.0\r\n' +
+                '\r\n' +
+                '------sinikael-?=_1-test\r\n' +
+                'Content-Type: text/plain\r\n' +
+                'Content-Transfer-Encoding: 7bit\r\n' +
+                '\r\n' +
+                'abc\r\n-' +
+                '-----sinikael-?=_1-test\r\n' +
+                'Content-Type: text/plain; name=test.txt\r\n' +
+                'X-Test-1: 12345\r\n' +
+                'X-Test-2: =?UTF-8?Q?=C3=95=C3=84=C3=96=C3=9C?=\r\n' +
+                'Content-Disposition: attachment; filename=test.txt\r\n' +
+                'Content-Transfer-Encoding: 7bit\r\n' +
+                '\r\n' +
+                'test\r\n' +
+                '------sinikael-?=_1-test--\r\n';
+
+            var mail = mailcomposer(data);
+            mail.build(function (err, message) {
+                expect(err).to.not.exist;
+                expect(message.toString()).to.equal(expected);
+                done();
+            });
+        });
     });
 });
