@@ -27,7 +27,7 @@ describe('MailComposer unit tests', function () {
             };
 
             var compiler = new MailComposer(data);
-            sinon.stub(compiler, '_createMixed');
+            sinon.spy(compiler, '_createMixed');
             compiler.compile();
             expect(compiler._createMixed.callCount).to.equal(1);
             compiler._createMixed.restore();
@@ -43,7 +43,7 @@ describe('MailComposer unit tests', function () {
             };
 
             var compiler = new MailComposer(data);
-            sinon.stub(compiler, '_createMixed');
+            sinon.spy(compiler, '_createMixed');
             compiler.compile();
             expect(compiler._createMixed.callCount).to.equal(1);
             compiler._createMixed.restore();
@@ -56,7 +56,7 @@ describe('MailComposer unit tests', function () {
             };
 
             var compiler = new MailComposer(data);
-            sinon.stub(compiler, '_createAlternative');
+            sinon.spy(compiler, '_createAlternative');
             compiler.compile();
             expect(compiler._createAlternative.callCount).to.equal(1);
 
@@ -75,7 +75,7 @@ describe('MailComposer unit tests', function () {
             };
 
             var compiler = new MailComposer(data);
-            sinon.stub(compiler, '_createAlternative');
+            sinon.spy(compiler, '_createAlternative');
             compiler.compile();
             expect(compiler._createAlternative.callCount).to.equal(1);
             expect(compiler._alternatives.length).to.equal(3);
@@ -99,7 +99,7 @@ describe('MailComposer unit tests', function () {
             };
 
             var compiler = new MailComposer(data);
-            sinon.stub(compiler, '_createAlternative');
+            sinon.spy(compiler, '_createAlternative');
             compiler.compile();
             expect(compiler._createAlternative.callCount).to.equal(1);
             compiler._createAlternative.restore();
@@ -118,7 +118,7 @@ describe('MailComposer unit tests', function () {
             };
 
             var compiler = new MailComposer(data);
-            sinon.stub(compiler, '_createRelated');
+            sinon.spy(compiler, '_createRelated');
             compiler.compile();
             expect(compiler._createRelated.callCount).to.equal(1);
             compiler._createRelated.restore();
@@ -130,7 +130,7 @@ describe('MailComposer unit tests', function () {
             };
 
             var compiler = new MailComposer(data);
-            sinon.stub(compiler, '_createContentNode');
+            sinon.spy(compiler, '_createContentNode');
             compiler.compile();
             expect(compiler._createContentNode.callCount).to.equal(1);
             compiler._createContentNode.restore();
@@ -145,7 +145,7 @@ describe('MailComposer unit tests', function () {
             };
 
             var compiler = new MailComposer(data);
-            sinon.stub(compiler, '_createContentNode');
+            sinon.spy(compiler, '_createContentNode');
             compiler.compile();
             expect(compiler._createContentNode.callCount).to.equal(1);
             compiler._createContentNode.restore();
@@ -174,7 +174,8 @@ describe('MailComposer unit tests', function () {
             };
 
             var compiler = new MailComposer(data);
-            compiler.compile();
+            var mail = compiler.compile();
+            expect(mail.messageId()).to.exist;
             expect(compiler.mail.attachments[0].content).to.deep.equal(new Buffer(str));
             expect(compiler.mail.attachments[0].contentType).to.equal('image/png');
         });
@@ -184,7 +185,7 @@ describe('MailComposer unit tests', function () {
                 text: 'abc',
                 html: 'def',
                 baseBoundary: 'test',
-                messageId: 'zzzzzz',
+                messageId: '<zzzzzz>',
                 date: 'Sat, 21 Jun 2014 10:52:44 +0000'
             };
 
@@ -207,6 +208,7 @@ describe('MailComposer unit tests', function () {
                 '------sinikael-?=_1-test--\r\n';
 
             var mail = mailcomposer(data);
+            expect(mail.messageId()).to.equal('<zzzzzz>');
             mail.build(function (err, message) {
                 expect(err).to.not.exist;
                 expect(message.toString()).to.equal(expected);
@@ -283,7 +285,8 @@ describe('MailComposer unit tests', function () {
                 attachments: [{
                     headers: {
                         'X-Test-1': 12345,
-                        'X-Test-2': 'ÕÄÖÜ'
+                        'X-Test-2': 'ÕÄÖÜ',
+                        'X-Test-3': ['foo', 'bar']
                     },
                     content: 'test',
                     filename: 'test.txt'
@@ -305,6 +308,8 @@ describe('MailComposer unit tests', function () {
                 'Content-Type: text/plain; name=test.txt\r\n' +
                 'X-Test-1: 12345\r\n' +
                 'X-Test-2: =?UTF-8?Q?=C3=95=C3=84=C3=96=C3=9C?=\r\n' +
+                'X-Test-3: foo\r\n' +
+                'X-Test-3: bar\r\n' +
                 'Content-Disposition: attachment; filename=test.txt\r\n' +
                 'Content-Transfer-Encoding: 7bit\r\n' +
                 '\r\n' +
