@@ -186,11 +186,21 @@ describe('MailComposer unit tests', function () {
                 html: 'def',
                 baseBoundary: 'test',
                 messageId: '<zzzzzz>',
+                headers: {
+                    'x-processed': 'a really long header or value with non-ascii characters 👮',
+                    'x-unprocessed': {
+                        prepared: true,
+                        value: 'a really long header or value with non-ascii characters 👮'
+                    }
+                },
                 date: 'Sat, 21 Jun 2014 10:52:44 +0000'
             };
 
             var expected = '' +
                 'Content-Type: multipart/alternative; boundary="----sinikael-?=_1-test"\r\n' +
+                'X-Processed: a really long header or value with non-ascii characters\r\n' +
+                ' =?UTF-8?Q?=F0=9F=91=AE?=\r\n' +
+                'X-Unprocessed: a really long header or value with non-ascii characters 👮\r\n' +
                 'Message-Id: <zzzzzz>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'MIME-Version: 1.0\r\n' +
