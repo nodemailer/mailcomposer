@@ -78,6 +78,7 @@ The following are the possible fields of an e-mail message:
   - **messageId** - optional Message-Id value, random value will be generated if not set
   - **date** - optional Date value, current UTC string will be used if not set
   - **encoding** - optional transfer encoding for the textual parts
+  - **raw** - if set then overwrites entire message output with this value. The value is not parsed, so you should still set address headers or the envelope value for the message to work
 
 All text fields (e-mail addresses, plaintext body, html body) use UTF-8 as the encoding.
 Attachments are streamed as binary.

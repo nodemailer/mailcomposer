@@ -226,6 +226,29 @@ describe('MailComposer unit tests', function () {
             });
         });
 
+        it('should use raw input for the message', function (done) {
+            var data = {
+                raw: 'test test test',
+                envelope: {
+                    from: 'Daemon <deamon@kreata.ee>',
+                    to: 'mailer@kreata.ee, Mailer <mailer2@kreata.ee>'
+                }
+            };
+
+            var expected = 'test test test';
+
+            var mail = mailcomposer(data);
+            mail.build(function (err, message) {
+                expect(err).to.not.exist;
+                expect(mail.getEnvelope()).to.deep.equal({
+                    from: 'deamon@kreata.ee',
+                    to: ['mailer@kreata.ee', 'mailer2@kreata.ee']
+                });
+                expect(message.toString()).to.equal(expected);
+                done();
+            });
+        });
+
         it('should discard BCC', function (done) {
             var data = {
                 from: 'test1@example.com',
