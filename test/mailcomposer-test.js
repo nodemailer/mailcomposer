@@ -85,6 +85,24 @@ describe('MailComposer unit tests', function () {
             compiler._createAlternative.restore();
         });
 
+        it('should create Alternative structure with text, icalEvent and html', function () {
+            var data = {
+                text: 'abc',
+                html: 'def',
+                icalEvent: 'ghi'
+            };
+
+            var compiler = new MailComposer(data);
+            sinon.spy(compiler, '_createAlternative');
+            compiler.compile();
+            expect(compiler._createAlternative.callCount).to.equal(1);
+            expect(compiler._alternatives.length).to.equal(3);
+            expect(compiler._alternatives[0].contentType).to.equal('text/plain');
+            expect(compiler._alternatives[1].contentType).to.equal('text/html');
+            expect(compiler._alternatives[2].contentType).to.equal('text/calendar; charset="utf-8"; method=PUBLISH');
+            compiler._createAlternative.restore();
+        });
+
         it('should create Alternative structure with text, html and cid attachment', function () {
             var data = {
                 text: 'abc',
@@ -249,6 +267,68 @@ describe('MailComposer unit tests', function () {
             });
         });
 
+        it('should use raw input for different parts', function (done) {
+            var data = {
+                from: 'test1@example.com',
+                to: 'test2@example.com',
+                bcc: 'test3@example.com',
+                text: {
+                    raw: 'rawtext'
+                },
+                html: {
+                    raw: 'rawhtml'
+                },
+                watchHtml: {
+                    raw: 'rawwatch'
+                },
+                messageId: 'rawtest',
+                icalEvent: {
+                    raw: 'rawcalendar'
+                },
+                attachments: [{
+                    raw: 'rawattachment'
+                }],
+                alternatives: [{
+                    raw: 'rawalternative'
+                }],
+                date: 'Sat, 21 Jun 2014 10:52:44 +0000',
+                baseBoundary: 'test'
+            };
+
+            var expected = 'Content-Type: multipart/mixed; boundary="----sinikael-?=_1-test"\r\n' +
+                'From: test1@example.com\r\n' +
+                'To: test2@example.com\r\n' +
+                'Message-Id: <rawtest>\r\n' +
+                'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
+                'MIME-Version: 1.0\r\n' +
+                '\r\n' +
+                '------sinikael-?=_1-test\r\n' +
+                'Content-Type: multipart/alternative; boundary="----sinikael-?=_2-test"\r\n' +
+                '\r\n' +
+                '------sinikael-?=_2-test\r\n' +
+                'rawtext\r\n' +
+                '------sinikael-?=_2-test\r\n' +
+                'rawwatch\r\n' +
+                '------sinikael-?=_2-test\r\n' +
+                'rawhtml\r\n' +
+                '------sinikael-?=_2-test\r\n' +
+                'rawcalendar\r\n' +
+                '------sinikael-?=_2-test\r\n' +
+                'rawalternative\r\n' +
+                '------sinikael-?=_2-test--\r\n' +
+                '\r\n' +
+                '------sinikael-?=_1-test\r\n' +
+                'rawattachment\r\n' +
+                '------sinikael-?=_1-test--\r\n';
+
+            var mail = mailcomposer(data);
+            mail.build(function (err, message) {
+                expect(err).to.not.exist;
+                expect(message.toString()).to.equal(expected);
+                done();
+            });
+        });
+
         it('should discard BCC', function (done) {
             var data = {
                 from: 'test1@example.com',
@@ -347,6 +427,50 @@ describe('MailComposer unit tests', function () {
                 'Content-Transfer-Encoding: 7bit\r\n' +
                 '\r\n' +
                 'test\r\n' +
+                '------sinikael-?=_1-test--\r\n';
+
+            var mail = mailcomposer(data);
+            mail.build(function (err, message) {
+                expect(err).to.not.exist;
+                expect(message.toString()).to.equal(expected);
+                done();
+            });
+        });
+
+        it('should add ical alternative', function (done) {
+            var data = {
+                from: 'test1@example.com',
+                to: 'test2@example.com',
+                bcc: 'test3@example.com',
+                text: 'def',
+                messageId: 'icaltest',
+                icalEvent: {
+                    method: 'request',
+                    content: new Buffer('test').toString('hex'),
+                    encoding: 'hex'
+                },
+                date: 'Sat, 21 Jun 2014 10:52:44 +0000',
+                baseBoundary: 'test'
+            };
+
+            var expected = '' +
+                'Content-Type: multipart/alternative; boundary="----sinikael-?=_1-test"\r\n' +
+                'From: test1@example.com\r\n' +
+                'To: test2@example.com\r\n' +
+                'Message-Id: <icaltest>\r\n' +
+                'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
+                'MIME-Version: 1.0\r\n' +
+                '\r\n' +
+                '------sinikael-?=_1-test\r\n' +
+                'Content-Type: text/plain\r\n' +
+                'Content-Transfer-Encoding: 7bit\r\n' +
+                '\r\n' +
+                'def\r\n' +
+                '------sinikael-?=_1-test\r\n' +
+                'Content-Type: text/calendar; charset=utf-8; method=REQUEST\r\n' +
+                'Content-Transfer-Encoding: base64\r\n' +
+                '\r\n' +
+                'dGVzdA==\r\n' +
                 '------sinikael-?=_1-test--\r\n';
 
             var mail = mailcomposer(data);

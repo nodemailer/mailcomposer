@@ -70,7 +70,8 @@ The following are the possible fields of an e-mail message:
   - **subject** - The subject of the e-mail
   - **text** - The plaintext version of the message as an Unicode string, Buffer, Stream or an object *{path: '...'}*
   - **html** - The HTML version of the message as an Unicode string, Buffer, Stream or an object *{path: '...'}*
-  - **watchHtml** - Apple Watch specific HTML version of the message (*experimental*)
+  - **watchHtml** - Apple Watch specific HTML version of the message, same usage as with `text` and `html`
+  - **icalEvent** - iCalendar event, same usage as with `text` and `html`. Event `method` attribute defaults to 'PUBLISH' or define it yourself: `{method: 'REQUEST', content: iCalString}`. This value is added as an additional alternative to html or text. Only utf-8 content is allowed
   - **headers** - An object or array of additional header fields (e.g. *{"X-Key-Name": "key value"}* or *[{key: "X-Key-Name", value: "val1"}, {key: "X-Key-Name", value: "val2"}]*)
   - **attachments** - An array of attachment objects  (see [below](#attachments) for details)
   - **alternatives** - An array of alternative text contents (in addition to text and html parts)  (see [below](#alternatives) for details)
@@ -96,6 +97,7 @@ Attachment object consists of the following properties:
   * **contentTransferEncoding** - optional transfer encoding for the attachment, if not set it will be derived from the `contentType` property. Example values: `quoted-printable`, `base64`
   * **contentDisposition** - optional content disposition type for the attachment, defaults to 'attachment'
   * **headers** is an object of additional headers, similar to *message.headers* option `{'X-My-Header': 'value'}`
+  * **raw** is an optional value that overrides entire node content in the mime message. If used then all other options set for this node are ignored. The value is either a string, a buffer, a stream or an attachment-like object (eg. provides `path` or `content`)
 
 Attachments can be added as many as you want.
 
