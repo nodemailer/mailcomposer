@@ -358,6 +358,98 @@ describe('MailComposer unit tests', function () {
             });
         });
 
+        it('should autodetect text encoding', function (done) {
+            var data = {
+                from: 'ÄÄÄÄ test1@example.com',
+                to: 'AAAÄ test2@example.com',
+                subject: 'def ÄÄÄÄ foo AAAÄ',
+                text: 'def ÄÄÄÄ foo AAAÄ',
+                messageId: 'zzzzzz',
+                date: 'Sat, 21 Jun 2014 10:52:44 +0000'
+            };
+
+            var expected = '' +
+                'Content-Type: text/plain; charset=utf-8\r\n' +
+                'From: =?UTF-8?B?w4TDhMOEw4Q=?= <test1@example.com>\r\n' +
+                'To: =?UTF-8?Q?AAA=C3=84?= <test2@example.com>\r\n' +
+                'Subject: def =?UTF-8?Q?=C3=84=C3=84=C3=84=C3=84?= foo =?UTF-8?Q?AAA=C3=84?=\r\n' +
+                'Message-Id: <zzzzzz>\r\n' +
+                'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
+                'Content-Transfer-Encoding: quoted-printable\r\n' +
+                'MIME-Version: 1.0\r\n' +
+                '\r\n' +
+                'def =C3=84=C3=84=C3=84=C3=84 foo AAA=C3=84';
+
+            var mail = mailcomposer(data);
+            mail.build(function (err, message) {
+                expect(err).to.not.exist;
+                expect(message.toString()).to.equal(expected);
+                done();
+            });
+        });
+
+        it('should use quoted-printable text encoding', function (done) {
+            var data = {
+                from: 'ÄÄÄÄ test1@example.com',
+                to: 'AAAÄ test2@example.com',
+                subject: 'def ÄÄÄÄ foo AAAÄ',
+                text: 'def ÄÄÄÄ foo AAAÄ',
+                messageId: 'zzzzzz',
+                date: 'Sat, 21 Jun 2014 10:52:44 +0000',
+                textEncoding: 'quoted-printable'
+            };
+
+            var expected = '' +
+                'Content-Type: text/plain; charset=utf-8\r\n' +
+                'From: =?UTF-8?Q?=C3=84=C3=84=C3=84=C3=84?= <test1@example.com>\r\n' +
+                'To: =?UTF-8?Q?AAA=C3=84?= <test2@example.com>\r\n' +
+                'Subject: def =?UTF-8?Q?=C3=84=C3=84=C3=84=C3=84?= foo =?UTF-8?Q?AAA=C3=84?=\r\n' +
+                'Message-Id: <zzzzzz>\r\n' +
+                'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
+                'Content-Transfer-Encoding: quoted-printable\r\n' +
+                'MIME-Version: 1.0\r\n' +
+                '\r\n' +
+                'def =C3=84=C3=84=C3=84=C3=84 foo AAA=C3=84';
+
+            var mail = mailcomposer(data);
+            mail.build(function (err, message) {
+                expect(err).to.not.exist;
+                expect(message.toString()).to.equal(expected);
+                done();
+            });
+        });
+
+        it('should use base64 text encoding', function (done) {
+            var data = {
+                from: 'ÄÄÄÄ test1@example.com',
+                to: 'AAAÄ test2@example.com',
+                subject: 'def ÄÄÄÄ foo AAAÄ',
+                text: 'def ÄÄÄÄ foo AAAÄ',
+                messageId: 'zzzzzz',
+                date: 'Sat, 21 Jun 2014 10:52:44 +0000',
+                textEncoding: 'base64'
+            };
+
+            var expected = '' +
+                'Content-Type: text/plain; charset=utf-8\r\n' +
+                'From: =?UTF-8?B?w4TDhMOEw4Q=?= <test1@example.com>\r\n' +
+                'To: =?UTF-8?B?QUFBw4Q=?= <test2@example.com>\r\n' +
+                'Subject: def =?UTF-8?B?w4TDhMOEw4Q=?= foo =?UTF-8?B?QUFBw4Q=?=\r\n' +
+                'Message-Id: <zzzzzz>\r\n' +
+                'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
+                'Content-Transfer-Encoding: base64\r\n' +
+                'MIME-Version: 1.0\r\n' +
+                '\r\n' +
+                'ZGVmIMOEw4TDhMOEIGZvbyBBQUHDhA==';
+
+            var mail = mailcomposer(data);
+            mail.build(function (err, message) {
+                expect(err).to.not.exist;
+                expect(message.toString()).to.equal(expected);
+                done();
+            });
+        });
+
         it('should keep BCC', function (done) {
             var data = {
                 from: 'test1@example.com',
@@ -420,7 +512,7 @@ describe('MailComposer unit tests', function () {
                 '-----sinikael-?=_1-test\r\n' +
                 'Content-Type: text/plain; name=test.txt\r\n' +
                 'X-Test-1: 12345\r\n' +
-                'X-Test-2: =?UTF-8?Q?=C3=95=C3=84=C3=96=C3=9C?=\r\n' +
+                'X-Test-2: =?UTF-8?B?w5XDhMOWw5w=?=\r\n' +
                 'X-Test-3: foo\r\n' +
                 'X-Test-3: bar\r\n' +
                 'Content-Disposition: attachment; filename=test.txt\r\n' +
