@@ -6,8 +6,6 @@ node_js:
   - iojs
   - 4
   - 5
-before_install:
-  - npm install -g grunt-cli
 notifications:
   email:
     recipients:
