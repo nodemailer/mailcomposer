@@ -529,6 +529,54 @@ describe('MailComposer unit tests', function () {
             });
         });
 
+        it('should ignore attachment filename', function (done) {
+            var data = {
+                text: 'abc',
+                baseBoundary: 'test',
+                messageId: 'zzzzzz',
+                date: 'Sat, 21 Jun 2014 10:52:44 +0000',
+                attachments: [{
+                    content: 'test',
+                    filename: 'test.txt'
+                }, {
+                    content: 'test2',
+                    filename: false
+                }]
+            };
+
+            var expected = '' +
+                'Content-Type: multipart/mixed; boundary="----sinikael-?=_1-test"\r\n' +
+                'Message-Id: <zzzzzz>\r\n' +
+                'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
+                'MIME-Version: 1.0\r\n' +
+                '\r\n' +
+                '------sinikael-?=_1-test\r\n' +
+                'Content-Type: text/plain\r\n' +
+                'Content-Transfer-Encoding: 7bit\r\n' +
+                '\r\n' +
+                'abc\r\n' +
+                '------sinikael-?=_1-test\r\n' +
+                'Content-Type: text/plain; name=test.txt\r\n' +
+                'Content-Disposition: attachment; filename=test.txt\r\n' +
+                'Content-Transfer-Encoding: 7bit\r\n' +
+                '\r\n' +
+                'test\r\n' +
+                '------sinikael-?=_1-test\r\n' +
+                'Content-Type: application/octet-stream\r\n' +
+                'Content-Disposition: attachment\r\n' +
+                'Content-Transfer-Encoding: base64\r\n' +
+                '\r\n' +
+                'dGVzdDI=\r\n' +
+                '------sinikael-?=_1-test--\r\n';
+
+            var mail = mailcomposer(data);
+            mail.build(function (err, message) {
+                expect(err).to.not.exist;
+                expect(message.toString()).to.equal(expected);
+                done();
+            });
+        });
+
         it('should add ical alternative', function (done) {
             var data = {
                 from: 'test1@example.com',

@@ -89,7 +89,7 @@ Attachments are streamed as binary.
 
 Attachment object consists of the following properties:
 
-  * **filename** - filename to be reported as the name of the attached file, use of unicode is allowed
+  * **filename** - filename to be reported as the name of the attached file, use of unicode is allowed. If you do not want to use a filename, set this value as `false`, otherwise a filename is generated automatically
   * **cid** - optional content id for using inline images in HTML message source
   * **content** - String, Buffer or a Stream contents for the attachment
   * **encoding** - If set and `content` is string, then encodes the content to a Buffer using the specified encoding. Example values: `base64`, `hex`, `binary` etc. Useful if you want to use binary attachments in a JSON formatted e-mail object
