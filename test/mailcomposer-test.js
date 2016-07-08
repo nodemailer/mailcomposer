@@ -219,7 +219,7 @@ describe('MailComposer unit tests', function () {
                 'X-Processed: a really long header or value with non-ascii characters\r\n' +
                 ' =?UTF-8?Q?=F0=9F=91=AE?=\r\n' +
                 'X-Unprocessed: a really long header or value with non-ascii characters 👮\r\n' +
-                'Message-Id: <zzzzzz>\r\n' +
+                'Message-ID: <zzzzzz>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'MIME-Version: 1.0\r\n' +
                 '\r\n' +
@@ -298,7 +298,7 @@ describe('MailComposer unit tests', function () {
             var expected = 'Content-Type: multipart/mixed; boundary="----sinikael-?=_1-test"\r\n' +
                 'From: test1@example.com\r\n' +
                 'To: test2@example.com\r\n' +
-                'Message-Id: <rawtest>\r\n' +
+                'Message-ID: <rawtest>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'MIME-Version: 1.0\r\n' +
                 '\r\n' +
@@ -343,7 +343,7 @@ describe('MailComposer unit tests', function () {
                 'Content-Type: text/plain\r\n' +
                 'From: test1@example.com\r\n' +
                 'To: test2@example.com\r\n' +
-                'Message-Id: <zzzzzz>\r\n' +
+                'Message-ID: <zzzzzz>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'Content-Transfer-Encoding: 7bit\r\n' +
                 'MIME-Version: 1.0\r\n' +
@@ -373,7 +373,7 @@ describe('MailComposer unit tests', function () {
                 'From: =?UTF-8?B?w4TDhMOEw4Q=?= <test1@example.com>\r\n' +
                 'To: =?UTF-8?Q?AAA=C3=84?= <test2@example.com>\r\n' +
                 'Subject: def =?UTF-8?Q?=C3=84=C3=84=C3=84=C3=84?= foo =?UTF-8?Q?AAA=C3=84?=\r\n' +
-                'Message-Id: <zzzzzz>\r\n' +
+                'Message-ID: <zzzzzz>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'Content-Transfer-Encoding: quoted-printable\r\n' +
                 'MIME-Version: 1.0\r\n' +
@@ -404,7 +404,7 @@ describe('MailComposer unit tests', function () {
                 'From: =?UTF-8?Q?=C3=84=C3=84=C3=84=C3=84?= <test1@example.com>\r\n' +
                 'To: =?UTF-8?Q?AAA=C3=84?= <test2@example.com>\r\n' +
                 'Subject: def =?UTF-8?Q?=C3=84=C3=84=C3=84=C3=84?= foo =?UTF-8?Q?AAA=C3=84?=\r\n' +
-                'Message-Id: <zzzzzz>\r\n' +
+                'Message-ID: <zzzzzz>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'Content-Transfer-Encoding: quoted-printable\r\n' +
                 'MIME-Version: 1.0\r\n' +
@@ -435,7 +435,7 @@ describe('MailComposer unit tests', function () {
                 'From: =?UTF-8?B?w4TDhMOEw4Q=?= <test1@example.com>\r\n' +
                 'To: =?UTF-8?B?QUFBw4Q=?= <test2@example.com>\r\n' +
                 'Subject: def =?UTF-8?B?w4TDhMOEw4Q=?= foo =?UTF-8?B?QUFBw4Q=?=\r\n' +
-                'Message-Id: <zzzzzz>\r\n' +
+                'Message-ID: <zzzzzz>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'Content-Transfer-Encoding: base64\r\n' +
                 'MIME-Version: 1.0\r\n' +
@@ -465,7 +465,7 @@ describe('MailComposer unit tests', function () {
                 'From: test1@example.com\r\n' +
                 'To: test2@example.com\r\n' +
                 'Bcc: test3@example.com\r\n' +
-                'Message-Id: <zzzzzz>\r\n' +
+                'Message-ID: <zzzzzz>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'Content-Transfer-Encoding: 7bit\r\n' +
                 'MIME-Version: 1.0\r\n' +
@@ -500,7 +500,7 @@ describe('MailComposer unit tests', function () {
 
             var expected = '' +
                 'Content-Type: multipart/mixed; boundary="----sinikael-?=_1-test"\r\n' +
-                'Message-Id: <zzzzzz>\r\n' +
+                'Message-ID: <zzzzzz>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'MIME-Version: 1.0\r\n' +
                 '\r\n' +
@@ -546,7 +546,7 @@ describe('MailComposer unit tests', function () {
 
             var expected = '' +
                 'Content-Type: multipart/mixed; boundary="----sinikael-?=_1-test"\r\n' +
-                'Message-Id: <zzzzzz>\r\n' +
+                'Message-ID: <zzzzzz>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'MIME-Version: 1.0\r\n' +
                 '\r\n' +
@@ -597,7 +597,7 @@ describe('MailComposer unit tests', function () {
                 'Content-Type: multipart/alternative; boundary="----sinikael-?=_1-test"\r\n' +
                 'From: test1@example.com\r\n' +
                 'To: test2@example.com\r\n' +
-                'Message-Id: <icaltest>\r\n' +
+                'Message-ID: <icaltest>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'MIME-Version: 1.0\r\n' +
                 '\r\n' +

@@ -1,7 +1,7 @@
 {
   "name": "mailcomposer",
   "description": "Compose E-Mail messages",
-  "version": "3.9.0",
+  "version": "3.10.0",
   "author": "Andris Reinman",
   "license": "MIT",
   "maintainers": [
@@ -15,20 +15,20 @@
     "url": "http://github.com/andris9/mailcomposer.git"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "grunt mochaTest"
   },
   "main": "./lib/mailcomposer",
   "dependencies": {
-    "buildmail": "3.7.0",
+    "buildmail": "3.8.0",
     "libmime": "2.0.3"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
-    "grunt-eslint": "^18.1.0",
+    "grunt-eslint": "^19.0.0",
     "grunt-mocha-test": "^0.12.7",
-    "mocha": "^2.4.5",
+    "mocha": "^2.5.3",
     "sinon": "^1.17.4"
   },
   "engine": {
