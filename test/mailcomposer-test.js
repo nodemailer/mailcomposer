@@ -620,5 +620,38 @@ describe('MailComposer unit tests', function () {
                 done();
             });
         });
+
+        it('should use load attachment from file', function (done) {
+            var data = {
+                text: 'abc',
+                attachments: [{
+                    path: __dirname + '/fixtures/attachment.bin'
+                }]
+            };
+
+            var mail = mailcomposer(data);
+            mail.build(function (err, message) {
+                expect(err).to.not.exist;
+                expect(message.toString()).to.include('w7VrdmEK');
+                done();
+            });
+        });
+
+        it('should not load attachment from file', function (done) {
+            var data = {
+                text: 'abc',
+                attachments: [{
+                    path: __dirname + '/fixtures/attachment.bin'
+                }],
+                disableFileAccess: true
+            };
+
+            var mail = mailcomposer(data);
+            mail.build(function (err, message) {
+                expect(err).to.exist;
+                expect(message).to.not.exist;
+                done();
+            });
+        });
     });
 });

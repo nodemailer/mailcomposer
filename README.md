@@ -81,6 +81,8 @@ The following are the possible fields of an e-mail message:
   - **encoding** - optional transfer encoding for the textual parts
   - **raw** - if set then overwrites entire message output with this value. The value is not parsed, so you should still set address headers or the envelope value for the message to work
   - **textEncoding** - set explicitly which encoding to use for text parts (*quoted-printable* or *base64*). If not set then encoding is detected from text content (mostly ascii means *quoted-printable*, otherwise *base64*)
+  - **disableUrlAccess** - if set to true then fails with an error when a node tries to load content from URL
+  - **disableFileAccess** - if set to true then fails with an error when a node tries to load content from a file
 
 All text fields (e-mail addresses, plaintext body, html body) use UTF-8 as the encoding.
 Attachments are streamed as binary.
