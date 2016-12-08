@@ -372,7 +372,7 @@ describe('MailComposer unit tests', function () {
                 'Content-Type: text/plain; charset=utf-8\r\n' +
                 'From: =?UTF-8?B?w4TDhMOEw4Q=?= <test1@example.com>\r\n' +
                 'To: =?UTF-8?Q?AAA=C3=84?= <test2@example.com>\r\n' +
-                'Subject: def =?UTF-8?Q?=C3=84=C3=84=C3=84=C3=84?= foo =?UTF-8?Q?AAA=C3=84?=\r\n' +
+                'Subject: def =?UTF-8?Q?=C3=84=C3=84=C3=84=C3=84_foo_AAA=C3=84?=\r\n' +
                 'Message-ID: <zzzzzz>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'Content-Transfer-Encoding: quoted-printable\r\n' +
@@ -403,7 +403,7 @@ describe('MailComposer unit tests', function () {
                 'Content-Type: text/plain; charset=utf-8\r\n' +
                 'From: =?UTF-8?Q?=C3=84=C3=84=C3=84=C3=84?= <test1@example.com>\r\n' +
                 'To: =?UTF-8?Q?AAA=C3=84?= <test2@example.com>\r\n' +
-                'Subject: def =?UTF-8?Q?=C3=84=C3=84=C3=84=C3=84?= foo =?UTF-8?Q?AAA=C3=84?=\r\n' +
+                'Subject: def =?UTF-8?Q?=C3=84=C3=84=C3=84=C3=84_foo_AAA=C3=84?=\r\n' +
                 'Message-ID: <zzzzzz>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'Content-Transfer-Encoding: quoted-printable\r\n' +
@@ -434,7 +434,7 @@ describe('MailComposer unit tests', function () {
                 'Content-Type: text/plain; charset=utf-8\r\n' +
                 'From: =?UTF-8?B?w4TDhMOEw4Q=?= <test1@example.com>\r\n' +
                 'To: =?UTF-8?B?QUFBw4Q=?= <test2@example.com>\r\n' +
-                'Subject: def =?UTF-8?B?w4TDhMOEw4Q=?= foo =?UTF-8?B?QUFBw4Q=?=\r\n' +
+                'Subject: def =?UTF-8?B?w4TDhMOEw4QgZm9vIEFBQcOE?=\r\n' +
                 'Message-ID: <zzzzzz>\r\n' +
                 'Date: Sat, 21 Jun 2014 10:52:44 +0000\r\n' +
                 'Content-Transfer-Encoding: base64\r\n' +
